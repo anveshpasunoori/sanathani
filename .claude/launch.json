@@ -1,0 +1,36 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sanathani-attach",
+      "url": "http://localhost:5173",
+      "port": 5173
+    },
+    {
+      "name": "thithi-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "5173",
+        "--strictPort"
+      ],
+      "env": { "NODE_OPTIONS": "--max-old-space-size=4096" },
+      "port": 5173
+    },
+    {
+      "name": "sanathani-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--port",
+        "4174",
+        "--strictPort"
+      ],
+      "port": 4174
+    }
+  ]
+}

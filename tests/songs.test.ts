@@ -1,0 +1,33 @@
+import { SONGS, songsFor } from '../src/data/songs';
+import { SONG_DEITIES } from '../src/ui/Songs';
+
+describe('songs', () => {
+  it('every song is under Ayyappa (from the Ayyappa booklet), with unique ids and titles', () => {
+    expect(SONGS).toHaveLength(42);
+    expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
+    for (const s of SONGS) {
+      expect(s.deities).toContain('ayyappa');
+      expect(s.title.te.length).toBeGreaterThan(2);
+      expect(s.text.split('\n').length).toBeGreaterThan(3);
+    }
+  });
+  it('Hanuman and Venkateswara songs are also listed under those deities', () => {
+    expect(songsFor('hanuman').map((s) => s.id)).toEqual(['ati-balavanta-hanumanta', 'emaya-dora-varala-anjani']);
+    expect(songsFor('venkateswara').map((s) => s.id)).toEqual(['adi-shesha-ananta-shayana']);
+  });
+  it('text is clean: no PDF splits, watermark or booklet footer', () => {
+    const all = SONGS.map((s) => s.title.te + '\n' + s.text).join('\n');
+    for (const bad of ['స్నా న', 'జ్యో తి', 'వెళ్ళా లి', 'అయ్య ప్ప', 'స్వా మి', 'instapdf', 'కామెంట్', '  ']) expect(all, bad).not.toContain(bad);
+    expect(all).not.toMatch(/-\|2\||--\|\|2\|\||విత్ కోరస్|wit koras/);
+  });
+  it('every song deity has a menu entry', () => {
+    for (const s of SONGS) for (const d of s.deities) expect(SONG_DEITIES.some((x) => x.id === d)).toBe(true);
+  });
+  it('songs with a recording point at a file that exists', async () => {
+    const { existsSync } = await import('node:fs');
+    const withAudio = SONGS.filter((s) => s.audio);
+    expect(withAudio.length).toBe(29);
+    expect(withAudio.map((s) => s.id)).toContain('digu-digu-naga');
+    for (const s of withAudio) expect(existsSync(`public${s.audio!.src}`)).toBe(true);
+  });
+});
