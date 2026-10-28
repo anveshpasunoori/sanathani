@@ -186,7 +186,7 @@ function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Lis
           {stanzas.map((lines, k) => (
             <p key={k} className="stanza">
               {lines.map((l, j) => (
-                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|\(కోరస్\))/.test(l.trim()) ? 'cue' : undefined}>
+                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|పల్లవి|అనుపల్లవి|చరణం|\(కోరస్\))/.test(l.trim()) ? 'cue' : undefined}>
                   {l.split(/(\(కోరస్\)|\(\d\)|\(\d సార్లు\))/).map((part, m) => (/^\((కోరస్|\d)/.test(part) ? <span key={m} className="cue"> {part}</span> : part))}
                   <br />
                 </span>
