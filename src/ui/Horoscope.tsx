@@ -17,6 +17,7 @@ import { Card, DateFields } from './components';
 import { go } from './router';
 import { JathakaCard } from './JathakaCard';
 import { ChartReadingView } from './ChartReading';
+import { ChartSummaryCard } from './ChartSummary';
 import { hasReadingText } from '../locales/reading';
 import { LifeThemesView } from './LifeThemes';
 import { MatchingView } from './Matching';
@@ -61,7 +62,7 @@ export function HoroscopeScreen() {
         ))}
         <button className="chip" onClick={() => setEditing('new')}>+ {x('addPerson')}</button>
       </div>
-      {mode === 'themes' ? <LifeThemesView profile={active} lang={lang} /> : mode === 'chart' ? <ChartReadingView profile={active} lang={lang} /> : <Reading profile={active} lang={lang} onEdit={() => setEditing(active)} />}
+      {mode === 'themes' ? <LifeThemesView profile={active} lang={lang} /> : mode === 'chart' ? <ChartReadingView profile={active} lang={lang} /> : <Reading profile={active} lang={lang} onEdit={() => setEditing(active)} onFull={() => setMode('chart')} />}
       </>}
     </>
   );
@@ -83,7 +84,7 @@ function HoroscopeIntro({ onAdd }: { onAdd: () => void }) {
   );
 }
 
-function Reading({ profile, lang, onEdit }: { profile: BirthProfile; lang: Lang; onEdit: () => void }) {
+function Reading({ profile, lang, onEdit, onFull }: { profile: BirthProfile; lang: Lang; onEdit: () => void; onFull: () => void }) {
   const place = useStore((s) => s.settings.place);
   const tz = place.tz;
   const today = todayIn(tz);
@@ -118,6 +119,8 @@ function Reading({ profile, lang, onEdit }: { profile: BirthProfile; lang: Lang;
         {profile.isSample && <div className="note warn small">{x('sampleProfile')}</div>}
         {profile.eventId && !profile.time && <div className="note small">{x('fromBirthday')}</div>}
       </Card>
+
+      <ChartSummaryCard chart={chart} lang={lang} onFull={onFull} />
 
       <JathakaCard profile={profile} chart={chart} />
 

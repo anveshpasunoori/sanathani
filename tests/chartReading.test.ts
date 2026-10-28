@@ -1,4 +1,6 @@
 import { ashtakavarga, chartReading, dignityOf, saturnPhases } from '../src/engine/chartReading';
+import { chartSummary } from '../src/engine/chartSummary';
+import { summaryText } from '../src/locales/chartSummary';
 import { birthChart } from '../src/engine/jyotish';
 import { zonedToUtc } from '../src/engine/tz';
 
@@ -65,6 +67,33 @@ describe('birth chart reading', () => {
       const years = (p.end.getTime() - p.start.getTime()) / (365.25 * 86400000);
       expect(years).toBeGreaterThan(6.5);
       expect(years).toBeLessThan(8.5);
+    }
+  });
+
+  it('sums the chart up in simple words: strengths, what to stay alert about and what to do', () => {
+    const now = new Date('2026-10-27T00:00:00Z');
+    const date = (d: Date) => d.toISOString().slice(0, 7);
+    for (const lang of ['en', 'te', 'hi', 'gu'] as const) {
+      for (const c of [chart, noTime]) {
+        const s = chartSummary(c, now, lang, date);
+        expect(summaryText(lang).overall).toContain(s.overall);
+        expect(s.good.length + s.care.length).toBeGreaterThan(0);
+        expect(s.todo.length).toBeGreaterThan(0);
+        expect(s.todo.length).toBeLessThanOrEqual(6);
+        expect(new Set(s.todo).size).toBe(s.todo.length);
+        expect(s.period).toMatch(/\d{4}-\d{2}/);
+        // Every template variable is filled, and no frightening labels slip into the cautions.
+        for (const t of [...s.good, ...s.care, ...s.todo, s.period!]) expect(t).not.toMatch(/[{}]|undefined/);
+        if (lang === 'en') for (const t of s.care) expect(t).not.toMatch(/debilitat|enemy|bad luck|danger/i);
+      }
+    }
+  });
+
+  it('has a full summary table in every written language', () => {
+    for (const lang of ['en', 'te', 'kn', 'ta', 'ml', 'hi', 'mr'] as const) {
+      const t = summaryText(lang);
+      expect(t.practical).toHaveLength(12);
+      expect(t.overall).toHaveLength(3);
     }
   });
 });
