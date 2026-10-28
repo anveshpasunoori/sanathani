@@ -17,6 +17,7 @@ import { useReminderRunner } from './reminderRunner';
 import { useAccount } from '../sync/sync';
 import { go, useRoute, type Route } from './router';
 import { SettingsScreen } from './Settings';
+import { asset } from '../data/asset';
 
 // The Pooja tab carries long texts, so it loads when first opened.
 const PoojasScreen = lazy(() => import('./Poojas').then((m) => ({ default: m.PoojasScreen })));
@@ -62,7 +63,7 @@ export function App() {
     <div className="app">
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="brand"><img src="/icon.svg" alt="" /> Sanathani</div>
+          <div className="brand"><img src={asset('/icon.svg')} alt="" /> Sanathani</div>
           <div className="topbar-actions">
             <button className="place" onClick={() => go({ tab: 'settings' })} aria-label={`Location: ${settings.place.name}. Change in settings`}>
               📍 {settings.place.name}

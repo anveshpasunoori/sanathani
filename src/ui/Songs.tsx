@@ -6,6 +6,7 @@ import { POOJA_TEXT } from '../locales/pooja';
 import { pickName, SONG_DEITY_NAMES, subName } from '../locales/poojaNames';
 import { Card, DeityPic, DevotionSwitch } from './components';
 import { go } from './router';
+import { asset } from '../data/asset';
 
 export const SONG_DEITIES: Array<{ id: SongDeity; image: DeityImageId; en: string; te: string }> = [
   { id: 'ayyappa', image: 'ayyappa', en: 'Ayyappa', te: 'అయ్యప్ప స్వామి' },
@@ -148,7 +149,7 @@ function SongView({ deity, song }: { deity: Deity; song: Song }) {
               {song.audio.singer !== 'Recording' && <div className="small muted">{song.audio.singer}</div>}
             </div>
           </div>
-          <audio controls preload="none" src={song.audio.src} style={{ width: '100%' }}>{x('noAudio')}</audio>
+          <audio controls preload="none" src={asset(song.audio.src)} style={{ width: '100%' }}>{x('noAudio')}</audio>
         </Card>
       )}
       <div className="row reader-tools" role="group" aria-label={x('readingOptions')}>

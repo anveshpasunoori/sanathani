@@ -10,6 +10,7 @@ import { todayIn, addDays } from '../engine/tz';
 import { phoneDelivers } from './nativeReminders';
 import { festivalText, loadPoojaPlanner, planFestivals } from '../reminders/festivals';
 import type { Route } from './router';
+import { asset } from '../data/asset';
 
 export interface Toast { id: string; title: string; body: string; eventId?: string; route?: Route }
 
@@ -17,8 +18,8 @@ async function show(title: string, body: string, tag: string): Promise<boolean> 
   if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return false;
   try {
     const reg = await navigator.serviceWorker?.getRegistration();
-    if (reg) await reg.showNotification(title, { body, icon: '/icon.svg', tag, data: { eventId: tag } });
-    else new Notification(title, { body, icon: '/icon.svg', tag });
+    if (reg) await reg.showNotification(title, { body, icon: asset('/icon.svg'), tag, data: { eventId: tag } });
+    else new Notification(title, { body, icon: asset('/icon.svg'), tag });
     return true;
   } catch {
     return false;

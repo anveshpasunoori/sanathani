@@ -49,6 +49,8 @@ function seo(siteUrl: string | undefined): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
+    // The web build for GitHub Pages lives under /sanathani/ (set by the workflow); the phone apps use /.
+    base: process.env.BASE_PATH ?? '/',
     plugins: [react(), csp(env.VITE_SUPABASE_URL), seo(env.VITE_SITE_URL)],
     test: { globals: true, environment: 'node', testTimeout: 30000 },
   };

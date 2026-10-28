@@ -3,6 +3,8 @@
 // index.json with each line's length and where every word starts, so the slow modes can play a
 // line word by word or half by half from the same natural recording instead of slowing it down.
 // Lines without audio fall back to the phone's own voice.
+import { asset } from './asset';
+
 
 /** Folder (and voice) for each reading language; English readers hear the Telugu text. */
 export const VOICE_CODE: Record<string, string> = {
@@ -45,14 +47,14 @@ export function loadVoiceManifest(voiceLang: string): Promise<VoiceManifest | nu
   const code = VOICE_CODE[voiceLang];
   if (!code) return Promise.resolve(null);
   if (!manifests.has(code)) {
-    manifests.set(code, fetch(`/audio/voice/${code}/index.json`)
+    manifests.set(code, fetch(asset(`/audio/voice/${code}/index.json`))
       .then((r) => (r.ok ? r.json() as Promise<VoiceManifest> : null))
       .catch(() => null));
   }
   return manifests.get(code)!;
 }
 
-export const voiceFile = (voiceLang: string, key: string) => `/audio/voice/${VOICE_CODE[voiceLang]}/${key}.mp3`;
+export const voiceFile = (voiceLang: string, key: string) => asset(`/audio/voice/${VOICE_CODE[voiceLang]}/${key}.mp3`);
 
 /**
  * The pieces of a line to play, as [from, to) seconds: the whole line, two halves split at the word

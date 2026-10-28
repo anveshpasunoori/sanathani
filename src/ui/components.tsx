@@ -12,6 +12,7 @@ import { FOLLOW_TEXT } from '../locales/reminders';
 import { askReminderPermission, nativeReminders } from './nativeReminders';
 import { parseCivil, type CivilDate } from '../engine/tz';
 import { go } from './router';
+import { asset } from '../data/asset';
 
 export function Icon({ name }: { name: 'home' | 'calendar' | 'events' | 'pooja' | 'songs' | 'astro' | 'ask' | 'settings' }) {
   const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -87,7 +88,7 @@ export function relativeDay(from: CivilDate, to: CivilDate, lang: Lang): string 
 /** Deity picture; with `credit`, the source and licence are shown under it (required for CC BY-SA). */
 export function DeityPic({ id, className = '', credit = false }: { id: DeityImageId; className?: string; credit?: boolean }) {
   const img = DEITY_IMAGES[id];
-  const pic = <img src={img.src} alt={img.title} loading="lazy" decoding="async" className={`deity-pic ${className}`} style={{ objectPosition: img.focus }} />;
+  const pic = <img src={asset(img.src)} alt={img.title} loading="lazy" decoding="async" className={`deity-pic ${className}`} style={{ objectPosition: img.focus }} />;
   if (!credit || img.license === 'own') return pic;
   return (
     <figure className="deity-figure">
