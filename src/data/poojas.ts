@@ -846,7 +846,7 @@ export const POOJAS: Pooja[] = [
     note: 'Special anniversaries: every year, a simple Lakshmi-Narayana or family-deity pooja; on milestone anniversaries, a special archana or priest-led worship according to family custom. Shashtipoorthi (the 60th-year milestone), Bhimaratha Shanti (observed in some communities around age 70) and Sahasra Chandra Darshanam (about 1,000 full moons) are age- or tradition-specific milestones, not rituals required on every wedding anniversary — confirm their dates and procedures with a knowledgeable priest.',
   },
   {
-    id: 'purnima-amavasya', image: 'vishnu',
+    id: 'purnima-amavasya', image: 'purnima-amavasya',
     title: { en: 'Purnima & Amavasya Worship', te: 'పౌర్ణమి & అమావాస్య పూజ' }, deity: { en: 'Vishnu, Shiva, Lakshmi or your family deity', te: 'విష్ణువు, శివుడు, లక్ష్మీదేవి లేదా కులదైవం' },
     when: { en: 'Every Purnima (full moon). Common observances: Satyanarayana Swamy Vratham; Lakshmi or Vishnu worship; Shiva worship and stotra recitation; Chandra prayer in traditions that keep it; a fast or dietary vrata by personal custom; charity and sharing prasadam. Satyanarayana Vratham is a well-known family observance, but it is not compulsory on every Purnima.', te: 'ప్రతి పౌర్ణమి. సాధారణ ఆచారాలు: సత్యనారాయణ స్వామి వ్రతం; లక్ష్మీ లేదా విష్ణు పూజ; శివ పూజ, స్తోత్ర పారాయణ; ఆచారం ఉన్నవారికి చంద్ర ప్రార్థన; వ్యక్తిగత ఆచారం ప్రకారం ఉపవాసం లేదా వ్రతం; దానం, ప్రసాద వితరణ. సత్యనారాయణ వ్రతం ప్రసిద్ధమైన కుటుంబ ఆచారం, కానీ ప్రతి పౌర్ణమికీ తప్పనిసరి కాదు.' },
     next: (from, place) => [...monthly('purnima', 'Purnima')(from, place), ...monthly('amavasya', 'Amavasya')(from, place)],
