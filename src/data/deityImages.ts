@@ -26,7 +26,7 @@ export const DEITY_IMAGES: Record<DeityImageId, DeityImage> = {
   saraswati: own('/deities/saraswati.webp', 'Goddess Saraswati'),
   kartikeya: own('/deities/kartikeya.webp', 'Lord Subrahmanya'),
   rama: own('/deities/rama.webp', 'Lord Sri Rama'),
-  krishna: own('/deities/krishna.webp', 'Lord Sri Krishna'),
+  krishna: own('/deities/krishna.webp', 'Lord Sri Krishna playing the flute, with a peacock', '50% 25%'),
   andal: own('/deities/andal.webp', 'Sri Andal (Goda Devi)', '50% 22%'),
   pinda: own('/deities/pinda.webp', 'Pinda pradanam by the river', '50% 60%'),
   nithya: own('/deities/nithya.webp', 'Home pooja mandir set for nithya pooja', '50% 40%'),
