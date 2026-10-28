@@ -1866,6 +1866,23 @@ export const SONGS: Song[] = [
 ఓం గాయత్రీ నమో నమో
 శ్రీ శామ వందిత నమో నమో
 `),
+
+  // Devi bhajan (author not known), as the app owner sent it; ఆనందదాయిని, మమ్మేలు corrected and the refrain cued.
+  song('shankari-shambhavi', ['durga'], 'శంకరీ శాంభవీ పరమేశ్వరీ', 'Shankari Shambhavi Parameshwari', `
+శంకరీ శాంభవీ పరమేశ్వరీ (2)
+ఆనందదాయిని ఓంకార రూపిణి
+॥ శంకరీ ॥
+
+సకల దేవతల మూలము నువ్వే (2)
+కోరికలను తీర్చి పాపులను బాపి
+కరుణించి కాపాడి కరుణించి కాపాడి మమ్మేలు తల్లి
+॥ శంకరీ ॥
+
+సకల జీవుల చల్లగ బ్రోచే (2)
+దుష్టుల దునుమాడి శిష్టుల కాపాడి
+లోకాలా లోకాలా మమ్ము నెలకొల్పు తల్లి
+॥ శంకరీ ॥
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
