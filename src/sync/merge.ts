@@ -1,22 +1,25 @@
 // Merging this device's data with the cloud copy. Items merge one by one: the most recently
 // edited copy of each event/profile wins, deletions win over older edits (tombstones), and
 // settings follow whichever side changed them last. Device-only data (reminder delivery log,
-// cached dates, notices) never leaves the device.
+// cached dates, notices) never leaves the device. The user's own songs and poojas sync like events.
 import { upgrade } from '../data/traditions';
-import type { AppState, BirthProfile, FamilyEvent, Settings } from '../data/types';
+import type { AppState, BirthProfile, FamilyEvent, MyPooja, MySong, Settings } from '../data/types';
 
 /** The part of the app state that is stored in the cloud. */
 export interface SyncedState {
   v: 1;
   events: FamilyEvent[];
   profiles: BirthProfile[];
+  /** Absent in cloud copies saved before own songs and poojas existed. */
+  mySongs?: MySong[];
+  myPoojas?: MyPooja[];
   settings: Settings;
   settingsUpdatedAt?: string;
   tombstones: Record<string, string>;
 }
 
 export function toSynced(s: AppState): SyncedState {
-  return { v: 1, events: s.events, profiles: s.profiles, settings: s.settings, settingsUpdatedAt: s.settingsUpdatedAt, tombstones: s.tombstones ?? {} };
+  return { v: 1, events: s.events, profiles: s.profiles, mySongs: s.mySongs ?? [], myPoojas: s.myPoojas ?? [], settings: s.settings, settingsUpdatedAt: s.settingsUpdatedAt, tombstones: s.tombstones ?? {} };
 }
 
 const ts = (x?: string) => (x ? Date.parse(x) || 0 : 0);
@@ -42,6 +45,8 @@ export function mergeStates(local: SyncedState, remote: SyncedState | null): Syn
     v: 1,
     events: mergeById(local.events, remote.events, tombstones),
     profiles: mergeById(local.profiles, remote.profiles, tombstones),
+    mySongs: mergeById(local.mySongs ?? [], remote.mySongs ?? [], tombstones),
+    myPoojas: mergeById(local.myPoojas ?? [], remote.myPoojas ?? [], tombstones),
     settings: { ...(localNewer ? local.settings : remote.settings), onboarded: local.settings.onboarded || remote.settings.onboarded },
     settingsUpdatedAt: localNewer ? local.settingsUpdatedAt : remote.settingsUpdatedAt,
     tombstones,

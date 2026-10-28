@@ -99,6 +99,35 @@ export interface BirthProfile {
   updatedAt?: string;
 }
 
+/** A devotional song the user typed in themselves (kept on their device, shared only if they choose). */
+export interface MySong {
+  id: string;
+  /** Deity id as in data/songs.ts (SongDeity). */
+  deity: string;
+  title: string;
+  /** Lines; a blank line separates stanzas. */
+  text: string;
+  /** Who wrote or sings it, or where it is from. */
+  source?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** A pooja the user wrote down the way their family does it. */
+export interface MyPooja {
+  id: string;
+  title: string;
+  /** Deity id as in data/songs.ts (SongDeity), for the picture; empty for none. */
+  deity: string;
+  /** When it is done, in the user's words. */
+  when?: string;
+  samagri: string[];
+  steps: Array<{ title: string; text: string }>;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AppState {
   version: 1;
   settings: Settings;
@@ -108,6 +137,9 @@ export interface AppState {
   notices: Notice[];
   profiles: BirthProfile[];
   activeProfile?: string;
+  /** The user's own songs and poojas. */
+  mySongs?: MySong[];
+  myPoojas?: MyPooja[];
   /** Deleted event/profile ids → deletion time, so cloud sync doesn't bring them back. */
   tombstones?: Record<string, string>;
   /** When settings last changed (for sync). */

@@ -4,7 +4,7 @@ import { useSyncExternalStore } from 'react';
 import { PLACES } from './places';
 import { refreshOccurrences } from './occurrences';
 import { upgrade } from './traditions';
-import type { AppState, BirthProfile, FamilyEvent, Notice, Settings } from './types';
+import type { AppState, BirthProfile, FamilyEvent, MyPooja, MySong, Notice, Settings } from './types';
 import { formatCivil, todayIn } from '../engine/tz';
 import type { Place } from '../engine/panchang';
 
@@ -157,6 +157,21 @@ export function deleteProfile(id: string) {
     const extra = gone?.eventId ? { [`bday-${gone.eventId}`]: now } : {};
     return { ...s, profiles, activeProfile: profiles[0]?.id, tombstones: { ...s.tombstones, [id]: now, ...extra } };
   });
+}
+
+/** Adds or updates one of the user's own songs or poojas. */
+export function saveMine(kind: 'mySongs', item: MySong): void;
+export function saveMine(kind: 'myPoojas', item: MyPooja): void;
+export function saveMine(kind: 'mySongs' | 'myPoojas', item: MySong | MyPooja) {
+  setState((s) => {
+    const list = (s[kind] ?? []) as Array<MySong | MyPooja>;
+    const q = { ...item, updatedAt: new Date().toISOString() };
+    return { ...s, [kind]: list.some((x) => x.id === item.id) ? list.map((x) => (x.id === item.id ? q : x)) : [...list, q] };
+  });
+}
+
+export function deleteMine(kind: 'mySongs' | 'myPoojas', id: string) {
+  setState((s) => ({ ...s, [kind]: ((s[kind] ?? []) as Array<{ id: string }>).filter((x) => x.id !== id), tombstones: { ...s.tombstones, [id]: new Date().toISOString() } }));
 }
 
 export function updateSettings(patch: Partial<Settings>) {

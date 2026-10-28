@@ -18,6 +18,7 @@ import { POOJA_TEXT } from '../locales/pooja';
 import { NEW_YEAR_WHEN, newYearOf, poojaName, REGION_NAMES, subName } from '../locales/poojaNames';
 import { go } from './router';
 import type { Stotra } from './Stotram';
+import { MyPoojaForm, MyPoojasCard, MyPoojaView, useMyPoojas } from './Mine';
 
 type SizeKey = 'verses' | 'names' | 'vsn' | 'chaupais' | 'callResponse' | 'vedicHymn';
 export const STOTRA_LIST: Array<{ id: string; en: string; te: string; image: DeityImageId; size: Array<[SizeKey, number?]> }> = [
@@ -66,8 +67,16 @@ export function PoojasScreen({ id }: { id?: string }) {
   const { x, lang } = useText(POOJA_TEXT);
   const { title, sub } = useStotraTitle();
   const today = todayIn(settings.place.tz);
+  const mine = useMyPoojas();
   const pooja = POOJAS.find((p) => p.id === id);
   if (pooja) return <PoojaDetail pooja={pooja} />;
+  // The user's own poojas (ids start with "my-") and the form for a new one.
+  const own = mine.find((p) => p.id === id);
+  if (own) return <MyPoojaView pooja={own} back={x('allPoojas')} />;
+  if (id === 'new') return <>
+    <button className="btn ghost" onClick={() => go({ tab: 'pooja' })}>← {x('allPoojas')}</button>
+    <MyPoojaForm onDone={(p) => go({ tab: 'pooja', id: p?.id })} />
+  </>;
   return (
     <>
       <DevotionSwitch current="pooja" />
@@ -78,6 +87,7 @@ export function PoojasScreen({ id }: { id?: string }) {
       <div className="pooja-grid">
         {ORDER.map((id) => POOJAS.find((p) => p.id === id)!).filter(Boolean).map((p) => <PoojaTile key={p.id} p={p} today={today} lang={lang} />)}
       </div>
+      <MyPoojasCard />
       <Card title={x('stotrams')}>
         <ul className="stotra-list">
           {STOTRA_LIST.map((s) => (

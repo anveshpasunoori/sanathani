@@ -1,5 +1,5 @@
 import { DEFAULT_SETTINGS } from '../src/data/store';
-import type { BirthProfile, FamilyEvent } from '../src/data/types';
+import type { BirthProfile, FamilyEvent, MySong } from '../src/data/types';
 import { mergeStates, sameSynced, type SyncedState } from '../src/sync/merge';
 import { upgrade, upgradeTradition } from '../src/data/traditions';
 import { HYD } from './fixtures';
@@ -32,6 +32,19 @@ describe('cloud merge', () => {
     const m = mergeStates(phone, cloud);
     expect(m.events.map((e) => e.id)).toEqual(['b']);
     expect(m.tombstones.a).toBeDefined();
+  });
+
+  it("merges the user's own songs and poojas, including copies saved before they existed", () => {
+    const song = (id: string, updatedAt: string, title = id): MySong => ({ id, deity: 'ayyappa', title, text: 'line', createdAt: updatedAt, updatedAt });
+    const phone = state({ mySongs: [song('my-a', '2026-01-02T00:00:00Z', 'edited'), song('my-b', '2026-01-01T00:00:00Z')], tombstones: { 'my-c': '2026-02-01T00:00:00Z' } });
+    const cloud = state({ mySongs: [song('my-a', '2026-01-01T00:00:00Z'), song('my-c', '2026-01-01T00:00:00Z')] });
+    const m = mergeStates(phone, cloud);
+    expect(m.mySongs!.map((x) => x.id).sort()).toEqual(['my-a', 'my-b']);
+    expect(m.mySongs!.find((x) => x.id === 'my-a')!.title).toBe('edited');
+    // A cloud copy from an older version has no mySongs/myPoojas at all.
+    const old = mergeStates(state({}), { ...state({}), mySongs: undefined, myPoojas: undefined });
+    expect(old.mySongs).toEqual([]);
+    expect(old.myPoojas).toEqual([]);
   });
 
   it('settings follow whichever device changed them last, and never re-run onboarding', () => {

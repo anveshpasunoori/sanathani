@@ -471,3 +471,11 @@ details.note > summary { cursor: pointer; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .btn:hover, .btn:active { transform: none; }
 }
+
+/* The user's own poojas: step editor and reading view. */
+.my-step { border: 1px solid var(--line); border-radius: var(--radius-input); padding: 10px 12px; margin: 0 0 10px; display: grid; gap: 8px; }
+.my-step legend { padding: 0 4px; color: var(--muted); }
+.my-pic { display: inline-grid; place-items: center; font-size: 1.6rem; background: var(--surface); border: 1px solid var(--line); }
+.my-steps { padding-left: 22px; margin: 0; display: grid; gap: 10px; }
+.my-steps p { margin: 4px 0 0; }
+.my-samagri { padding-left: 18px; margin: 0; columns: 2; column-gap: 24px; }

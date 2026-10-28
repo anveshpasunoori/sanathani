@@ -44,7 +44,7 @@ export async function syncNow(): Promise<void> {
       const merged = mergeStates(local, remote);
       if (!sameSynced(merged, local)) {
         applying = true;
-        setState((s) => ({ ...s, events: merged.events, profiles: merged.profiles, settings: merged.settings, settingsUpdatedAt: merged.settingsUpdatedAt, tombstones: merged.tombstones }));
+        setState((s) => ({ ...s, events: merged.events, profiles: merged.profiles, mySongs: merged.mySongs, myPoojas: merged.myPoojas, settings: merged.settings, settingsUpdatedAt: merged.settingsUpdatedAt, tombstones: merged.tombstones }));
         applying = false;
         recompute();
       }
