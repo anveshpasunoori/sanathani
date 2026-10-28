@@ -50,7 +50,11 @@ export interface Pooja {
   note?: string;
   /** Where a region keeps the festival its own way (e.g. the new year), what replaces the common guide. */
   byTradition?: Partial<Record<string, RegionalGuide>>;
+  /** Two observances under one pooja (Purnima / Amavasya): a switch on the page, each replacing parts of the guide. */
+  variants?: Array<{ id: string; label: Text; guide: PoojaVariant }>;
 }
+
+export type PoojaVariant = Partial<Pick<Pooja, 'when' | 'samagri' | 'naivedyam' | 'steps' | 'short' | 'stotras' | 'note'>>;
 
 export type RegionalGuide = Partial<Pick<Pooja, 'samagri' | 'naivedyam' | 'steps' | 'short' | 'stotras' | 'note'>>;
 
@@ -763,6 +767,156 @@ export const POOJAS: Pooja[] = [
     ],
     short: { steps: [] },
     stotras: ['ganesha-ashtottaram', 'ganesha-pancharatnam', 'hanuman-chalisa'],
+  },
+  {
+    // Dates are personal: the pooja page lists the family's own birthdays (from their events) instead.
+    id: 'birthday', image: 'ganapathi',
+    title: { en: 'Birthday Pooja', te: 'పుట్టినరోజు పూజ' }, deity: { en: 'Ganapathi & your ishta devata', te: 'గణపతి & ఇష్టదేవత' },
+    when: { en: 'On the birthday — by the calendar date, or on the Janma Nakshatra day (the birth star) in the birth month, as your family keeps it. A time to thank God for another year, pray for health, wisdom and peace, and receive the blessings of parents, elders and the family deity.', te: 'పుట్టినరోజున — తేదీ ప్రకారం గానీ, పుట్టిన మాసంలో జన్మ నక్షత్రం రోజున గానీ, మీ కుటుంబ ఆచారం ప్రకారం. మరో సంవత్సరం ఇచ్చినందుకు భగవంతునికి కృతజ్ఞత, ఆరోగ్యం, జ్ఞానం, శాంతి కోసం ప్రార్థన, తల్లిదండ్రులు, పెద్దలు, కులదైవం ఆశీర్వాదం పొందే రోజు.' },
+    next: () => [],
+    samagri: [
+      { en: 'Ganapathi or chosen deity image', te: 'గణపతి లేదా ఇష్టదేవత పటం' },
+      { en: 'Clean puja cloth and a small altar', te: 'శుభ్రమైన పూజా వస్త్రం, చిన్న పీఠం' },
+      { en: 'Brass or other suitable lamp, cotton wicks and oil or ghee', te: 'ఇత్తడి లేదా తగిన దీపం, వత్తులు, నూనె లేదా నెయ్యి' },
+      { en: 'Turmeric, kumkum, sandalwood paste', te: 'పసుపు, కుంకుమ, గంధం' },
+      { en: 'Flowers, and tulasi or bilva leaves as appropriate to the deity', te: 'పూలు; దేవతను బట్టి తులసి లేదా మారేడు దళాలు' },
+      { en: 'Akshata (rice mixed with turmeric, according to custom)', te: 'అక్షతలు (ఆచారం ప్రకారం పసుపు కలిపిన బియ్యం)' },
+      { en: 'Water in a clean vessel; kalash materials if used', te: 'శుభ్రమైన పాత్రలో నీరు; కలశం పెడితే దానికి కావలసినవి' },
+      { en: 'Fruits, coconut, and a simple naivedyam', te: 'పండ్లు, కొబ్బరికాయ, సులభమైన నైవేద్యం' },
+      { en: 'Incense, camphor, and aarti plate', te: 'అగరబత్తి, కర్పూరం, హారతి పళ్ళెం' },
+      { en: 'New or clean clothing for the person being blessed', te: 'పుట్టినరోజు వారికి కొత్త లేదా శుభ్రమైన బట్టలు' },
+    ],
+    naivedyam: [{ en: 'Fruits, coconut, and a simple naivedyam your family makes', te: 'పండ్లు, కొబ్బరికాయ, మీ ఇంట్లో చేసే సులభమైన నైవేద్యం' }],
+    steps: [
+      { title: { en: 'Cleanse and prepare', te: 'శుద్ధి & సిద్ధత' }, text: 'Clean the puja area, arrange the deity\'s image, place the offerings, and light the lamp. The person celebrating the birthday may bathe and wear clean clothes.' },
+      { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Begin with a prayer to Lord Ganapathi for the smooth completion of the worship. A commonly recited mantra is "Om Gam Ganapataye Namah".', mantra: 'ఓం గం గణపతయే నమః' },
+      { title: { en: 'Sankalpam', te: 'సంకల్పం' }, kind: 'sankalpam', preeti: 'శ్రీ మహాగణాధిపతి', text: 'State the date, place, the person\'s name, and the intention to perform birthday or birth-star worship for well-being and spiritual growth. The panchangam part is filled in below for today and your place. A formal Vedic sankalpam has more calendrical and lineage details — use a version prepared for your family\'s tradition rather than improvising Sanskrit wording.' },
+      { title: { en: 'Worship the chosen deity', te: 'ఇష్టదేవత పూజ' }, text: 'Offer flowers, akshata, incense and naivedyam according to the deity\'s tradition. Recite the deity\'s namavali, ashtottaram, or a familiar stotram (see Stotrams below).' },
+      { title: { en: 'Janma Nakshatra prayer', te: 'జన్మ నక్షత్ర ప్రార్థన' }, text: 'Remember the person\'s birth star and pray for health, long life, knowledge and peace. A family may recite a suitable nakshatra prayer, or arrange a priest-led nakshatra shanti if customary. Many families also recite the Mrityunjaya mantra for health and long life.', mantra: MANTRA.mrityunjaya },
+      { title: { en: 'Naivedyam and mangalarati', te: 'నైవేద్యం & మంగళహారతి' }, text: 'Offer the prepared food, perform aarti, and conclude with a prayer of gratitude.' },
+      { title: { en: 'Receive blessings', te: 'ఆశీర్వాదం' }, text: 'Offer respects to parents and elders, distribute prasadam, and consider an act of charity or feeding others.' },
+    ],
+    short: {
+      steps: [
+        { title: { en: 'Deepam', te: 'దీపారాధన' }, text: 'After the birthday person has bathed, light the lamp and incense before Ganapathi or your family deity.' },
+        { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Fold your hands and pray that the worship goes without obstacles.', mantra: 'ఓం గం గణపతయే నమః' },
+        { title: { en: 'Prayer for the year ahead', te: 'కొత్త సంవత్సరం కోసం ప్రార్థన' }, text: 'Offer flowers and akshata, remember the person\'s birth star, and pray for health, long life, knowledge and peace.' },
+        { title: { en: 'Aarti & blessings', te: 'హారతి & ఆశీర్వాదం' }, text: 'Offer fruit or a sweet, show aarti, then bow to parents and elders for their blessings and share the prasadam.' },
+      ],
+    },
+    stotras: ['ganesha-ashtottaram', 'ganesha-pancharatnam', 'vishnu-sahasranamam', 'lalitha-sahasranamam'],
+    note: 'Birthday or Janma Nakshatra? The calendar birthday is for gratitude, family prayers and blessings; the Janma Nakshatra day is worship aligned with the birth star; a Nakshatra shanti is a more specific ritual when prescribed or customary; and an Ayushya Homam is a priest-led longevity homam, commonly done for children or at selected milestones. A nakshatra shanti or Ayushya Homam is not automatically required every birthday — it depends on your family\'s tradition and the observance.',
+  },
+  {
+    // Dates are personal: the pooja page lists the family's own wedding anniversaries instead.
+    id: 'anniversary', image: 'vishnu',
+    title: { en: 'Wedding Anniversary Pooja', te: 'వివాహ వార్షికోత్సవ పూజ' }, deity: { en: 'Lakshmi-Narayana, Uma-Maheshwara or your family deity', te: 'లక్ష్మీనారాయణులు, ఉమామహేశ్వరులు లేదా కులదైవం' },
+    when: { en: 'On the wedding anniversary — by the calendar date or the wedding thithi, as your family keeps it. A time to pray for harmony, affection and mutual respect between husband and wife, give thanks for the family\'s life together, and seek blessings for children, elders and the household.', te: 'వివాహ వార్షికోత్సవం రోజున — తేదీ ప్రకారం గానీ, వివాహ తిథి ప్రకారం గానీ, మీ కుటుంబ ఆచారం ప్రకారం. దంపతుల మధ్య సామరస్యం, ప్రేమ, పరస్పర గౌరవం కోసం ప్రార్థన, కలిసి గడిపిన జీవితానికి కృతజ్ఞత, పిల్లలు, పెద్దలు, ఇంటి క్షేమం కోసం ఆశీర్వాదం కోరే రోజు.' },
+    next: () => [],
+    samagri: [
+      { en: 'Image of Lakshmi-Narayana, Uma-Maheshwara, or the family deity', te: 'లక్ష్మీనారాయణులు, ఉమామహేశ్వరులు లేదా కులదైవం పటం' },
+      { en: 'Clean altar cloth and puja vessels', te: 'శుభ్రమైన పీఠం వస్త్రం, పూజా పాత్రలు' },
+      { en: 'Brass lamp, wicks, and oil or ghee', te: 'ఇత్తడి దీపం, వత్తులు, నూనె లేదా నెయ్యి' },
+      { en: 'Turmeric, kumkum, sandalwood paste, and akshata', te: 'పసుపు, కుంకుమ, గంధం, అక్షతలు' },
+      { en: 'Fresh flowers and deity-appropriate leaves', te: 'తాజా పూలు, దేవతకు తగిన దళాలు' },
+      { en: 'Fruits, coconut, and naivedyam', te: 'పండ్లు, కొబ్బరికాయ, నైవేద్యం' },
+      { en: 'Incense and aarti plate', te: 'అగరబత్తి, హారతి పళ్ళెం' },
+      { en: 'Two flower garlands, if the couple wishes to exchange them', te: 'దంపతులు మార్చుకోవాలనుకుంటే రెండు పూలమాలలు' },
+      { en: 'Optional: betel leaves, betel nuts, and traditional auspicious offerings', te: 'ఐచ్ఛికం: తమలపాకులు, వక్కలు, సంప్రదాయ మంగళ ద్రవ్యాలు' },
+    ],
+    naivedyam: [{ en: 'Fruits, coconut, and a naivedyam your family makes', te: 'పండ్లు, కొబ్బరికాయ, మీ ఇంట్లో చేసే నైవేద్యం' }],
+    steps: [
+      { title: { en: 'Prepare the altar', te: 'పీఠం సిద్ధం' }, text: 'Clean the worship area, arrange the chosen deity\'s image, light the lamp, and place the offerings. The couple may wear traditional or clean festive clothes.' },
+      { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Begin by invoking Lord Ganapathi.', mantra: 'ఓం గం గణపతయే నమః' },
+      { title: { en: 'Sankalpam', te: 'సంకల్పం' }, kind: 'sankalpam', preeti: 'శ్రీ లక్ష్మీనారాయణ', text: 'State the couple\'s names, the date, and the intention to offer prayers for marital harmony, health, family welfare and continued companionship. The panchangam part is filled in below for today and your place. If you use a formal Vedic sankalpam, follow your family\'s regional and priestly tradition.' },
+      { title: { en: 'Worship Lakshmi-Narayana or Uma-Maheshwara', te: 'లక్ష్మీనారాయణ / ఉమామహేశ్వర పూజ' }, text: 'Offer flowers, akshata, incense and naivedyam. Recite a familiar Vishnu or Shiva stotram, or the chosen deity\'s ashtottaram (see Stotrams below). Follow the deity\'s usual offering customs.' },
+      { title: { en: 'Couple\'s prayer', te: 'దంపతుల ప్రార్థన' }, text: 'Together, the husband and wife may offer flowers and pray for patience, trust, respect, good health, and the strength to support each other through life\'s challenges. Optionally exchange flower garlands as a personal symbolic gesture; this is not a mandatory part of a standard home pooja.' },
+      { title: { en: 'Naivedyam and mangalarati', te: 'నైవేద్యం & మంగళహారతి' }, text: 'Offer food, perform aarti, and pray for the well-being of the whole family.' },
+      { title: { en: 'Prasadam and charity', te: 'ప్రసాదం & దానం' }, text: 'Share prasadam with family members and, if you wish, make a donation or offer food to others as an expression of gratitude.' },
+    ],
+    short: {
+      steps: [
+        { title: { en: 'Deepam', te: 'దీపారాధన' }, text: 'Light the lamp and incense before Lakshmi-Narayana, Uma-Maheshwara or your family deity.' },
+        { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Fold your hands and pray that the worship goes without obstacles.', mantra: 'ఓం గం గణపతయే నమః' },
+        { title: { en: 'Couple\'s prayer', te: 'దంపతుల ప్రార్థన' }, text: 'Together, offer flowers and akshata and pray for patience, trust, respect and good health for each other and the family.' },
+        { title: { en: 'Aarti & prasadam', te: 'హారతి & ప్రసాదం' }, text: 'Offer fruit or a sweet, show aarti, and share the prasadam with the family.' },
+      ],
+    },
+    stotras: ['vishnu-sahasranamam', 'lalitha-sahasranamam', 'shiva-ashtottaram', 'lakshmi-ashtottaram'],
+    note: 'Special anniversaries: every year, a simple Lakshmi-Narayana or family-deity pooja; on milestone anniversaries, a special archana or priest-led worship according to family custom. Shashtipoorthi (the 60th-year milestone), Bhimaratha Shanti (observed in some communities around age 70) and Sahasra Chandra Darshanam (about 1,000 full moons) are age- or tradition-specific milestones, not rituals required on every wedding anniversary — confirm their dates and procedures with a knowledgeable priest.',
+  },
+  {
+    id: 'purnima-amavasya', image: 'vishnu',
+    title: { en: 'Purnima & Amavasya Worship', te: 'పౌర్ణమి & అమావాస్య పూజ' }, deity: { en: 'Vishnu, Shiva, Lakshmi or your family deity', te: 'విష్ణువు, శివుడు, లక్ష్మీదేవి లేదా కులదైవం' },
+    when: { en: 'Every Purnima (full moon). Common observances: Satyanarayana Swamy Vratham; Lakshmi or Vishnu worship; Shiva worship and stotra recitation; Chandra prayer in traditions that keep it; a fast or dietary vrata by personal custom; charity and sharing prasadam. Satyanarayana Vratham is a well-known family observance, but it is not compulsory on every Purnima.', te: 'ప్రతి పౌర్ణమి. సాధారణ ఆచారాలు: సత్యనారాయణ స్వామి వ్రతం; లక్ష్మీ లేదా విష్ణు పూజ; శివ పూజ, స్తోత్ర పారాయణ; ఆచారం ఉన్నవారికి చంద్ర ప్రార్థన; వ్యక్తిగత ఆచారం ప్రకారం ఉపవాసం లేదా వ్రతం; దానం, ప్రసాద వితరణ. సత్యనారాయణ వ్రతం ప్రసిద్ధమైన కుటుంబ ఆచారం, కానీ ప్రతి పౌర్ణమికీ తప్పనిసరి కాదు.' },
+    next: (from, place) => [...monthly('purnima', 'Purnima')(from, place), ...monthly('amavasya', 'Amavasya')(from, place)],
+    samagri: [
+      { en: 'Image of Satyanarayana Swamy, Vishnu, Shiva, or chosen deity', te: 'సత్యనారాయణ స్వామి, విష్ణు, శివ లేదా ఇష్టదేవత పటం' },
+      { en: 'Clean altar cloth and puja vessels', te: 'శుభ్రమైన పీఠం వస్త్రం, పూజా పాత్రలు' },
+      { en: 'Brass lamp, oil or ghee, and wicks', te: 'ఇత్తడి దీపం, నూనె లేదా నెయ్యి, వత్తులు' },
+      { en: 'Flowers, turmeric, kumkum, sandalwood paste, and akshata', te: 'పూలు, పసుపు, కుంకుమ, గంధం, అక్షతలు' },
+      { en: 'Fruits and coconut', te: 'పండ్లు, కొబ్బరికాయ' },
+      { en: 'Tulasi leaves for Vishnu worship, where appropriate', te: 'విష్ణు పూజకు తులసి దళాలు (తగిన చోట)' },
+      { en: 'Water vessel and kalash materials if used', te: 'నీటి పాత్ర; కలశం పెడితే దానికి కావలసినవి' },
+      { en: 'Naivedyam suited to the chosen vrata', te: 'చేసే వ్రతానికి తగిన నైవేద్యం' },
+      { en: 'Incense and aarti plate', te: 'అగరబత్తి, హారతి పళ్ళెం' },
+      { en: 'Optional: ingredients for the traditional Satyanarayana prasadam', te: 'ఐచ్ఛికం: సత్యనారాయణ ప్రసాదానికి కావలసిన సామగ్రి' },
+    ],
+    naivedyam: [{ en: 'Naivedyam suited to the chosen vrata; fruits and coconut', te: 'వ్రతానికి తగిన నైవేద్యం; పండ్లు, కొబ్బరికాయ' }],
+    steps: [
+      { title: { en: 'Preparation and sankalpam', te: 'సిద్ధత & సంకల్పం' }, kind: 'sankalpam', preeti: 'శ్రీ పరమేశ్వర', text: 'Clean the worship area, bathe if convenient, light the lamp, and state your intention to observe Purnima worship. The panchangam part of the sankalpam is filled in below for today and your place.' },
+      { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Recite "Om Gam Ganapataye Namah" or your family\'s customary opening prayer.', mantra: 'ఓం గం గణపతయే నమః' },
+      { title: { en: 'Worship the chosen deity', te: 'ఇష్టదేవత పూజ' }, text: 'Perform a simple upachara pooja with flowers, akshata, incense and naivedyam. For Satyanarayana Vratham, follow the prescribed katha and ritual sequence of your tradition — the Satyanarayana Vratham guide in this app has the full sequence.' },
+      { title: { en: 'Parayanam and prayer', te: 'పారాయణ & ప్రార్థన' }, text: 'Recite the relevant stotram, Vishnu Sahasranamam, or the Satyanarayana katha if you are observing that vrata (see Stotrams below).' },
+      { title: { en: 'Naivedyam and aarti', te: 'నైవేద్యం & హారతి' }, text: 'Offer the prepared food, perform aarti, pray for peace and well-being, and distribute prasadam.' },
+    ],
+    short: {
+      steps: [
+        { title: { en: 'Deepam', te: 'దీపారాధన' }, text: 'After bathing, light the lamp and incense before your chosen deity.' },
+        { title: { en: 'Ganapathi prayer', te: 'గణపతి ప్రార్థన' }, text: 'Fold your hands and pray that the worship goes without obstacles.', mantra: 'ఓం గం గణపతయే నమః' },
+        { title: { en: 'Offering & parayanam', te: 'సమర్పణ & పారాయణ' }, text: 'Offer flowers and akshata, and recite a stotram you know, such as Vishnu Sahasranamam.' },
+        { title: { en: 'Naivedyam & aarti', te: 'నైవేద్యం & హారతి' }, text: 'Offer fruit or naivedyam, show aarti, and share the prasadam.' },
+      ],
+    },
+    stotras: ['vishnu-sahasranamam', 'lakshmi-ashtottaram', 'shiva-ashtottaram', 'lalitha-sahasranamam'],
+    note: 'Fasting is optional unless you are following a specific vrata that prescribes it. Anyone who is pregnant, unwell, taking medication, or otherwise needs regular meals should adapt the observance safely. Purnima emphasises devotion, vrata, prayer and gratitude; ritual details depend on the vrata and regional custom.',
+    variants: [
+      { id: 'purnima', label: { en: 'Purnima (full moon)', te: 'పౌర్ణమి' }, guide: {} },
+      {
+        id: 'amavasya', label: { en: 'Amavasya (new moon)', te: 'అమావాస్య' },
+        guide: {
+          when: { en: 'Every Amavasya (new moon). It is kept differently among families: daily worship of the family deity; remembrance of and prayers for departed ancestors (Pitrus); tarpanam as prescribed by the family\'s tradition; charity, feeding others and acts of remembrance; or Shiva, Vishnu or other deity worship by custom.', te: 'ప్రతి అమావాస్య. కుటుంబాన్ని బట్టి ఆచారం మారుతుంది: కులదైవ పూజ; పితృ స్మరణ, పెద్దల కోసం ప్రార్థన; కుటుంబ సంప్రదాయం ప్రకారం తర్పణం; దానం, అన్నదానం, స్మరణ; లేదా ఆచారం ప్రకారం శివ, విష్ణు లేదా ఇతర దేవతా పూజ.' },
+          samagri: [
+            { en: 'Chosen deity image and clean altar', te: 'ఇష్టదేవత పటం, శుభ్రమైన పీఠం' },
+            { en: 'Brass lamp, wicks, and oil or ghee', te: 'ఇత్తడి దీపం, వత్తులు, నూనె లేదా నెయ్యి' },
+            { en: 'Flowers, turmeric, kumkum, and akshata as appropriate', te: 'తగినట్లు పూలు, పసుపు, కుంకుమ, అక్షతలు' },
+            { en: 'Clean water and a suitable vessel', te: 'శుభ్రమైన నీరు, తగిన పాత్ర' },
+            { en: 'Fruits or simple naivedyam', te: 'పండ్లు లేదా సులభమైన నైవేద్యం' },
+            { en: 'Incense and aarti plate', te: 'అగరబత్తి, హారతి పళ్ళెం' },
+            { en: 'Optional: items specifically prescribed by the family\'s priest for Pitru observances', te: 'ఐచ్ఛికం: పితృ కార్యాలకు మీ పురోహితులు చెప్పిన వస్తువులు' },
+            { en: 'Optional: food or donations for charitable giving', te: 'ఐచ్ఛికం: దానానికి ఆహారం లేదా విరాళం' },
+          ],
+          naivedyam: [{ en: 'Fruits or a simple naivedyam', te: 'పండ్లు లేదా సులభమైన నైవేద్యం' }],
+          steps: [
+            { title: { en: 'Clean and prepare', te: 'శుద్ధి & సిద్ధత' }, text: 'Clean the altar and arrange the deity\'s image, lamp, flowers and offerings.' },
+            { title: { en: 'Begin with prayer', te: 'ప్రార్థనతో ప్రారంభం' }, kind: 'sankalpam', preeti: 'శ్రీ పరమేశ్వర', text: 'Offer a prayer to Ganapathi or the family\'s chosen deity and state the intention to observe Amavasya. The panchangam part of the sankalpam is filled in below for today and your place.', mantra: 'ఓం గం గణపతయే నమః' },
+            { title: { en: 'Remember the ancestors', te: 'పితృ స్మరణ' }, text: 'Silently remember departed family members, express gratitude for their lives, and pray for their peace. If your family observes formal Pitru rituals, follow the prescribed procedure and guidance — this simple prayer is not the same as a formal tarpanam. The Pinda Pradanam (Shraddha) guide in this app covers the formal rite.' },
+            { title: { en: 'Perform deity worship', te: 'దేవతా పూజ' }, text: 'Offer flowers, akshata and other appropriate offerings. Recite a familiar prayer or stotram according to your family\'s tradition.' },
+            { title: { en: 'Offer naivedyam and conclude', te: 'నైవేద్యం & ముగింపు' }, text: 'Offer food, perform aarti, and conclude with a prayer for family welfare. Charity or feeding others may be included if you wish.' },
+          ],
+          short: {
+            steps: [
+              { title: { en: 'Deepam', te: 'దీపారాధన' }, text: 'Light the lamp and incense before your family deity.' },
+              { title: { en: 'Remember the ancestors', te: 'పితృ స్మరణ' }, text: 'Silently remember departed family members with gratitude and pray for their peace.' },
+              { title: { en: 'Prayer', te: 'ప్రార్థన' }, text: 'Offer flowers and akshata and recite a familiar prayer or stotram.', mantra: 'ఓం గం గణపతయే నమః' },
+              { title: { en: 'Naivedyam & aarti', te: 'నైవేద్యం & హారతి' }, text: 'Offer fruit or naivedyam, show aarti, and pray for the family\'s welfare. Give food or charity if you wish.' },
+            ],
+          },
+          stotras: ['shiva-ashtottaram', 'vishnu-sahasranamam'],
+          note: 'Pitru tarpanam has specific procedures and rules in many traditions; a simple home prayer is not the same as a formal tarpanam. Fasting on Amavasya is optional or tradition-specific. Amavasya emphasises ancestor remembrance, prayer and charity, and its rites depend especially on family and ancestral custom.',
+        },
+      },
+    ],
   },
   {
     id: 'shiva', image: 'shiva',

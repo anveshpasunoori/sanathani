@@ -62,7 +62,8 @@ describe('Tamil Nadu and Kerala festivals', () => {
   });
   it('gives every pooja upcoming dates in Tamil Nadu and Kerala', () => {
     for (const [t, place] of [['ta', CHENNAI], ['ml', KOCHI]] as const) {
-      for (const p of POOJAS) expect(p.next('2026-10-26', place, t).length, `${t} ${p.id}`).toBeGreaterThan(0);
+      // Birthday and anniversary poojas follow the family's own dates, not the calendar.
+      for (const p of POOJAS.filter((x) => !['birthday', 'anniversary'].includes(x.id))) expect(p.next('2026-10-26', place, t).length, `${t} ${p.id}`).toBeGreaterThan(0);
     }
   });
 });

@@ -28,6 +28,7 @@ export function poojaStrings(): string[] {
   };
   for (const p of POOJAS) {
     addPooja(p);
+    for (const v of p.variants ?? []) { add(v.label.en); addPooja({ ...p, ...v.guide }); }
     for (const t of TRADITIONS) if (p.byTradition?.[t.id]) addPooja(poojaForTradition(p, t.id));
   }
   for (const byRegion of Object.values(REGIONAL_CUSTOMS)) {

@@ -39,7 +39,7 @@ export const STOTRA_LIST: Array<{ id: string; en: string; te: string; image: Dei
 ];
 
 const ORDER = ['nithya', 'ganapathi', 'lakshmi', 'varalakshmi', 'shiva', 'vishnu', 'venkateswara', 'satyanarayana', 'durga', 'saraswati', 'hanuman', 'rama', 'krishna', 'thiruppavai',
-  'subrahmanya', 'ayyappa', 'lalitha', 'surya', 'navagraha', 'narasimha', 'dattatreya', 'kubera', 'ugadi', 'vehicle', 'pinda'];
+  'subrahmanya', 'ayyappa', 'lalitha', 'surya', 'navagraha', 'narasimha', 'dattatreya', 'kubera', 'ugadi', 'vehicle', 'birthday', 'anniversary', 'purnima-amavasya', 'pinda'];
 
 const STYLE_KEY = 'thithi-reminder:pooja-style';
 
@@ -144,7 +144,8 @@ function useChecklist(id: string) {
 function PoojaDetail({ pooja: common }: { pooja: Pooja }) {
   const settings = useStore((s) => s.settings);
   // Some festivals (the new year) are kept with the region's own steps and samagri.
-  const pooja = poojaForTradition(common, settings.tradition);
+  const base = poojaForTradition(common, settings.tradition);
+  const [variantId, setVariant] = useState<string>();
   const regional = !!common.byTradition?.[settings.tradition];
   const { x, lang } = useText(POOJA_TEXT);
   const { title } = useStotraTitle();
@@ -153,13 +154,16 @@ function PoojaDetail({ pooja: common }: { pooja: Pooja }) {
   const [english, setEnglish] = useState(false);
   const { t, translated } = usePoojaText(lang, english);
   const loc = LOCALE[lang];
-  const name = poojaName(pooja, lang, settings.tradition);
+  const name = poojaName(base, lang, settings.tradition);
   const today = todayIn(settings.place.tz);
   const [tab, setTab] = useState<'steps' | 'samagri' | 'stotras'>('steps');
   const [style, setStyleState] = useState<'short' | 'detailed'>(() => { try { return localStorage.getItem(STYLE_KEY) === 'short' ? 'short' : 'detailed'; } catch { return 'detailed'; } });
   const setStyle = (v: 'short' | 'detailed') => { setStyleState(v); try { localStorage.setItem(STYLE_KEY, v); } catch { /* ignore */ } };
-  const [checked, setChecked] = useChecklist(regional ? `${pooja.id}:${settings.tradition}` : pooja.id);
-  const dates = useMemo(() => { try { return [...pooja.next(today, settings.place, settings.tradition)].sort((a, b) => a.date.localeCompare(b.date)); } catch { return []; } }, [pooja, today, settings.place, settings.tradition]);
+  const dates = useMemo(() => { try { return [...base.next(today, settings.place, settings.tradition)].sort((a, b) => a.date.localeCompare(b.date)); } catch { return []; } }, [base, today, settings.place, settings.tradition]);
+  // Purnima / Amavasya: the one whose day comes first is shown, until the reader switches.
+  const variant = common.variants && (common.variants.find((v) => v.id === variantId) ?? common.variants.find((v) => dates[0]?.label.toLowerCase() === v.id) ?? common.variants[0]);
+  const pooja = variant ? { ...base, ...variant.guide } : base;
+  const [checked, setChecked] = useChecklist([pooja.id, regional && settings.tradition, variant?.id].filter(Boolean).join(':'));
   const done = pooja.samagri.filter((_, i) => checked[i]).length;
   const { x: f } = useText(FOLLOW_TEXT);
   const [shared, setShared] = useState<'shared' | 'copied' | 'failed'>();
@@ -178,6 +182,11 @@ function PoojaDetail({ pooja: common }: { pooja: Pooja }) {
   return (
     <>
       <button className="btn ghost" onClick={() => go({ tab: 'pooja' })}>← {x('allPoojas')}</button>
+      {common.variants && (
+        <div className="segmented" role="group" aria-label={name.title}>
+          {common.variants.map((v) => <button key={v.id} aria-pressed={v === variant} onClick={() => setVariant(v.id)}>{t(v.label.en, v.label.te)}</button>)}
+        </div>
+      )}
       <Card className="hero">
         <div className="pooja-hero">
           <DeityPic id={poojaImage(pooja, settings.tradition)} className="hero-pic" credit />
@@ -197,6 +206,8 @@ function PoojaDetail({ pooja: common }: { pooja: Pooja }) {
           <button className="btn primary" style={{ marginBottom: 8 }} onClick={() => go({ tab: 'muhurtam', activity: pooja.action!.activity })}>🪔 {t(pooja.action.label.en, pooja.action.label.te)}</button>
         )}
         {pooja.id === 'pinda' && <FamilyShraddha />}
+        {pooja.id === 'birthday' && <FamilyDays category="birthday" title="familyBirthdays" empty="familyBirthdaysEmpty" />}
+        {pooja.id === 'anniversary' && <FamilyDays category="marriage" title="familyAnniversaries" empty="familyAnniversariesEmpty" />}
         {dates.length > 0 && (
           <div className="row">
             <FollowButton follow={`pooja:${pooja.id}`} />
@@ -419,6 +430,33 @@ function FamilyShraddha() {
         </ul>
       ) : (
         <p style={{ margin: '4px 0 0' }}>{x('familyShraddhaEmpty')}</p>
+      )}
+    </div>
+  );
+}
+
+/** The family's coming birthdays or wedding anniversaries (by thithi or date, as each event is kept), for those poojas. */
+function FamilyDays({ category, title, empty }: { category: 'birthday' | 'marriage'; title: 'familyBirthdays' | 'familyAnniversaries'; empty: 'familyBirthdaysEmpty' | 'familyAnniversariesEmpty' }) {
+  const { x, lang } = useText(POOJA_TEXT);
+  const events = useStore((s) => s.events);
+  const settings = useStore((s) => s.settings);
+  const today = todayIn(settings.place.tz);
+  const list = useMemo(() => upcoming(events.filter((e) => e.category === category), settings, today, 400), [events, settings, today, category]);
+  const loc = LOCALE[lang];
+  return (
+    <div className="note info small" style={{ marginBottom: 8 }}>
+      <strong>{x(title)}</strong>
+      {list.length ? (
+        <ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>
+          {list.slice(0, 6).map((o) => (
+            <li key={o.event.id + o.date}>
+              <button className="linklike" onClick={() => go({ tab: 'events', id: o.event.id })}>{o.event.personName}</button>
+              {' — '}{formatCivil(o.date, loc, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · {relativeDay(today, o.date, lang)}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style={{ margin: '4px 0 0' }}>{x(empty)}</p>
       )}
     </div>
   );

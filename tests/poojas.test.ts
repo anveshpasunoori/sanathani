@@ -9,9 +9,12 @@ import { weekdayOf } from '../src/engine/tz';
 import { HYD, NJ } from './fixtures';
 import { STOTRA_LIST } from '../src/ui/Poojas';
 
+const PERSONAL = ['birthday', 'anniversary'];
+
 describe('pooja dates', () => {
   it('every pooja has upcoming dates in India and the US', () => {
-    for (const place of [HYD, NJ]) for (const p of POOJAS) {
+    // Birthday and anniversary poojas follow the family's own dates (shown from their events), not the calendar.
+    for (const place of [HYD, NJ]) for (const p of POOJAS.filter((x) => !PERSONAL.includes(x.id))) {
       const d = p.next('2026-10-24', place);
       expect(d.length).toBeGreaterThan(0);
       for (const x of d) expect(x.date >= '2026-10-24').toBe(true);
@@ -95,10 +98,10 @@ describe('new poojas', () => {
 
 describe('all deity poojas', () => {
   it('has 20 poojas, each with a picture on disk, upcoming dates, and both short and detailed styles', () => {
-    expect(POOJAS).toHaveLength(25);
+    expect(POOJAS).toHaveLength(28);
     for (const p of POOJAS) {
       expect(existsSync(`public${DEITY_IMAGES[p.image].src}`)).toBe(true);
-      expect(p.next('2026-10-25', HYD, 'te').length).toBeGreaterThan(0);
+      if (!PERSONAL.includes(p.id)) expect(p.next('2026-10-25', HYD, 'te').length).toBeGreaterThan(0);
       const short = shortSteps(p);
       expect(short.length).toBeGreaterThan(1);
       expect(short.length).toBeLessThan(p.steps.length);

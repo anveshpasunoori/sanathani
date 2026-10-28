@@ -33,7 +33,10 @@ describe('detailed poojas', () => {
       expect(sk.length, p.id).toBe(1);
       expect(sk[0].preeti, p.id).toBeTruthy();
       const withWords = p.steps.filter((s) => s.mantra || s.kind).length;
-      expect(withWords / p.steps.length, p.id).toBeGreaterThan(['vehicle', 'satyanarayana', 'ugadi', 'pinda'].includes(p.id) ? 0.4 : 0.6);
+      // The family-occasion guides leave the words to each family's tradition, apart from the opening prayer and sankalpam.
+      const min = ['birthday', 'anniversary', 'purnima-amavasya'].includes(p.id) ? 0.25 : ['vehicle', 'satyanarayana', 'ugadi', 'pinda'].includes(p.id) ? 0.4 : 0.6;
+      expect(withWords / p.steps.length, p.id).toBeGreaterThan(min);
+      for (const v of p.variants ?? []) if (v.guide.steps) expect(v.guide.steps.filter((s) => s.kind === 'sankalpam').length, `${p.id} ${v.id}`).toBe(1);
     }
   });
   it('full poojas have the complete shodashopachara sequence', () => {
