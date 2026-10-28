@@ -3,7 +3,7 @@ import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
   it('every booklet song is under Ayyappa, with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(67);
+    expect(SONGS).toHaveLength(68);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
     // Songs added since the Ayyappa booklet are listed under their own deity.
     const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha', 'vatapi-ganapatim', 'govinda-nama-sankeertanam', 'srinivasa-govinda', 'lingashtakam', 'bilvashtakam', 'radhe-govinda-brindavana-chandra', 'jaya-janardhana-krishna', 'achyutashtakam', 'yadukula-bhushana', 'nacho-nacho-nandalala', 'raghukula-tilaka-rara', 'ramudante-ramude', 'vel-vel-velayya', 'palanimalai-vasuda', 'umamaheshwara-kumaraguruve', 'muruga-muruganayya', 'vel-muruga-mam-pahi', 'shanmukhanatha-palayamam', 'lakshmi-varada-cheeryala', 'amba-parameshwari', 'saraswati-he-jagajjanani', 'shankari-shambhavi'];
