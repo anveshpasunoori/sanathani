@@ -75,7 +75,7 @@ What is left before the App Store / Play Store release, in suggested order. Tick
 - [ ] Content rights: song recordings, the Ayyappa picture, any modern songs' lyrics.
 - [ ] Supabase: run `0002_security.sql`, add the app redirect URL, turn on CAPTCHA.
 - [ ] Home-screen widget (2026-10-27): data, bridge and native code written; needs Xcode (add the widget target + App Group) and Android Studio to build and test — see `docs/widget.md`.
-- [ ] Local Supabase for testing (planned, not started): `brew install supabase/tap/supabase`, `supabase init`, `supabase start` (Docker Desktop running), put the printed URL and anon key in `.env.local`. Login codes arrive in the local inbox at http://127.0.0.1:54324; Google sign-in needs OAuth credentials. Then the "login page first" gate (paused 2026-10-26).
+- [ ] Local Supabase for testing (planned, not started): `brew install supabase/tap/supabase`, `supabase init`, `supabase start` (Docker Desktop running), put the printed URL and anon key in `.env.local`. Login codes arrive in the local inbox at http://127.0.0.1:54324; Google sign-in needs OAuth credentials. Sign-in stays optional: the app never requires an account (decided 2026-10-28; the earlier "login page first" idea is dropped).
 - [ ] Web host security headers, domain, `VITE_SITE_URL`.
 - [ ] Install Xcode and Android Studio; first test builds on real phones.
 - [ ] Store listings: screenshots, descriptions, content rating.
