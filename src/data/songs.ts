@@ -1554,6 +1554,23 @@ export const SONGS: Song[] = [
 మాకు నొసగుమా మణిమయహార
 ॥ యదుకుల ॥
 `),
+
+  // Nama bhajan (author not known), as the app owner sent it; the Hindi words written as sung —
+  // "గుంగురూభజే" → "ఘుంఘురూ బాజే" (the anklet bells ring), "మురళీభజే" → "మురళీ బాజే" (the flute plays).
+  song('nacho-nacho-nandalala', ['krishna'], 'నాచో నాచో నందలాలా', 'Nacho Nacho Nandalala', `
+నాచో నాచో నాచో నందలాలా
+నందలాలా నందలాలా (2)
+
+నరహరి రూపా నారాయణా
+నారాయణ హరి నారాయణ
+నారాయణ శ్రీమన్నారాయణ
+॥ నందలాలా నందలాలా ॥
+
+ఝుమ్ ఝుమ్ పాయల్ ఘుంఘురూ బాజే (2)
+ఘుంఘురూ బాజే సాయి మురళీ బాజే
+ఘుంఘురూ బాజే హరి మురళీ బాజే
+॥ నందలాలా నందలాలా ॥
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
