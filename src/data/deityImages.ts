@@ -39,7 +39,7 @@ export const DEITY_IMAGES: Record<DeityImageId, DeityImage> = {
   narasimha: own('/deities/narasimha.webp', 'Lord Narasimha'),
   dattatreya: own('/deities/dattatreya.webp', 'Lord Dattatreya'),
   kubera: own('/deities/kubera.webp', 'Lord Kubera'),
-  vehicle: own('/deities/vehicle.webp', 'Vehicle pooja', '50% 50%'),
+  vehicle: own('/deities/vehicle.webp', 'A family offering harathi to a decorated bullock cart at sunrise', '45% 62%'),
   vishu: own('/deities/vishu.webp', 'Vishu kani', '45% 50%'),
   puthandu: own('/deities/puthandu.webp', 'Puthandu kani', '50% 60%'),
   'ugadi-kn': own('/deities/ugadi-kn.webp', 'Ugadi pooja', '50% 60%'),
