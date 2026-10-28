@@ -1104,6 +1104,26 @@ export const SONGS: Song[] = [
 జై గణేశ పాహిమాం శ్రీ గణేశ రక్షమాం
 జై గణేశ రక్షమాం జై గణేశ పాహిమాం
 `),
+
+  // Bhajan sent as text by the app owner (author unknown); "గణేష" → "గణేశ", split words joined ("మో సేము" → "మోసేము"),
+  // and the refrain shown once in full, then as "॥ … ॥" like the booklet songs.
+  song('vakratunda-mahakaya-om-maha-ganapathi', ['ganapathi'], 'వక్రతుండ మహాకాయ ఓం మహా గణపతి', 'Vakratunda Mahakaya Om Maha Ganapathi', `
+వక్రతుండ మహాకాయ ఓం మహా గణపతి (2)
+దయ రాదా నీకు ఇంకా ఓ స్వామి దారిచూపు మాకు కొంత
+జై గణేశ జై గణేశ జై గణేశ దేవా (2)
+
+పామరులను మేమంతా పాలించుము భగవంత (2)
+పాడేము భక్తకోటి ఓ స్వామి నొసగుమయ్య మాకు ముక్తి
+॥ జై గణేశ ॥
+
+పల్లకి మోసేము సేవలెన్నో చేసేము
+చేసేము నీ భజనలు ఓ స్వామి అందుకో మా పూజలు
+॥ జై గణేశ ॥
+
+సర్వలోక వందిత సర్వలోక పూజిత
+సర్వదేవ శాస్త్ర రూప ఓ స్వామి ఓంకార శ్రీకారా
+॥ జై గణేశ ॥
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
