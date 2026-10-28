@@ -1528,6 +1528,32 @@ export const SONGS: Song[] = [
 వృత్తతః సుందరం కర్తృవిశ్వంభరః
 తస్య వశ్యో హరిర్జాయతే సత్వరమ్ ॥
 `),
+
+  // Krishna bhajan (author not known) with the traditional "వసుదేవసుతం దేవం" shloka as its saaki, as the app
+  // owner sent it; దేవకీ, చాణూర, మణిమయహార corrected and the refrain cued as "॥ యదుకుల ॥".
+  song('yadukula-bhushana', ['krishna'], 'యదుకుల భూషణ యశోద నందన', 'Yadukula Bhushana Yashoda Nandana', `
+శ్లోకం
+వసుదేవసుతం దేవం
+కంస చాణూర మర్దనం
+దేవకీ పరమానందం
+కృష్ణం వందే జగద్గురుం (2)
+
+పల్లవి
+యదుకుల భూషణ యశోద నందన
+గోకుల నందన దయగనవా
+
+గోపాల నీ మురళి గానం
+మనసున కలతను తెంచెను
+గోవిందా నీ పదముల ధ్యానం
+పరమ పావనం ఎంతో పుణ్యం
+॥ యదుకుల ॥
+
+మోహన రూపా మాధవ కేశవ
+మురహర శౌరి మొర వినవోయి
+కనులారా నీ దరిశన భాగ్యం
+మాకు నొసగుమా మణిమయహార
+॥ యదుకుల ॥
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
