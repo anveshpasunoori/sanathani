@@ -3,10 +3,10 @@ import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
   it('every booklet song is under Ayyappa, with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(46);
+    expect(SONGS).toHaveLength(47);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
     // Songs added since the Ayyappa booklet are listed under their own deity.
-    const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha', 'vatapi-ganapatim'];
+    const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha', 'vatapi-ganapatim', 'govinda-nama-sankeertanam'];
     for (const s of SONGS) {
       if (!added.includes(s.id)) expect(s.deities).toContain('ayyappa');
       expect(s.title.te.length).toBeGreaterThan(2);
@@ -18,7 +18,7 @@ describe('songs', () => {
   });
   it('Hanuman and Venkateswara songs are also listed under those deities', () => {
     expect(songsFor('hanuman').map((s) => s.id)).toEqual(['ati-balavanta-hanumanta', 'emaya-dora-varala-anjani']);
-    expect(songsFor('venkateswara').map((s) => s.id)).toEqual(['adi-shesha-ananta-shayana']);
+    expect(songsFor('venkateswara').map((s) => s.id)).toEqual(['adi-shesha-ananta-shayana', 'govinda-nama-sankeertanam']);
   });
   it('text is clean: no PDF splits, watermark or booklet footer', () => {
     const all = SONGS.map((s) => s.title.te + '\n' + s.text).join('\n');

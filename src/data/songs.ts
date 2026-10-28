@@ -1187,6 +1187,28 @@ export const SONGS: Song[] = [
 హంసధ్వని భూషిత హేరంబం
 ॥ వాతాపి గణపతిం ॥
 `),
+
+  // Traditional Govinda nama sankeertana (no known author), as the app owner sent it; spellings corrected
+  // (వేంకటరమణ, సంకటహరణ, దీనదయాళో, షణ్ముఖనాథా) and the refrain cued after each verse.
+  song('govinda-nama-sankeertanam', ['venkateswara'], 'గోవింద నామ సంకీర్తనం', 'Govinda Nama Sankeertanam', `
+గోవింద నామ సంకీర్తనం గోవిందా గోవిందా
+
+శ్రీనివాస గోవిందా శ్రీ వేంకటేశా గోవిందా
+హరి నారాయణ గోవింద జయ నారాయణ గోవింద
+॥ గోవిందా గోవిందా ॥
+
+వేంకటరమణ గోవిందా సంకటహరణ గోవిందా
+దీన రక్షక గోవిందా దీన పాలక గోవిందా
+॥ గోవిందా గోవిందా ॥
+
+దీనజన ప్రియ గోవిందా దీనదయాళో గోవిందా
+మూషిక వాహన గోవిందా మోదకహస్త గోవిందా
+॥ గోవిందా గోవిందా ॥
+
+శంభు కుమార గోవిందా షణ్ముఖనాథా గోవిందా
+హరిహరపుత్ర గోవిందా అయ్యప్ప దేవా గోవిందా
+॥ గోవిందా గోవిందా ॥
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
