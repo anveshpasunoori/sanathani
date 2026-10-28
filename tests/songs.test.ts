@@ -3,18 +3,18 @@ import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
   it('every booklet song is under Ayyappa, with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(44);
+    expect(SONGS).toHaveLength(45);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
     // Songs added since the Ayyappa booklet are listed under their own deity.
-    const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi'];
+    const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha'];
     for (const s of SONGS) {
       if (!added.includes(s.id)) expect(s.deities).toContain('ayyappa');
       expect(s.title.te.length).toBeGreaterThan(2);
       expect(s.text.split('\n').length).toBeGreaterThan(3);
     }
   });
-  it('Ganapathi has its two bhajans', () => {
-    expect(songsFor('ganapathi').map((s) => s.id)).toEqual(['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi']);
+  it('Ganapathi has its bhajans', () => {
+    expect(songsFor('ganapathi').map((s) => s.id)).toEqual(['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha']);
   });
   it('Hanuman and Venkateswara songs are also listed under those deities', () => {
     expect(songsFor('hanuman').map((s) => s.id)).toEqual(['ati-balavanta-hanumanta', 'emaya-dora-varala-anjani']);
