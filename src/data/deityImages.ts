@@ -30,7 +30,7 @@ export const DEITY_IMAGES: Record<DeityImageId, DeityImage> = {
   andal: own('/deities/andal.webp', 'Sri Andal (Goda Devi)', '50% 22%'),
   pinda: own('/deities/pinda.webp', 'Pinda pradanam by the river', '50% 60%'),
   nithya: own('/deities/nithya.webp', 'Home pooja mandir set for nithya pooja', '50% 40%'),
-  birthday: own('/deities/birthday.webp', 'A mother blessing her son with tilak on his birthday at the home shrine', '45% 35%'),
+  birthday: own('/deities/birthday.webp', 'A family lighting lamps together before the home shrine', '50% 55%'),
   'purnima-amavasya': own('/deities/purnima-amavasya.webp', 'Goddess Lakshmi on a lotus before the full moon and its phases', '50% 35%'),
   varalakshmi: own('/deities/varalakshmi.webp', 'Sri Varalakshmi vratham mandapam', '50% 30%'),
   surya: own('/deities/surya.webp', 'Lord Surya'),
