@@ -16,7 +16,7 @@ Accounts are built in but switched off until the app knows your Supabase project
 1. **Authentication → Providers → Email**: make sure it is enabled.
 2. **Authentication → Email Templates → Magic Link**: make sure the template includes `{{ .Token }}`
    so the email shows the 6-digit code (the link works too). For example:
-   `Your Sanathani code is {{ .Token }}` followed by the default link.
+   `Your Nitya code is {{ .Token }}` followed by the default link.
 3. The built-in mailer is rate-limited (a few emails per hour) — fine for testing. For your family,
    add an SMTP provider under **Project Settings → Authentication → SMTP** (e.g. Resend, Brevo, SES).
 
@@ -29,7 +29,7 @@ Accounts are built in but switched off until the app knows your Supabase project
 **Authentication → URL Configuration**:
 - *Site URL*: where the app is hosted (e.g. `https://thithi.example.com`).
 - *Redirect URLs*: add the same, plus `http://localhost:5173` for development.
-- For the iPhone and Android apps, also add `com.anveshpasunoori.sanathani://auth-callback` (sign-in opens in the phone's browser and returns to the app through this link).
+- For the iPhone and Android apps, also add `com.anveshpasunoori.nitya://auth-callback` (sign-in opens in the phone's browser and returns to the app through this link).
 
 ## 6. Connect the app
 1. **Project Settings → API**: copy the *Project URL* and the *anon public* key.

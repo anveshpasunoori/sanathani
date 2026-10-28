@@ -1,4 +1,4 @@
-package com.anveshpasunoori.sanathani;
+package com.anveshpasunoori.nitya;
 
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;

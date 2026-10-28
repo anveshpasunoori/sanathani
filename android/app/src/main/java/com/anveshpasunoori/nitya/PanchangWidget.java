@@ -1,4 +1,4 @@
-package com.anveshpasunoori.sanathani;
+package com.anveshpasunoori.nitya;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -63,7 +63,7 @@ public class PanchangWidget extends AppWidgetProvider {
             if (note != null) views.setTextViewText(R.id.widget_note, note);
         } catch (Exception e) {
             // No data yet (the app hasn't been opened since install) or it has run out: ask to open the app.
-            views.setTextViewText(R.id.widget_heading, "Sanathani");
+            views.setTextViewText(R.id.widget_heading, "Nitya");
             views.setTextViewText(R.id.widget_month, "");
             views.setTextViewText(R.id.widget_thithi, context.getString(R.string.widget_open_app));
             views.setTextViewText(R.id.widget_nakshatra, "");

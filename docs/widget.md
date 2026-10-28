@@ -14,7 +14,7 @@ Already in the projects:
 ## Android (needs Android Studio)
 1. Install Android Studio, open the `android` folder, let Gradle sync.
 2. `npm run build && npx cap sync android`, then Run on a phone or emulator.
-3. Open the app once, then long-press the home screen → Widgets → Sanathani → "Today's thithi…".
+3. Open the app once, then long-press the home screen → Widgets → Nitya → "Today's thithi…".
 
 ## iOS (needs Xcode — App Store)
 1. `sudo xcode-select -s /Applications/Xcode.app` (once, after installing Xcode).
@@ -24,5 +24,5 @@ Already in the projects:
 4. Delete the Swift files Xcode generated in the new PanchangWidget group and add
    `ios/App/PanchangWidget/PanchangWidget.swift` to the **PanchangWidget** target.
 5. Signing & Capabilities → **+ Capability → App Groups** on **both** the App and PanchangWidget targets,
-   with the group `group.com.anveshpasunoori.sanathani` (it must match `WidgetPlugin.swift`).
-6. Run the app once, then add the widget from the home screen (long-press → + → Sanathani).
+   with the group `group.com.anveshpasunoori.nitya` (it must match `WidgetPlugin.swift`).
+6. Run the app once, then add the widget from the home screen (long-press → + → Nitya).

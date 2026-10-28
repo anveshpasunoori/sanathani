@@ -7,15 +7,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Sanathani</string>
+        <string>Nitya</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.anveshpasunoori.sanathani</string>
+			<string>com.anveshpasunoori.nitya</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.anveshpasunoori.sanathani</string>
+				<string>com.anveshpasunoori.nitya</string>
 			</array>
 		</dict>
 	</array>

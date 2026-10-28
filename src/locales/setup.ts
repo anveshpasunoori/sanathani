@@ -6,7 +6,7 @@ import type { TraditionId } from '../data/types';
 
 const en = {
   welcome: 'Welcome',
-  intro: "Sanathani remembers your family's birthdays, anniversaries and Shraddha dates by the Hindu calendar — and reminds you every year.",
+  intro: "Nitya remembers your family's birthdays, anniversaries and Shraddha dates by the Hindu calendar — and reminds you every year.",
   chooseLang: 'Choose your language',
   haveAccount: 'Already have an account? Sign in to restore your data',
   traditionTitle: 'Your Panchangam tradition',
@@ -191,7 +191,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   bn: {
     welcome: 'স্বাগতম',
-    intro: 'Sanathani হিন্দু পঞ্জিকা অনুযায়ী আপনার পরিবারের জন্মদিন, বার্ষিকী ও শ্রাদ্ধের তারিখ মনে রাখে — আর প্রতি বছর মনে করিয়ে দেয়।',
+    intro: 'Nitya হিন্দু পঞ্জিকা অনুযায়ী আপনার পরিবারের জন্মদিন, বার্ষিকী ও শ্রাদ্ধের তারিখ মনে রাখে — আর প্রতি বছর মনে করিয়ে দেয়।',
     chooseLang: 'আপনার ভাষা বেছে নিন',
     haveAccount: 'আগে থেকেই অ্যাকাউন্ট আছে? তথ্য ফিরিয়ে আনতে সাইন ইন করুন',
     traditionTitle: 'আপনার পঞ্জিকার প্রথা',
@@ -217,7 +217,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   gu: {
     welcome: 'સ્વાગત છે',
-    intro: 'Sanathani હિન્દુ પંચાંગ મુજબ તમારા પરિવારના જન્મદિવસ, વર્ષગાંઠ અને શ્રાદ્ધની તારીખો યાદ રાખે છે — અને દર વર્ષે યાદ અપાવે છે.',
+    intro: 'Nitya હિન્દુ પંચાંગ મુજબ તમારા પરિવારના જન્મદિવસ, વર્ષગાંઠ અને શ્રાદ્ધની તારીખો યાદ રાખે છે — અને દર વર્ષે યાદ અપાવે છે.',
     chooseLang: 'તમારી ભાષા પસંદ કરો',
     haveAccount: 'પહેલેથી ખાતું છે? તમારો ડેટા પાછો લાવવા સાઇન ઇન કરો',
     traditionTitle: 'તમારી પંચાંગ પરંપરા',
@@ -243,7 +243,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   pa: {
     welcome: 'ਜੀ ਆਇਆਂ ਨੂੰ',
-    intro: 'Sanathani ਹਿੰਦੂ ਪੰਚਾਂਗ ਅਨੁਸਾਰ ਤੁਹਾਡੇ ਪਰਿਵਾਰ ਦੇ ਜਨਮਦਿਨ, ਵਰ੍ਹੇਗੰਢਾਂ ਅਤੇ ਸ਼ਰਾਧ ਦੀਆਂ ਤਾਰੀਖਾਂ ਯਾਦ ਰੱਖਦਾ ਹੈ — ਅਤੇ ਹਰ ਸਾਲ ਯਾਦ ਕਰਾਉਂਦਾ ਹੈ।',
+    intro: 'Nitya ਹਿੰਦੂ ਪੰਚਾਂਗ ਅਨੁਸਾਰ ਤੁਹਾਡੇ ਪਰਿਵਾਰ ਦੇ ਜਨਮਦਿਨ, ਵਰ੍ਹੇਗੰਢਾਂ ਅਤੇ ਸ਼ਰਾਧ ਦੀਆਂ ਤਾਰੀਖਾਂ ਯਾਦ ਰੱਖਦਾ ਹੈ — ਅਤੇ ਹਰ ਸਾਲ ਯਾਦ ਕਰਾਉਂਦਾ ਹੈ।',
     chooseLang: 'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',
     haveAccount: 'ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ? ਆਪਣਾ ਡਾਟਾ ਵਾਪਸ ਲਿਆਉਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ',
     traditionTitle: 'ਤੁਹਾਡੀ ਪੰਚਾਂਗ ਰਵਾਇਤ',
@@ -269,7 +269,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   raj: {
     welcome: 'पधारो सा',
-    intro: 'Sanathani हिंदू पंचांग मुजब थांरै परिवार रा जनमदिन, बरसगांठ अर सराध री तारीखां याद राखै — अर हर बरस याद दिरावै।',
+    intro: 'Nitya हिंदू पंचांग मुजब थांरै परिवार रा जनमदिन, बरसगांठ अर सराध री तारीखां याद राखै — अर हर बरस याद दिरावै।',
     chooseLang: 'आपरी भासा चुणो',
     haveAccount: 'पैलां सूं खातो है? आपरो डेटा पाछो लावण खातर साइन इन करो',
     traditionTitle: 'थांरी पंचांग परंपरा',
@@ -295,7 +295,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   or: {
     welcome: 'ସ୍ୱାଗତ',
-    intro: 'Sanathani ହିନ୍ଦୁ ପାଞ୍ଜି ଅନୁସାରେ ଆପଣଙ୍କ ପରିବାରର ଜନ୍ମଦିନ, ବାର୍ଷିକୀ ଓ ଶ୍ରାଦ୍ଧ ତାରିଖ ମନେ ରଖେ — ଏବଂ ପ୍ରତି ବର୍ଷ ମନେ ପକାଏ।',
+    intro: 'Nitya ହିନ୍ଦୁ ପାଞ୍ଜି ଅନୁସାରେ ଆପଣଙ୍କ ପରିବାରର ଜନ୍ମଦିନ, ବାର୍ଷିକୀ ଓ ଶ୍ରାଦ୍ଧ ତାରିଖ ମନେ ରଖେ — ଏବଂ ପ୍ରତି ବର୍ଷ ମନେ ପକାଏ।',
     chooseLang: 'ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ',
     haveAccount: 'ଆଗରୁ ଆକାଉଣ୍ଟ ଅଛି? ତଥ୍ୟ ଫେରାଇବାକୁ ସାଇନ ଇନ କରନ୍ତୁ',
     traditionTitle: 'ଆପଣଙ୍କ ପାଞ୍ଜି ପରମ୍ପରା',
@@ -321,7 +321,7 @@ export const SETUP_TEXT: ScreenText<keyof typeof en> = {
   },
   bho: {
     welcome: 'स्वागत बा',
-    intro: 'Sanathani हिंदू पतरा के हिसाब से रउरा परिवार के जनमदिन, बरसी आ सराध के तारीख याद राखेला — आ हर साल याद दिलावेला।',
+    intro: 'Nitya हिंदू पतरा के हिसाब से रउरा परिवार के जनमदिन, बरसी आ सराध के तारीख याद राखेला — आ हर साल याद दिलावेला।',
     chooseLang: 'आपन भासा चुनीं',
     haveAccount: 'पहिले से खाता बा? आपन डेटा वापस ले आवे खातिर साइन इन करीं',
     traditionTitle: 'रउरा पतरा के परंपरा',

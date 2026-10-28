@@ -27,7 +27,7 @@ function csp(supabaseUrl: string | undefined): Plugin {
 }
 
 // Search engines and link previews need full addresses. Once the site has a domain, set VITE_SITE_URL
-// (e.g. https://sanathani.app) and the build adds the canonical link, full share-image URLs,
+// (e.g. https://nitya.app) and the build adds the canonical link, full share-image URLs,
 // robots.txt with the sitemap, and sitemap.xml.
 function seo(siteUrl: string | undefined): Plugin {
   const site = siteUrl?.replace(/\/+$/, '');
@@ -49,7 +49,7 @@ function seo(siteUrl: string | undefined): Plugin {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    // The web build for GitHub Pages lives under /sanathani/ (set by the workflow); the phone apps use /.
+    // The web build for GitHub Pages lives under /nitya/ (set by the workflow); the phone apps use /.
     base: process.env.BASE_PATH ?? '/',
     plugins: [react(), csp(env.VITE_SUPABASE_URL), seo(env.VITE_SITE_URL)],
     test: { globals: true, environment: 'node', testTimeout: 30000 },

@@ -1,4 +1,4 @@
-package com.anveshpasunoori.sanathani;
+package com.anveshpasunoori.nitya;
 
 import android.content.Context;
 import com.getcapacitor.JSObject;
@@ -11,9 +11,9 @@ import com.getcapacitor.annotation.CapacitorPlugin;
  * Receives the next two weeks of Panchang from the app (src/ui/widgetBridge.ts), keeps it for the
  * home-screen widget and redraws the widget.
  */
-@CapacitorPlugin(name = "SanathaniWidget")
+@CapacitorPlugin(name = "NityaWidget")
 public class WidgetPlugin extends Plugin {
-    static final String PREFS = "sanathani_widget";
+    static final String PREFS = "nitya_widget";
     static final String KEY = "json";
 
     @PluginMethod

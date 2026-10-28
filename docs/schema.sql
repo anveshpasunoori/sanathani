@@ -1,4 +1,4 @@
--- Sanathani — PostgreSQL / Supabase schema for the sync stage.
+-- Nitya — PostgreSQL / Supabase schema for the sync stage.
 -- The v0.1 app stores the same shapes locally (src/data/types.ts).
 
 create extension if not exists pgcrypto;

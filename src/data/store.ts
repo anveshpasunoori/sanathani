@@ -17,7 +17,8 @@ function defaultPlace() {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  onboarded: false,
+  // The app opens straight into the full app in English; setup stays available from Settings.
+  onboarded: true,
   lang: 'en',
   tradition: 'te',
   place: defaultPlace(),
@@ -169,7 +170,7 @@ export function exportBackup(): string {
 
 export function importBackup(json: string) {
   const parsed = JSON.parse(json) as AppState;
-  if (parsed.version !== 1 || !Array.isArray(parsed.events)) throw new Error('This file is not a Sanathani backup.');
+  if (parsed.version !== 1 || !Array.isArray(parsed.events)) throw new Error('This file is not a Nitya backup.');
   setState(() => upgrade({ ...initial(), ...parsed, settings: { ...DEFAULT_SETTINGS, ...parsed.settings } }));
   recompute();
 }

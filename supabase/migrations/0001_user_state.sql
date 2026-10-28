@@ -1,4 +1,4 @@
--- Sanathani: per-user cloud copy of events, birth profiles and settings.
+-- Nitya: per-user cloud copy of events, birth profiles and settings.
 -- Row Level Security makes each row readable and writable only by its owner.
 create table if not exists public.user_state (
   user_id    uuid primary key references auth.users (id) on delete cascade,

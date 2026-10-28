@@ -1,9 +1,9 @@
-# Sanathani — roadmap
+# Nitya — roadmap
 
 What is left before the App Store / Play Store release, in suggested order. Tick items as they land.
 
 ## Decisions so far
-- App name **Sanathani**, app ID `com.anveshpasunoori.sanathani`, built with Capacitor 8 (iOS + Android) from the same web code.
+- App name **Nitya**, app ID `com.anveshpasunoori.nitya`, built with Capacitor 8 (iOS + Android) from the same web code.
 - Languages: English, Telugu, **Kannada, Tamil, Malayalam, Hindi, Marathi**, and (added 2026-10-26) **Gujarati, Bengali, Odia, Punjabi, Rajasthani/Marwari (one language), Bhojpuri**. Punjabi shows stotrams in Devanagari.
 - Smooth voices: **Microsoft Azure neural voices**, generated once on the Mac and bundled as audio (no key inside the app).
 - Vedic hymns (svaras) are taught only from real chanters' recordings; the computer voice is not used for them.

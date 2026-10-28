@@ -1,4 +1,4 @@
--- Sanathani: security hardening on top of 0001_user_state.sql.
+-- Nitya: security hardening on top of 0001_user_state.sql.
 
 -- 1. Cap each person's cloud copy at ~2 MB so one account cannot fill the database.
 alter table public.user_state

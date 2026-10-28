@@ -1,11 +1,11 @@
 {
-  "name": "Sanathani — Hindu Panchangam & Family Events",
-  "short_name": "Sanathani",
+  "name": "Nitya — Hindu Panchangam & Family Events",
+  "short_name": "Nitya",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#FFF8EC",
-  "theme_color": "#7A1F2B",
+  "background_color": "#FAF7F0",
+  "theme_color": "#702B36",
   "icons": [
     {
       "src": "icon.svg",
@@ -26,7 +26,7 @@
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icons/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

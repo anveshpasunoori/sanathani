@@ -91,7 +91,7 @@ function onSession(user: { id: string; email?: string; user_metadata?: Record<st
 // The store apps have no web address to return to, so sign-in opens in the system browser and comes
 // back through the app's own link (registered in Info.plist and AndroidManifest.xml).
 const native = Capacitor.isNativePlatform();
-const NATIVE_CALLBACK = 'com.anveshpasunoori.sanathani://auth-callback';
+const NATIVE_CALLBACK = 'com.anveshpasunoori.nitya://auth-callback';
 const redirect = () => native ? NATIVE_CALLBACK : `${location.origin}${location.pathname}`;
 
 async function finishNativeSignIn(url: string) {
