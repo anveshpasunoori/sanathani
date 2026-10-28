@@ -2,14 +2,19 @@ import { SONGS, songsFor } from '../src/data/songs';
 import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
-  it('every song is under Ayyappa (from the Ayyappa booklet), with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(42);
+  it('every booklet song is under Ayyappa, with unique ids and titles', () => {
+    expect(SONGS).toHaveLength(43);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
+    // Songs added since the Ayyappa booklet are listed under their own deity.
+    const added = ['ganesha-sharanam'];
     for (const s of SONGS) {
-      expect(s.deities).toContain('ayyappa');
+      if (!added.includes(s.id)) expect(s.deities).toContain('ayyappa');
       expect(s.title.te.length).toBeGreaterThan(2);
       expect(s.text.split('\n').length).toBeGreaterThan(3);
     }
+  });
+  it('Ganapathi has the Ganesha Sharanam bhajan', () => {
+    expect(songsFor('ganapathi').map((s) => s.id)).toEqual(['ganesha-sharanam']);
   });
   it('Hanuman and Venkateswara songs are also listed under those deities', () => {
     expect(songsFor('hanuman').map((s) => s.id)).toEqual(['ati-balavanta-hanumanta', 'emaya-dora-varala-anjani']);
