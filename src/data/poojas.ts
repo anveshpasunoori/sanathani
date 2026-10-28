@@ -770,7 +770,7 @@ export const POOJAS: Pooja[] = [
   },
   {
     // Dates are personal: the pooja page lists the family's own birthdays (from their events) instead.
-    id: 'birthday', image: 'ganapathi',
+    id: 'birthday', image: 'birthday',
     title: { en: 'Birthday Pooja', te: 'పుట్టినరోజు పూజ' }, deity: { en: 'Ganapathi & your ishta devata', te: 'గణపతి & ఇష్టదేవత' },
     when: { en: 'On the birthday — by the calendar date, or on the Janma Nakshatra day (the birth star) in the birth month, as your family keeps it. A time to thank God for another year, pray for health, wisdom and peace, and receive the blessings of parents, elders and the family deity.', te: 'పుట్టినరోజున — తేదీ ప్రకారం గానీ, పుట్టిన మాసంలో జన్మ నక్షత్రం రోజున గానీ, మీ కుటుంబ ఆచారం ప్రకారం. మరో సంవత్సరం ఇచ్చినందుకు భగవంతునికి కృతజ్ఞత, ఆరోగ్యం, జ్ఞానం, శాంతి కోసం ప్రార్థన, తల్లిదండ్రులు, పెద్దలు, కులదైవం ఆశీర్వాదం పొందే రోజు.' },
     next: () => [],

@@ -5,7 +5,7 @@
 export type DeityImageId =
   | 'ganapathi' | 'lakshmi' | 'vishnu' | 'hanuman' | 'lalitha' | 'ayyappa' | 'ugadi'
   | 'shiva' | 'durga' | 'saraswati' | 'kartikeya' | 'rama' | 'krishna' | 'surya' | 'shani' | 'narasimha' | 'dattatreya' | 'kubera'
-  | 'vehicle' | 'venkateswara' | 'vishu' | 'puthandu' | 'ugadi-kn' | 'gudi-padwa' | 'nav-samvatsar' | 'andal' | 'pinda' | 'nithya' | 'varalakshmi' | 'purnima-amavasya';
+  | 'vehicle' | 'venkateswara' | 'vishu' | 'puthandu' | 'ugadi-kn' | 'gudi-padwa' | 'nav-samvatsar' | 'andal' | 'pinda' | 'nithya' | 'varalakshmi' | 'purnima-amavasya' | 'birthday';
 
 export interface DeityImage { src: string; title: string; artist: string; license: string; url: string; focus: string }
 
@@ -30,6 +30,7 @@ export const DEITY_IMAGES: Record<DeityImageId, DeityImage> = {
   andal: own('/deities/andal.webp', 'Sri Andal (Goda Devi)', '50% 22%'),
   pinda: own('/deities/pinda.webp', 'Pinda pradanam by the river', '50% 60%'),
   nithya: own('/deities/nithya.webp', 'Home pooja mandir set for nithya pooja', '50% 40%'),
+  birthday: own('/deities/birthday.webp', 'A mother blessing her son with tilak on his birthday at the home shrine', '45% 35%'),
   'purnima-amavasya': own('/deities/purnima-amavasya.webp', 'Goddess Lakshmi on a lotus before the full moon and its phases', '50% 35%'),
   varalakshmi: own('/deities/varalakshmi.webp', 'Sri Varalakshmi vratham mandapam', '50% 30%'),
   surya: own('/deities/surya.webp', 'Lord Surya'),
