@@ -2,6 +2,7 @@
 //   public/brand/*.svg   emblem, primary (stacked) and horizontal logos for light, dark and one colour
 //   public/icon.svg      the app icon (burgundy tile, gold emblem) — also the favicon
 //   public/icons/*.png   192/512/1024 icons, the iOS touch icon and the Android maskable icon
+//   android/…/res, ios/…/Assets.xcassets   launcher icons, the iOS app icon and the splash screens
 // Run: node scripts/build-brand.mjs   (PNGs are rendered with the installed Google Chrome, headless)
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -85,19 +86,50 @@ const pngs = [
   ['icons/apple-touch-icon.png', square(0.82), 180],
   ['icons/icon-maskable-512.png', square(0.62), 512],
 ];
+// Native app assets: Android launcher icons (square, round and the adaptive-icon foreground on the
+// burgundy background colour), the iOS app icon, and the splash screens of both apps.
+const fg = svg(108, 108, `<g transform="translate(23 22) scale(0.97)">${emblem(C.gold)}</g>`);
+const round = svg(64, 64, `<circle cx="32" cy="32" r="32" fill="${C.burgundy}"/><g transform="translate(9.6 8.6) scale(0.7)">${emblem(C.gold)}</g>`);
+const splash = (w, h) => {
+  const e = Math.min(w, h) * 0.26;
+  return svg(w, h, `<defs><radialGradient id="s" cx="50%" cy="42%" r="75%"><stop offset="0" stop-color="#7A2E3A"/><stop offset="1" stop-color="${C.deep}"/></radialGradient></defs>`
+    + `<rect width="${w}" height="${h}" fill="url(#s)"/>`
+    + `<g transform="translate(${(w - e) / 2} ${h / 2 - e * 0.72}) scale(${e / 64})">${emblem(C.gold)}</g>`
+    + word(w / 2, h / 2 + e * 0.62, e * 0.36, C.champagne, 'middle'));
+};
+const res = 'android/app/src/main/res';
+const DENSITY = { mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4 };
+const native = [];
+for (const [d, k] of Object.entries(DENSITY)) {
+  native.push([`${res}/mipmap-${d}/ic_launcher.png`, files['icon.svg'], 48 * k, 48 * k]);
+  native.push([`${res}/mipmap-${d}/ic_launcher_round.png`, round, 48 * k, 48 * k]);
+  native.push([`${res}/mipmap-${d}/ic_launcher_foreground.png`, fg, 108 * k, 108 * k]);
+}
+for (const [dir, w, h] of [['drawable', 480, 320], ['drawable-land-mdpi', 480, 320], ['drawable-land-hdpi', 800, 480], ['drawable-land-xhdpi', 1280, 720], ['drawable-land-xxhdpi', 1600, 960], ['drawable-land-xxxhdpi', 1920, 1280],
+  ['drawable-port-mdpi', 320, 480], ['drawable-port-hdpi', 480, 800], ['drawable-port-xhdpi', 720, 1280], ['drawable-port-xxhdpi', 960, 1600], ['drawable-port-xxxhdpi', 1280, 1920]]) {
+  native.push([`${res}/${dir}/splash.png`, splash(w, h), w, h]);
+}
+const ios = 'ios/App/App/Assets.xcassets';
+native.push([`${ios}/AppIcon.appiconset/AppIcon-512@2x.png`, square(0.84), 1024, 1024]);
+for (const f of ['splash-2732x2732.png', 'splash-2732x2732-1.png', 'splash-2732x2732-2.png']) native.push([`${ios}/Splash.imageset/${f}`, splash(2732, 2732), 2732, 2732]);
+// The adaptive icon's background colour.
+writeFileSync(`${res}/values/ic_launcher_background.xml`, `<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">${C.burgundy}</color>\n</resources>\n`);
+
 const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 if (!existsSync(chrome)) {
   console.log('Google Chrome not found — PNG icons were not regenerated.');
 } else {
   mkdirSync(join(pub, 'icons'), { recursive: true });
   const work = mkdtempSync(join(tmpdir(), 'brand-'));
+  const render = (content, w, h, out) => {
+    const html = join(work, 'icon.html');
+    writeFileSync(html, `<!doctype html><html><body style="margin:0;background:transparent"><img style="display:block;width:${w}px;height:${h}px" src="data:image/svg+xml;base64,${Buffer.from(content).toString('base64')}"></body></html>`);
+    execFileSync(chrome, ['--headless', '--disable-gpu', '--hide-scrollbars', `--window-size=${w},${h}`, '--default-background-color=00000000', `--screenshot=${out}`, `file://${html}`], { stdio: 'ignore' });
+  };
   try {
-    for (const [name, content, size] of pngs) {
-      const html = join(work, 'icon.html');
-      writeFileSync(html, `<!doctype html><html><body style="margin:0;background:transparent"><img style="display:block;width:${size}px;height:${size}px" src="data:image/svg+xml;base64,${Buffer.from(content).toString('base64')}"></body></html>`);
-      execFileSync(chrome, ['--headless', '--disable-gpu', '--hide-scrollbars', `--window-size=${size},${size}`, '--default-background-color=00000000', `--screenshot=${join(pub, name)}`, `file://${html}`], { stdio: 'ignore' });
-    }
-    console.log(`Rendered ${pngs.length} PNG icons.`);
+    for (const [name, content, size] of pngs) render(content, size, size, join(pub, name));
+    for (const [out, content, w, h] of native) render(content, w, h, resolve(out));
+    console.log(`Rendered ${pngs.length} web icons and ${native.length} native icons and splash screens.`);
   } finally {
     rmSync(work, { recursive: true, force: true });
   }
