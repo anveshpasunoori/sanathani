@@ -52,7 +52,7 @@ export function drawCard(ctx: CanvasRenderingContext2D, p: BirthProfile, d: Card
   // Header
   label(ctx, 'Jathaka card  ·  జాతక పత్రం', 48, 62);
   ctx.font = `500 13px ${SANS}`; ctx.fillStyle = CREAM; ctx.textAlign = 'right';
-  ctx.fillText('Nitya', W - 48, 62);
+  ctx.fillText('Sanathani', W - 48, 62);
   ctx.textAlign = 'left';
 
   // Name and birth line

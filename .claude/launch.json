@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "nitya-attach",
+      "name": "sanathani-attach",
       "url": "http://localhost:5173",
       "port": 5173
     },
@@ -21,7 +21,7 @@
       "port": 5173
     },
     {
-      "name": "nitya-preview",
+      "name": "sanathani-preview",
       "runtimeExecutable": "npx",
       "runtimeArgs": [
         "vite",

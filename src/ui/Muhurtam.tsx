@@ -141,7 +141,7 @@ function DayCard({ d, place, activity }: { d: MuhurtamDay; place: Place; activit
   const fmt = (t: Date) => formatTimeRel(t, d.date, place.tz, loc);
   const exportIcs = (w: MuhurtamWindow) => {
     const stamp = (t: Date) => t.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nitya//Muhurtam//EN', 'BEGIN:VEVENT',
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sanathani//Muhurtam//EN', 'BEGIN:VEVENT',
       `UID:${stamp(w.start)}-${activity}@thithi-reminder`, `DTSTAMP:${stamp(new Date())}`, `DTSTART:${stamp(w.start)}`, `DTEND:${stamp(w.end)}`,
       `SUMMARY:${x('title')} — ${x(activity)}`,
       `DESCRIPTION:${tithiFullName(w.tithi)}\\, ${nakshatraName(w.nakshatra)} nakshatra. Calculated for ${place.name}. Confirm with your purohit.`,

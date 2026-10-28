@@ -21,7 +21,7 @@ function fold(line: string): string {
 export function buildIcs(events: FamilyEvent[], s: Settings, years = 5): string {
   const today = todayIn(s.place.tz);
   const to = addDays(today, Math.round(365.25 * years));
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nitya//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sanathani//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
   const now = stamp(new Date());
   for (const e of events) {
     for (const o of occurrencesBetween(e, s, today, to)) {

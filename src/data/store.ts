@@ -170,7 +170,7 @@ export function exportBackup(): string {
 
 export function importBackup(json: string) {
   const parsed = JSON.parse(json) as AppState;
-  if (parsed.version !== 1 || !Array.isArray(parsed.events)) throw new Error('This file is not a Nitya backup.');
+  if (parsed.version !== 1 || !Array.isArray(parsed.events)) throw new Error('This file is not a Sanathani backup.');
   setState(() => upgrade({ ...initial(), ...parsed, settings: { ...DEFAULT_SETTINGS, ...parsed.settings } }));
   recompute();
 }

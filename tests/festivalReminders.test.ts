@@ -56,7 +56,7 @@ describe('samagri shopping list', () => {
       '', 'To get:', '☐ Lotus flowers', '☐ Camphor',
       '', 'Already have:', '✓ Kumkum',
       '', 'For naivedyam:', '• Payasam',
-      '', '— Nitya',
+      '', '— Sanathani',
     ].join('\n'));
   });
 });

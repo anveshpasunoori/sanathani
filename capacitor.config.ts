@@ -1,12 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.anveshpasunoori.nitya',
-  appName: 'Nitya',
+  appId: 'com.anveshpasunoori.sanathani',
+  appName: 'Sanathani',
   webDir: 'dist',
   plugins: {
     LocalNotifications: {
-      smallIcon: 'ic_stat_nitya',
+      smallIcon: 'ic_stat_sanathani',
       iconColor: '#7a1f2b',
     },
   },

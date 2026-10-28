@@ -1,4 +1,4 @@
-# Nitya — Product Requirements (v0.1)
+# Sanathani — Product Requirements (v0.1)
 
 ## Problem
 Hindu families remember birthdays, anniversaries and especially death anniversaries (Shraddha) by the

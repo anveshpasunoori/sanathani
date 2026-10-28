@@ -1,4 +1,4 @@
-// Makes the Nitya logo set from one emblem drawing, so every variant stays identical:
+// Makes the Sanathani logo set from one emblem drawing, so every variant stays identical:
 //   public/brand/*.svg   emblem, primary (stacked) and horizontal logos for light, dark and one colour
 //   public/icon.svg      the app icon (burgundy tile, gold emblem) — also the favicon
 //   public/icons/*.png   192/512/1024 icons, the iOS touch icon and the Android maskable icon
@@ -43,12 +43,12 @@ function emblem(line, flame = '#D9622B') {
   </g>`;
 }
 
-const svg = (w, h, body, title = 'Nitya') =>
+const svg = (w, h, body, title = 'Sanathani') =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${title}"><title>${title}</title>${body}\n</svg>\n`;
 
 // The wordmark uses the app's serif (Noto Serif, falling back to Georgia) so it matches the headings.
 const word = (x, y, size, fill, anchor = 'start') =>
-  `<text x="${x}" y="${y}" font-family="'Noto Serif', Georgia, 'Times New Roman', serif" font-size="${size}" font-weight="600" letter-spacing="0.5" fill="${fill}" text-anchor="${anchor}">Nitya</text>`;
+  `<text x="${x}" y="${y}" font-family="'Noto Serif', Georgia, 'Times New Roman', serif" font-size="${size}" font-weight="600" letter-spacing="0.5" fill="${fill}" text-anchor="${anchor}">Sanathani</text>`;
 
 // The app icon's tile: deep burgundy, a little lighter at the top, with a fine gold border.
 const tile = () =>
@@ -61,12 +61,12 @@ const files = {
   'brand/emblem-dark.svg': svg(64, 64, emblem(C.gold)),
   'brand/emblem-mono.svg': svg(64, 64, emblem('currentColor', 'currentColor')),
   // Horizontal logo for headers.
-  'brand/logo-horizontal-light.svg': svg(162, 64, `${emblem(C.burgundy)}${word(74, 42, 30, C.charcoal)}`),
-  'brand/logo-horizontal-dark.svg': svg(162, 64, `${emblem(C.gold)}${word(74, 42, 30, C.darkText)}`),
-  'brand/logo-horizontal-mono.svg': svg(162, 64, `${emblem('currentColor', 'currentColor')}${word(74, 42, 30, 'currentColor')}`),
+  'brand/logo-horizontal-light.svg': svg(248, 64, `${emblem(C.burgundy)}${word(74, 42, 30, C.charcoal)}`),
+  'brand/logo-horizontal-dark.svg': svg(248, 64, `${emblem(C.gold)}${word(74, 42, 30, C.darkText)}`),
+  'brand/logo-horizontal-mono.svg': svg(248, 64, `${emblem('currentColor', 'currentColor')}${word(74, 42, 30, 'currentColor')}`),
   // Primary (stacked) logo.
-  'brand/logo-primary-light.svg': svg(200, 150, `<g transform="translate(60 4) scale(1.25)">${emblem(C.burgundy)}</g>${word(100, 132, 32, C.charcoal, 'middle')}`),
-  'brand/logo-primary-dark.svg': svg(200, 150, `<g transform="translate(60 4) scale(1.25)">${emblem(C.gold)}</g>${word(100, 132, 32, C.darkText, 'middle')}`),
+  'brand/logo-primary-light.svg': svg(240, 150, `<g transform="translate(80 4) scale(1.25)">${emblem(C.burgundy)}</g>${word(120, 132, 32, C.charcoal, 'middle')}`),
+  'brand/logo-primary-dark.svg': svg(240, 150, `<g transform="translate(80 4) scale(1.25)">${emblem(C.gold)}</g>${word(120, 132, 32, C.darkText, 'middle')}`),
   // App icon and favicon: gold emblem on a burgundy tile.
   'icon.svg': svg(64, 64, `${tile()}<g transform="translate(4.5 3.8) scale(0.86)">${emblem(C.gold)}</g>`),
 };

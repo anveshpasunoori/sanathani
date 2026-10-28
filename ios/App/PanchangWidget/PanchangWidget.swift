@@ -3,11 +3,11 @@ import WidgetKit
 
 // Home-screen widget: today's thithi and nakshatra (the ones prevailing now), Rahu Kalam, sunrise
 // and sunset, and the day's festival or family event. The app hands over two weeks of ready-made
-// data in the reader's language (src/data/widget.ts → NityaWidgetPlugin → App Group), so the
+// data in the reader's language (src/data/widget.ts → SanathaniWidgetPlugin → App Group), so the
 // widget needs no network and no calculation. The timeline switches exactly when a thithi or
 // nakshatra ends and at midnight.
 
-private let appGroup = "group.com.anveshpasunoori.nitya"
+private let appGroup = "group.com.anveshpasunoori.sanathani"
 
 struct WidgetSpan: Decodable { let name: String; let ends: Date }
 struct WidgetRahu: Decodable { let text: String; let start: Date; let end: Date }
@@ -127,8 +127,8 @@ struct PanchangWidgetView: View {
         } else {
             // No data yet (the app hasn't been opened since install), or two weeks without opening it.
             VStack(alignment: .leading, spacing: 4) {
-                Text("Nitya").font(.headline).foregroundColor(maroon)
-                Text("Open Nitya once to show today's Panchang").font(.caption).foregroundColor(muted)
+                Text("Sanathani").font(.headline).foregroundColor(maroon)
+                Text("Open Sanathani once to show today's Panchang").font(.caption).foregroundColor(muted)
             }
         }
     }

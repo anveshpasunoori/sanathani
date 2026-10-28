@@ -77,7 +77,7 @@ const followEn = {
   naivedyam: 'For naivedyam',
   share: '📤 Share',
   shareCopied: 'Copied — paste it in WhatsApp or a message.',
-  sharedFrom: 'Shared from Nitya — Hindu calendar & family reminders',
+  sharedFrom: 'Shared from Sanathani — Hindu calendar & family reminders',
 };
 
 export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
@@ -89,7 +89,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'సామగ్రి జాబితా — {pooja}', toGet: 'తేవాల్సినవి', alreadyHave: 'ఉన్నవి', naivedyam: 'నైవేద్యానికి',
     share: '📤 షేర్ చేయండి',
     shareCopied: 'కాపీ అయింది — వాట్సాప్‌లో లేదా మెసేజ్‌లో పేస్ట్ చేయండి.',
-    sharedFrom: 'Nitya నుండి — హిందూ పంచాంగం & కుటుంబ రిమైండర్లు',
+    sharedFrom: 'Sanathani నుండి — హిందూ పంచాంగం & కుటుంబ రిమైండర్లు',
   },
   kn: {
     remindMe: '🔔 ನೆನಪಿಸಿ', reminderOn: '🔔 ಜ್ಞಾಪನೆ ಆನ್', reminderHint: 'ಹಿಂದಿನ ದಿನ, ನಿಮ್ಮ ಜ್ಞಾಪನೆ ಸಮಯಕ್ಕೆ ನೆನಪಿಸುತ್ತೇವೆ.',
@@ -98,7 +98,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'ಸಾಮಗ್ರಿ ಪಟ್ಟಿ — {pooja}', toGet: 'ತರಬೇಕಾದವು', alreadyHave: 'ಇರುವವು', naivedyam: 'ನೈವೇದ್ಯಕ್ಕೆ',
     share: '📤 ಹಂಚಿಕೊಳ್ಳಿ',
     shareCopied: 'ನಕಲಿಸಲಾಗಿದೆ — ವಾಟ್ಸಾಪ್ ಅಥವಾ ಸಂದೇಶದಲ್ಲಿ ಅಂಟಿಸಿ.',
-    sharedFrom: 'Nitya ಇಂದ — ಹಿಂದೂ ಪಂಚಾಂಗ ಮತ್ತು ಕುಟುಂಬ ನೆನಪುಗಳು',
+    sharedFrom: 'Sanathani ಇಂದ — ಹಿಂದೂ ಪಂಚಾಂಗ ಮತ್ತು ಕುಟುಂಬ ನೆನಪುಗಳು',
   },
   ta: {
     remindMe: '🔔 நினைவூட்டு', reminderOn: '🔔 நினைவூட்டல் இயக்கத்தில்', reminderHint: 'முந்தைய நாள், உங்கள் நினைவூட்டல் நேரத்தில் நினைவூட்டுவோம்.',
@@ -107,7 +107,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'பொருள் பட்டியல் — {pooja}', toGet: 'வாங்க வேண்டியவை', alreadyHave: 'இருப்பவை', naivedyam: 'நைவேத்தியத்திற்கு',
     share: '📤 பகிர்',
     shareCopied: 'நகலெடுக்கப்பட்டது — வாட்ஸ்அப்பில் அல்லது செய்தியில் ஒட்டவும்.',
-    sharedFrom: 'Nitya இலிருந்து — இந்து பஞ்சாங்கம் & குடும்ப நினைவூட்டல்கள்',
+    sharedFrom: 'Sanathani இலிருந்து — இந்து பஞ்சாங்கம் & குடும்ப நினைவூட்டல்கள்',
   },
   ml: {
     remindMe: '🔔 ഓർമ്മിപ്പിക്കൂ', reminderOn: '🔔 ഓർമ്മപ്പെടുത്തൽ ഓൺ', reminderHint: 'തലേദിവസം, നിങ്ങളുടെ ഓർമ്മപ്പെടുത്തൽ സമയത്ത് ഓർമ്മിപ്പിക്കും.',
@@ -116,7 +116,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'സാമഗ്രി പട്ടിക — {pooja}', toGet: 'വാങ്ങേണ്ടവ', alreadyHave: 'ഉള്ളവ', naivedyam: 'നിവേദ്യത്തിന്',
     share: '📤 പങ്കിടൂ',
     shareCopied: 'പകർത്തി — വാട്ട്സ്ആപ്പിലോ സന്ദേശത്തിലോ ഒട്ടിക്കൂ.',
-    sharedFrom: 'Nitya-ൽ നിന്ന് — ഹിന്ദു പഞ്ചാംഗവും കുടുംബ ഓർമ്മപ്പെടുത്തലുകളും',
+    sharedFrom: 'Sanathani-ൽ നിന്ന് — ഹിന്ദു പഞ്ചാംഗവും കുടുംബ ഓർമ്മപ്പെടുത്തലുകളും',
   },
   hi: {
     remindMe: '🔔 याद दिलाएँ', reminderOn: '🔔 रिमाइंडर चालू', reminderHint: 'एक दिन पहले, आपके रिमाइंडर समय पर याद दिलाएँगे।',
@@ -125,7 +125,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'सामग्री सूची — {pooja}', toGet: 'लाना है', alreadyHave: 'पहले से है', naivedyam: 'नैवेद्य के लिए',
     share: '📤 शेयर करें',
     shareCopied: 'कॉपी हो गया — व्हाट्सऐप या मैसेज में पेस्ट करें।',
-    sharedFrom: 'Nitya से — हिंदू पंचांग और पारिवारिक रिमाइंडर',
+    sharedFrom: 'Sanathani से — हिंदू पंचांग और पारिवारिक रिमाइंडर',
   },
   mr: {
     remindMe: '🔔 आठवण करून द्या', reminderOn: '🔔 आठवण चालू', reminderHint: 'आदल्या दिवशी, तुमच्या आठवणीच्या वेळी आठवण करून देऊ.',
@@ -134,7 +134,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     shoppingFor: 'साहित्य यादी — {pooja}', toGet: 'आणायचे', alreadyHave: 'आहे', naivedyam: 'नैवेद्यासाठी',
     share: '📤 शेअर करा',
     shareCopied: 'कॉपी झाले — व्हॉट्सॲप किंवा मेसेजमध्ये पेस्ट करा.',
-    sharedFrom: 'Nitya कडून — हिंदू पंचांग आणि कौटुंबिक आठवणी',
+    sharedFrom: 'Sanathani कडून — हिंदू पंचांग आणि कौटुंबिक आठवणी',
   },
   bn: {
     remindMe: '🔔 মনে করিয়ে দিন',
@@ -151,7 +151,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'নৈবেদ্যের জন্য',
     share: '📤 শেয়ার করুন',
     shareCopied: 'কপি হয়েছে — হোয়াটসঅ্যাপ বা মেসেজে পেস্ট করুন।',
-    sharedFrom: 'Nitya থেকে — হিন্দু পঞ্জিকা ও পারিবারিক রিমাইন্ডার',
+    sharedFrom: 'Sanathani থেকে — হিন্দু পঞ্জিকা ও পারিবারিক রিমাইন্ডার',
   },
   gu: {
     remindMe: '🔔 યાદ અપાવો',
@@ -168,7 +168,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'નૈવેદ્ય માટે',
     share: '📤 શેર કરો',
     shareCopied: 'કૉપિ થયું — વૉટ્સઍપ કે મેસેજમાં પેસ્ટ કરો.',
-    sharedFrom: 'Nitya તરફથી — હિન્દુ પંચાંગ અને પારિવારિક રિમાઇન્ડર',
+    sharedFrom: 'Sanathani તરફથી — હિન્દુ પંચાંગ અને પારિવારિક રિમાઇન્ડર',
   },
   pa: {
     remindMe: '🔔 ਯਾਦ ਕਰਾਓ',
@@ -185,7 +185,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'ਭੋਗ ਲਈ',
     share: '📤 ਸਾਂਝਾ ਕਰੋ',
     shareCopied: 'ਕਾਪੀ ਹੋ ਗਿਆ — ਵਟਸਐਪ ਜਾਂ ਮੈਸੇਜ ਵਿੱਚ ਪੇਸਟ ਕਰੋ।',
-    sharedFrom: 'Nitya ਵੱਲੋਂ — ਹਿੰਦੂ ਪੰਚਾਂਗ ਅਤੇ ਪਰਿਵਾਰਕ ਯਾਦ-ਦਹਾਨੀਆਂ',
+    sharedFrom: 'Sanathani ਵੱਲੋਂ — ਹਿੰਦੂ ਪੰਚਾਂਗ ਅਤੇ ਪਰਿਵਾਰਕ ਯਾਦ-ਦਹਾਨੀਆਂ',
   },
   raj: {
     remindMe: '🔔 याद दिराओ',
@@ -202,7 +202,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'भोग खातर',
     share: '📤 भेजो',
     shareCopied: 'कॉपी होग्यो — वॉट्सऐप का मैसेज में पेस्ट करो।',
-    sharedFrom: 'Nitya सूं — हिंदू पंचांग अर परिवार री याद',
+    sharedFrom: 'Sanathani सूं — हिंदू पंचांग अर परिवार री याद',
   },
   or: {
     remindMe: '🔔 ମନେ ପକାନ୍ତୁ',
@@ -219,7 +219,7 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'ନୈବେଦ୍ୟ ପାଇଁ',
     share: '📤 ସେୟାର କରନ୍ତୁ',
     shareCopied: 'କପି ହେଲା — ହ୍ୱାଟସଆପ ବା ମେସେଜରେ ପେଷ୍ଟ କରନ୍ତୁ।',
-    sharedFrom: 'Nitya ରୁ — ହିନ୍ଦୁ ପାଞ୍ଜି ଓ ପାରିବାରିକ ସ୍ମାରକ',
+    sharedFrom: 'Sanathani ରୁ — ହିନ୍ଦୁ ପାଞ୍ଜି ଓ ପାରିବାରିକ ସ୍ମାରକ',
   },
   bho: {
     remindMe: '🔔 याद दिलाईं',
@@ -236,6 +236,6 @@ export const FOLLOW_TEXT: ScreenText<keyof typeof followEn> = {
     naivedyam: 'भोग खातिर',
     share: '📤 भेजीं',
     shareCopied: 'कॉपी हो गइल — वॉट्सऐप भा मैसेज में पेस्ट करीं।',
-    sharedFrom: 'Nitya से — हिंदू पतरा आ परिवार के याद',
+    sharedFrom: 'Sanathani से — हिंदू पतरा आ परिवार के याद',
   },
 };

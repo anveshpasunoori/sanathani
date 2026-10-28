@@ -63,7 +63,7 @@ export function App() {
     <div className="app">
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="brand"><img src={asset('/brand/emblem-dark.svg')} alt="" /> Nitya</div>
+          <div className="brand"><img src={asset('/brand/emblem-dark.svg')} alt="" /> Sanathani</div>
           <div className="topbar-actions">
             <button className="place" onClick={() => go({ tab: 'settings' })} aria-label={`Location: ${settings.place.name}. Change in settings`}>
               📍 {settings.place.name}

@@ -1,6 +1,6 @@
 // Offline app shell + notification click handling.
 const CACHE = 'thithi-v3';
-// The app may be served from a sub-folder (GitHub Pages: /nitya/); paths are relative to it.
+// The app may be served from a sub-folder (GitHub Pages: /sanathani/); paths are relative to it.
 const BASE = new URL(self.registration.scope).pathname;
 self.addEventListener('install', (e) => { self.skipWaiting(); });
 self.addEventListener('activate', (e) => {

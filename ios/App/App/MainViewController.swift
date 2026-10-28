@@ -5,6 +5,6 @@ import UIKit
 /// packages — the home-screen widget's data bridge.
 class MainViewController: CAPBridgeViewController {
     override open func capacitorDidLoad() {
-        bridge?.registerPluginInstance(NityaWidgetPlugin())
+        bridge?.registerPluginInstance(SanathaniWidgetPlugin())
     }
 }

@@ -28,7 +28,7 @@ export function shoppingText(l: ShoppingList): string {
     ...(have.length ? ['', `${l.labels.alreadyHave}:`, ...have.map((t) => `✓ ${say(t)}`)] : []),
     ...(l.naivedyam.length ? ['', `${l.labels.naivedyam}:`, ...l.naivedyam.map((t) => `• ${say(t)}`)] : []),
     '',
-    '— Nitya',
+    '— Sanathani',
   ].join('\n');
 }
 

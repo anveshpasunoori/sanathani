@@ -1,4 +1,4 @@
-# Nitya
+# Sanathani
 
 A Hindu Thithi calendar and family remembrance assistant. It remembers birthdays, anniversaries and
 Shraddha dates by the lunar calendar, calculates each year's date from astronomy, and reminds you.
