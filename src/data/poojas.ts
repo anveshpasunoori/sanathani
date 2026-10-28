@@ -809,7 +809,7 @@ export const POOJAS: Pooja[] = [
   },
   {
     // Dates are personal: the pooja page lists the family's own wedding anniversaries instead.
-    id: 'anniversary', image: 'vishnu',
+    id: 'anniversary', image: 'anniversary',
     title: { en: 'Wedding Anniversary Pooja', te: 'వివాహ వార్షికోత్సవ పూజ' }, deity: { en: 'Lakshmi-Narayana, Uma-Maheshwara or your family deity', te: 'లక్ష్మీనారాయణులు, ఉమామహేశ్వరులు లేదా కులదైవం' },
     when: { en: 'On the wedding anniversary — by the calendar date or the wedding thithi, as your family keeps it. A time to pray for harmony, affection and mutual respect between husband and wife, give thanks for the family\'s life together, and seek blessings for children, elders and the household.', te: 'వివాహ వార్షికోత్సవం రోజున — తేదీ ప్రకారం గానీ, వివాహ తిథి ప్రకారం గానీ, మీ కుటుంబ ఆచారం ప్రకారం. దంపతుల మధ్య సామరస్యం, ప్రేమ, పరస్పర గౌరవం కోసం ప్రార్థన, కలిసి గడిపిన జీవితానికి కృతజ్ఞత, పిల్లలు, పెద్దలు, ఇంటి క్షేమం కోసం ఆశీర్వాదం కోరే రోజు.' },
     next: () => [],
