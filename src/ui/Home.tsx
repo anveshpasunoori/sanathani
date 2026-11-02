@@ -1,3 +1,4 @@
+import { AdSlot } from './Ad';
 import { useMemo, useState, useEffect } from 'react';
 import { upcoming } from '../data/occurrences';
 import { setState, useStore } from '../data/store';
@@ -161,6 +162,8 @@ export function HomeScreen() {
           <p className="tiny muted">{x('guidanceNote')}</p>
         </Card>
       )}
+
+      <AdSlot />
     </>
   );
 }

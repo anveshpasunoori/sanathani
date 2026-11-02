@@ -87,6 +87,7 @@ export function SettingsScreen() {
 
       <Card title={x('privacy')}>
         <p className="small">{x('privacyText')}</p>
+        <p className="small"><a href="privacy.html" target="_blank" rel="noopener">{x('privacy')} →</a></p>
         <div className="row">
           <button className="btn" onClick={() => download(exportBackup(), `thithi-backup-${new Date().toISOString().slice(0, 10)}.json`, 'application/json')}>{x('backup')}</button>
           <label className="btn">{x('restore')}

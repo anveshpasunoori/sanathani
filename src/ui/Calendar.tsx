@@ -1,3 +1,4 @@
+import { AdSlot } from './Ad';
 import { Fragment, useMemo, useState } from 'react';
 import { occurrencesBetween } from '../data/occurrences';
 import { updateSettings, useStore } from '../data/store';
@@ -162,6 +163,7 @@ export function CalendarScreen({ initialDate }: { initialDate?: string }) {
         <p className="small muted">{x('exportNote')}</p>
         <button className="btn" disabled={!s.events.length} onClick={() => downloadIcs(buildIcs(s.events, s.settings, 5), 'thithi-family-events.ics')}>{x('download')}</button>
       </Card>
+      <AdSlot />
     </>
   );
 

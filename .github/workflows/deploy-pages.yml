@@ -45,6 +45,15 @@ jobs:
           # Accounts turn on once these repository variables are set (Settings → Secrets and variables → Actions → Variables).
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          # Ads stay off until AdSense approves the site and these are set (docs/ads-setup.md).
+          VITE_ADSENSE_CLIENT: ${{ vars.VITE_ADSENSE_CLIENT }}
+          VITE_ADSENSE_SLOT: ${{ vars.VITE_ADSENSE_SLOT }}
+
+      - name: ads.txt
+        if: ${{ vars.VITE_ADSENSE_CLIENT != '' }}
+        run: echo "google.com, ${CLIENT#ca-}, DIRECT, f08c47fec0942fa0" > dist/ads.txt
+        env:
+          CLIENT: ${{ vars.VITE_ADSENSE_CLIENT }}
 
       - uses: actions/configure-pages@v5
 

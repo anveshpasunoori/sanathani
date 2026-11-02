@@ -502,3 +502,4 @@ details.note > summary { cursor: pointer; }
 .msg.announce { border-color: var(--gold); border-width: 2px; max-width: 100%; justify-self: stretch; }
 .msg-actions { display: flex; gap: 10px; justify-content: flex-end; }
 .msg-actions:empty { display: none; }
+.ad-slot { min-height: 0; margin: 4px 0; overflow: hidden; }
