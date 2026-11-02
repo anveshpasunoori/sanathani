@@ -11,3 +11,10 @@ export const supabase: SupabaseClient | null = url && key
   : null;
 
 export const cloudEnabled = !!supabase;
+
+/** Whether the project has Google sign-in switched on (Authentication → Providers). Asked once;
+ *  until it answers, or if it can't be reached, the Google button stays hidden. */
+export const googleEnabled: Promise<boolean> = url && key
+  ? fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } })
+    .then((r) => r.json()).then((s: { external?: { google?: boolean } }) => !!s.external?.google).catch(() => false)
+  : Promise.resolve(false);

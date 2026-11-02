@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useText } from '../i18n';
 import { ACCOUNT_TEXT } from '../locales/account';
 import { deleteAccount, sendEmailCode, signInWithGoogle, signOut, syncNow, useAccount, verifyEmailCode } from '../sync/sync';
+import { googleEnabled } from '../sync/supabase';
 import { Card } from './components';
 import { go } from './router';
 
@@ -20,6 +21,8 @@ export function SignInForm({ onDone, compact = false }: { onDone?: () => void; c
   const [step, setStep] = useState<'email' | 'code'>('email');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
+  const [google, setGoogle] = useState(false);
+  useEffect(() => { googleEnabled.then(setGoogle); }, []);
 
   if (acc.status === 'disabled') {
     return (
@@ -39,11 +42,13 @@ export function SignInForm({ onDone, compact = false }: { onDone?: () => void; c
 
   return (
     <div className="stack">
+      {google && <>
       <button className="btn google" disabled={busy} onClick={() => run(signInWithGoogle)}>
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.3-1.6 3.8-5.5 3.8-3.3 0-6-2.7-6-6s2.7-6 6-6c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.8 3.4 14.6 2.4 12 2.4 6.7 2.4 2.4 6.7 2.4 12s4.3 9.6 9.6 9.6c5.5 0 9.2-3.9 9.2-9.4 0-.6-.1-1.1-.2-1.6H12z" /></svg>
         {x('google')}
       </button>
       <div className="divider small muted"><span>{x('orEmail')}</span></div>
+      </>}
       {step === 'email' ? (
         <form className="row" onSubmit={(e) => { e.preventDefault(); run(async () => { await sendEmailCode(email.trim()); setStep('code'); }, x('codeSent')); }}>
           <label className="sr-only" htmlFor="signin-email">{x('email')}</label>
