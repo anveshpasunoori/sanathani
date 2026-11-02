@@ -10,7 +10,6 @@ import { HomeScreen } from './Home';
 import { HoroscopeScreen } from './Horoscope';
 import { MuhurtamScreen } from './Muhurtam';
 import { LoginScreen } from './Account';
-import { Onboarding } from './Onboarding';
 import { startNativeReminders } from './nativeReminders';
 import { startWidget } from './widgetBridge';
 import { useReminderRunner } from './reminderRunner';
@@ -60,7 +59,8 @@ export function App() {
     });
   }, []);
 
-  if (!settings.onboarded) return <Onboarding />;
+  // The app opens straight in (English unless changed in Settings); there is no welcome screen, even for
+  // devices that saved an unfinished one from an older version.
 
   return (
     <div className="app">
