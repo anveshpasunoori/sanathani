@@ -3,7 +3,7 @@ import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
   it('every booklet song is under Ayyappa, with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(81);
+    expect(SONGS).toHaveLength(84);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
     // Songs added since the Ayyappa booklet are listed under their own deity.
     const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha', 'vatapi-ganapatim', 'govinda-nama-sankeertanam', 'srinivasa-govinda', 'lingashtakam', 'bilvashtakam', 'radhe-govinda-brindavana-chandra', 'jaya-janardhana-krishna', 'achyutashtakam', 'yadukula-bhushana', 'nacho-nacho-nandalala', 'raghukula-tilaka-rara', 'ramudante-ramude', 'vel-vel-velayya', 'palanimalai-vasuda', 'umamaheshwara-kumaraguruve', 'muruga-muruganayya', 'vel-muruga-mam-pahi', 'shanmukhanatha-palayamam', 'lakshmi-varada-cheeryala', 'amba-parameshwari', 'saraswati-he-jagajjanani', 'shankari-shambhavi',
@@ -37,7 +37,7 @@ describe('songs', () => {
     for (const s of withAudio) expect(existsSync(`public${s.audio!.src}`)).toBe(true);
   });
   it('Tamil and Sanskrit songs carry their own script and English letters', () => {
-    for (const s of SONGS.filter((x) => x.lang === 'ta' || x.lang === 'sa')) {
+    for (const s of SONGS.filter((x) => x.lang === 'ta' || x.lang === 'sa' || x.roman)) {
       expect(s.roman, s.id).toBeTruthy();
       expect(s.roman!, s.id).toMatch(/^[\x00-\x7F’–]+$/);
       // Tamil songs are written in Tamil script; Sanskrit ones in Telugu script (converted for each reader).

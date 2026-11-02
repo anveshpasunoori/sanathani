@@ -29,8 +29,8 @@ export interface Song {
 
 const song = (id: string, deities: SongDeity[], te: string, en: string, text: string): Song =>
   ({ id, deities, title: { te, en }, text: text.trim() });
-/** A Tamil or Sanskrit song: its own script and English letters. */
-const sung = (lang: 'ta' | 'sa', id: string, deities: SongDeity[], title: string, en: string, text: string, roman: string): Song =>
+/** A song with its words in its own script and in English letters. */
+const sung = (lang: 'te' | 'ta' | 'sa', id: string, deities: SongDeity[], title: string, en: string, text: string, roman: string): Song =>
   ({ ...song(id, deities, title, en, text), lang, roman: roman.trim() });
 
 const A: SongDeity[] = ['ayyappa'];
@@ -2742,6 +2742,99 @@ Saranam Illaiyyappa
 16. Pathinaaram
 17. Pathinelam
 18. (slow) Pathinettam
+`),
+
+  // From the 2026 HSNEF bhajan programme (sent by the app owner): songs the app did not have yet; authors not known.
+  sung('ta', 'swami-saranam-ayyan-saranam', A, 'சுவாமி சரணம் ஐயன் சரணம்', 'Swami Saranam Ayyan Saranam', `
+சுவாமி சரணம் ஐயன் சரணம், ஐயப்ப சரணம் சரணம் பொன்னையப்பா (2)
+சபரிகிரீசா சத்குருநாதா, சுவாமியே சரணம் சரணம் பொன்னையப்பா (2)
+மோகினி சுதனே மோகன ரூபா, சுவாமியே சரணம் சரணம் பொன்னையப்பா (2)
+எருமேலி வாசா ஸ்ரீ தர்ம சாஸ்தா, சுவாமியே சரணம் சரணம் பொன்னையப்பா (2)
+பம்பா வாசா பந்தள ராஜா, சுவாமியே சரணம் சரணம் பொன்னையப்பா (2)
+வில்லாளி வீரா வீரமணிகண்டா, சுவாமியே சரணம் சரணம் பொன்னையப்பா (2)
+`, `
+Swami Saranam Ayyan Saranam, Ayyappa Saranam Saranam Ponnayyappa (2)
+Shabari Gireesha Sadguru Naatha, Swamiye Saranam Saranam Ponnayyappa (2)
+Mohini Suthane Mohana Roopa, Swamiye Saranam Saranam Ponnayyappa (2)
+Erumeli Vaasa Sree Dharma Sastha, Swamiye Saranam Saranam Ponnayyappa (2)
+Pamba Vaasa Pandala Raja, Swamiye Saranam Saranam Ponnayyappa (2)
+Villali Veera Veeramanikanda, Swamiye Saranam Saranam Ponnayyappa (2)
+`),
+
+  sung('ta', 'ayya-endrazhaikkava', A, 'ஐயா என்றழைக்கவா', 'Ayya Endrazhaikkava', `
+ஐயா என்றழைக்கவா பூதநாதா என்றழைக்கவா
+சாஸ்தா என்றழைக்கவா மணிகண்டா என்றழைக்கவா
+எப்படி அழைப்பேன் உன்னை எங்கே காண்பேன்
+
+ஏறாத மலையெல்லாம் ஏறி வந்தேன் அப்பா
+ஏழை பங்காளன் உன்னைத் தேடி வந்தேன் அப்பா
+நெய்யுடன் மெய்யோடு நானும் வருவேன் அப்பா
+சபரிமலை நாடி நானும் வருவேன் அப்பா
+॥ ஐயா என்றழைக்கவா ॥
+
+இருமுடிதனைத் தாங்கி நானும் வருவேன் அப்பா
+இன்பமுடன் பேட்டை துள்ளி ஆடி வருவேன் அப்பா
+மகர விளக்கன்று காண வருவேன் அப்பா
+மங்களமாம் வாழ்வளித்து அருள்வாயப்பா
+॥ ஐயா என்றழைக்கவா ॥
+`, `
+Ayya Endrazhaikkava Boothanaadha Endrazhaikkava
+Saastha Endrazhaikkava Manikanda Endrazhaikkava
+Eppadi Azhaippen Unnai Enge Kaanben
+
+Yeraadha Malayellam Yeri Vandhen Appa
+Ezhai Pangaalan Unnai Thedi Vandhen Appa
+Neyyudan Meyyodu Naanum Varuven Appa
+Sabarimalai Naadi Naanum Varuven Appa
+(Chorus) Ayya Endrazhaikkava
+
+Irumudithanai Thaangi Naanum Varuven Appa
+Inbamudan Pettai Thulli Aadi Varuven Appa
+Makara Vilakkandru Kaana Varuven Appa
+Mangalamaam Vaazhvalithu Arulvaayappa
+(Chorus) Ayya Endrazhaikkava
+`),
+
+  sung('te', 'antha-dukkamu', A, 'అంతా దుఃఖము అంతము చేయగదయ్యా', 'Antha Dukkamu Anthamu Cheyagadayya', `
+అంతా దుఃఖము అంతము చేయగదయ్యా శబరీవాసా (2)
+అంతా దోషము హరియించు నీ చేతుల
+అనుగ్రహించు దేవా నన్ను అనుగ్రహించు (2)
+
+రోజూ నిన్ను తలవకనే
+నీ నామం మదిలో పలకకనే (2)
+మాయామయమీ జీవితంలో
+మదమాత్సర్యాల మరకలతో (2)
+నిలకడ లేక అలసిపోయేము
+క్షణికము సుఖమని తెలియదులే (2)
+॥ అంతా దుఃఖము ॥
+
+కరచరణాదులు పడిపోయే
+మనసున భావన చెడిపోయే (2)
+అఖిలాండేశ్వర నీవే దిక్కని
+నా బ్రతుకునకు తెలిసినది (2)
+స్వామి శరణం అయ్యప్పా
+శరణం శరణం అయ్యప్పా (2)
+॥ అంతా దుఃఖము ॥
+`, `
+Anthaa Dukhamu Anthamu Cheyagadayya Shabaree Vaasa (2)
+Anthaa Doshamu Hariyinchu Nee Chethula
+Anugrahinchu Deva, Nannu Anugrahinchu (2)
+
+Roju Ninnu Thalavakane
+Nee Naamam Madilo Palakakane (2)
+Maayaamayamee Jeevithamlo
+Madamaathsaryaala Marakalatho (2)
+Nilakada Lekaa Alasipoyemu
+Kshanikamu Sukhamani Teliyadule (2)
+(Chorus) Anthaa Dukhamu
+
+Karacharanaadulu Padipoye
+Manasuna Bhaavana Chedipoye (2)
+Akhilaandeswara Neeve Dikkani
+Naa Brathukunaku Thelisinadi (2)
+Swami Saranam Ayyappa
+Saranam Saranam Ayyappa (2)
+(Chorus) Anthaa Dukhamu
 `),
 ];
 
