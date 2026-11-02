@@ -3,11 +3,11 @@ import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
   it('every booklet song is under Ayyappa, with unique ids and titles', () => {
-    expect(SONGS).toHaveLength(84);
+    expect(SONGS).toHaveLength(86);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
     // Songs added since the Ayyappa booklet are listed under their own deity.
     const added = ['ganesha-sharanam', 'vakratunda-mahakaya-om-maha-ganapathi', 'shiva-shivamurthivi-gananatha', 'vatapi-ganapatim', 'govinda-nama-sankeertanam', 'srinivasa-govinda', 'lingashtakam', 'bilvashtakam', 'radhe-govinda-brindavana-chandra', 'jaya-janardhana-krishna', 'achyutashtakam', 'yadukula-bhushana', 'nacho-nacho-nandalala', 'raghukula-tilaka-rara', 'ramudante-ramude', 'vel-vel-velayya', 'palanimalai-vasuda', 'umamaheshwara-kumaraguruve', 'muruga-muruganayya', 'vel-muruga-mam-pahi', 'shanmukhanatha-palayamam', 'lakshmi-varada-cheeryala', 'amba-parameshwari', 'saraswati-he-jagajjanani', 'shankari-shambhavi',
-      'gauri-nandana-gajavadana', 'bhavani-shankari-parvathi', 'anjaneya-veera-hanumantha', 'shivaya-nama-om', 'hara-om-sadashiva'];
+      'gauri-nandana-gajavadana', 'bhavani-shankari-parvathi', 'anjaneya-veera-hanumantha', 'shivaya-nama-om', 'hara-om-sadashiva', 'subramanyam-shanmukha-natha'];
     for (const s of SONGS) {
       if (!added.includes(s.id)) expect(s.deities).toContain('ayyappa');
       expect(s.title.te.length).toBeGreaterThan(2);

@@ -2836,6 +2836,218 @@ Swami Saranam Ayyappa
 Saranam Saranam Ayyappa (2)
 (Chorus) Anthaa Dukhamu
 `),
+
+  // From the 2024 Karthi-Leela family HSNEF bhajan list (sent by the app owner): the Tamil Sarana Ghosham call and
+  // response, and a Subrahmanya nama bhajan. Traditional.
+  sung('ta', 'sarana-ghosham-tamil', A, 'ஐயப்ப சரண கோஷம்', 'Ayyappa Sarana Ghosham (Tamil)', `
+ஓம் சுவாமியே (கோரஸ்) சரணம் ஐயப்பா
+கன்னிமூல கணபதி பகவானே (கோரஸ்) சரணம் ஐயப்பா
+ஓம் சுவாமியே (கோரஸ்) சரணம் ஐயப்பா
+
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஐயப்பா (கோரஸ்) சுவாமியே
+பகவானே (கோரஸ்) பகவதியே
+பகவதியே (கோரஸ்) பகவானே
+தேவனே (கோரஸ்) தேவியே
+தேவியே (கோரஸ்) தேவனே
+ஈஸ்வரனே (கோரஸ்) ஈஸ்வரியே
+ஈஸ்வரியே (கோரஸ்) ஈஸ்வரனே
+சுவாமியே (கோரஸ்) ஐயப்பா
+
+ஐயப்பா (கோரஸ்) சுவாமியே
+சுவாமி சரணம் (கோரஸ்) ஐயப்ப சரணம்
+ஐயப்ப சரணம் (கோரஸ்) சுவாமி சரணம்
+பகவான் சரணம் (கோரஸ்) பகவதி சரணம்
+பகவதி சரணம் (கோரஸ்) பகவான் சரணம்
+தேவன் சரணம் (கோரஸ்) தேவி சரணம்
+தேவி சரணம் (கோரஸ்) தேவன் சரணம்
+ஈஸ்வரன் சரணம் (கோரஸ்) ஈஸ்வரி சரணம்
+ஈஸ்வரி சரணம் (கோரஸ்) ஈஸ்வரன் சரணம்
+சுவாமியே (கோரஸ்) ஐயப்பா
+
+ஐயப்பா (கோரஸ்) சுவாமியே
+சுவாமி பாதம் (கோரஸ்) ஐயப்ப பாதம்
+ஐயப்ப பாதம் (கோரஸ்) சுவாமி பாதம்
+பகவான் பாதம் (கோரஸ்) பகவதி பாதம்
+பகவதி பாதம் (கோரஸ்) பகவான் பாதம்
+பாத பலம் தா (கோரஸ்) தேக பலம் தா
+தேக பலம் தா (கோரஸ்) பாத பலம் தா
+
+ஐயப்பா (கோரஸ்) சுவாமியே
+பள்ளிக்கட்டு (கோரஸ்) சபரிமலைக்கு
+கல்லும் முள்ளும் (கோரஸ்) காலுக்கு மெத்தை
+குண்டும் குழியும் (கோரஸ்) கண்ணுக்கு வெளிச்சம்
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஐயப்பா (கோரஸ்) சுவாமியே
+கட்டும் கட்டும் (கோரஸ்) சபரிமலைக்கு
+யாரிட கட்டு (கோரஸ்) சாமிட கட்டு
+யாரைக் காண (கோரஸ்) சாமியைக் காண
+சாமியைக் கண்டால் (கோரஸ்) மோட்சம் கிட்டும்
+எப்போ கிட்டும் (கோரஸ்) இப்போ கிட்டும்
+
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஏற்றிவிடப்பா (கோரஸ்) தூக்கிவிடப்பா
+தூக்கிவிடப்பா (கோரஸ்) ஏற்றிவிடப்பா
+வில்லாளி வீரா (கோரஸ்) ஐயப்பா
+வீரமணிகண்டா (கோரஸ்) ஐயப்பா
+சாந்த சொரூபா (கோரஸ்) ஐயப்பா
+சத்குருநாதா (கோரஸ்) ஐயப்பா
+பம்பா வாசா (கோரஸ்) ஐயப்பா
+பந்தள ராஜா (கோரஸ்) ஐயப்பா
+
+சாமி திந்தக தோம் தோம் (கோரஸ்) ஐயப்ப திந்தக தோம் தோம்
+ஐயப்ப திந்தக தோம் தோம் (கோரஸ்) சாமி திந்தக தோம் தோம்
+சாமியப்பா (கோரஸ்) ஐயப்பா
+சரணம் அப்பா (கோரஸ்) ஐயப்பா
+வந்தோம் அப்பா (கோரஸ்) ஐயப்பா
+வருவோம் அப்பா (கோரஸ்) ஐயப்பா
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஐயப்பா (கோரஸ்) சுவாமியே
+கலியுக வரதா (கோரஸ்) ஐயப்பா
+கண் கண்ட தெய்வமே (கோரஸ்) ஐயப்பா
+காப்பாத்தப்பா (கோரஸ்) ஐயப்பா
+சுவாமியே (கோரஸ்) ஐயப்பா
+
+ஐயப்பா (கோரஸ்) சுவாமியே
+கற்பூர தீபம் (கோரஸ்) சுவாமிக்கு
+அவலும் மலரும் (கோரஸ்) சுவாமிக்கு
+நெய் அபிஷேகம் (கோரஸ்) சுவாமிக்கே
+பால் அபிஷேகம் (கோரஸ்) சுவாமிக்கு
+தேன் அபிஷேகம் (கோரஸ்) சுவாமிக்கு
+புஷ்ப அபிஷேகம் (கோரஸ்) சுவாமிக்கு
+முத்திரைத் தேங்காய் (கோரஸ்) சுவாமிக்கு
+சுவாமியே (கோரஸ்) ஐயப்பா (2)
+
+சாமி திந்தக தோம் தோம் (கோரஸ்) ஐயப்ப திந்தக தோம் தோம்
+ஐயப்ப திந்தக தோம் தோம் (கோரஸ்) சாமி திந்தக தோம் தோம்
+
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஐயப்பா (கோரஸ்) சுவாமியே
+சுவாமியே (கோரஸ்) ஐயப்பா
+ஐயப்பா (கோரஸ்) சுவாமியே
+
+ஓம் சுவாமியே சரணம் ஐயப்பா (3)
+ஓம் ஹரிஹர சுதன் ஆனந்த சித்தன் ஐயன் ஐயப்ப சுவாமியே சரணம் ஐயப்பா
+`, `
+Om Swaamiye (Chorus) Saranam Ayyappaa
+Kannimoola Ganapathy Bhagavaane (Chorus) Saranam Ayyappaa
+Om Swaamiye (Chorus) Saranam Ayyappaa
+
+Swaamiye (Chorus) Ayyappaa
+Ayyappaa (Chorus) Swaamiye
+Bhagavaane (Chorus) Bhagavathiye
+Bhagavathiye (Chorus) Bhagavaane
+Dhevane (Chorus) Dheviye
+Dheviye (Chorus) Dhevane
+Eeswarane (Chorus) Eeswariye
+Eeswariye (Chorus) Eeswarane
+Swaamiye (Chorus) Ayyappaa
+
+Ayyappaa (Chorus) Swaamiye
+Swaami Saranam (Chorus) Ayyappa Saranam
+Ayyappa Saranam (Chorus) Swaami Saranam
+Bhagavaan Saranam (Chorus) Bhagavathi Saranam
+Bhagavathi Saranam (Chorus) Bhagavaan Saranam
+Dhevan Saranam (Chorus) Dhevi Saranam
+Dhevi Saranam (Chorus) Dhevan Saranam
+Eeswaran Saranam (Chorus) Eeswari Saranam
+Eeswari Saranam (Chorus) Eeswaran Saranam
+Swaamiye (Chorus) Ayyappaa
+
+Ayyappaa (Chorus) Swaamiye
+Swaami Paadham (Chorus) Ayyappa Paadham
+Ayyappa Paadham (Chorus) Swaami Paadham
+Bhagavaan Paadham (Chorus) Bhagavathi Paadham
+Bhagavathi Paadham (Chorus) Bhagavaan Paadham
+Paadha Balam Thaa (Chorus) Dhega Balam Thaa
+Dhega Balam Thaa (Chorus) Paadha Balam Thaa
+
+Ayyappaa (Chorus) Swaamiye
+Pallikkettu (Chorus) Sabarimalaikku
+Kallum Mullum (Chorus) Kaalukku Meththai
+Kundum Kuzhiyum (Chorus) Kannukku Velichcham
+Swaamiye (Chorus) Ayyappaa
+Ayyappaa (Chorus) Swaamiye
+Kattum Kattum (Chorus) Sabarimalaikku
+Yarida Kattu (Chorus) Saamida Kattu
+Yaaraik Kaana (Chorus) Saamiyaik Kaana
+Saamiyaik Kandaal (Chorus) Motcham Kittum
+Eppo Kittum (Chorus) Ippo Kittum
+
+Swaamiye (Chorus) Ayyappaa
+Yeththividappaa (Chorus) Thookkividappaa
+Thookkividappaa (Chorus) Yeththividappaa
+Villaali Veera (Chorus) Ayyappa
+Veeramanikanta (Chorus) Ayyappa
+Saantha Swaroopaa (Chorus) Ayyappaa
+Sathgurunaadhaa (Chorus) Ayyappaa
+Pamba Vaasa (Chorus) Ayyappa
+Pandala Raja (Chorus) Ayyappa
+
+Saami Dhindaka Thom Thom (Chorus) Ayyappa Dhindaka Thom Thom
+Ayyappa Dhindaka Thom Thom (Chorus) Saami Dhindaka Thom Thom
+Saamiyappa (Chorus) Ayyappa
+Saranam Appa (Chorus) Ayyappa
+Vandhom Appa (Chorus) Ayyappa
+Varuvom Appa (Chorus) Ayyappa
+Swaamiye (Chorus) Ayyappa
+Ayyappa (Chorus) Swaamiye
+Kaliyuga Varadhaa (Chorus) Ayyappaa
+Kan Kanda Dheivame (Chorus) Ayyappaa
+Kaappaathappaa (Chorus) Ayyappaa
+Swaamiye (Chorus) Ayyappa
+
+Ayyappa (Chorus) Swaamiye
+Karpoora Dheepam (Chorus) Swaamikku
+Avalum Malarum (Chorus) Swaamikku
+Nei Abhishekam (Chorus) Swaamikke
+Paal Abhishekam (Chorus) Swaamikku
+Then Abhishekam (Chorus) Swaamikku
+Pushpa Abhishekam (Chorus) Swaamikku
+Muththiraith Thengaai (Chorus) Swaamikku
+Swaamiye (Chorus) Ayyappaa (2)
+
+Saami Dhindaka Thom Thom (Chorus) Ayyappa Dhindaka Thom Thom
+Ayyappa Dhindaka Thom Thom (Chorus) Saami Dhindaka Thom Thom
+
+Swaamiye (Chorus) Ayyappaa
+Ayyappaa (Chorus) Swaamiye
+Swaamiye (Chorus) Ayyappaa
+Ayyappaa (Chorus) Swaamiye
+
+Om Swaamiye Saranam Ayyappaa (3)
+Om Harihara Sudhan Aanandha Siddhan Ayyan Ayyappa Swaamiye Saranam Ayyappa
+`),
+
+  sung('sa', 'subramanyam-shanmukha-natha', ['subrahmanya'], 'సుబ్రహ్మణ్యం సుబ్రహ్మణ్యం షణ్ముఖనాథ', 'Subramanyam Subramanyam Shanmukha Natha', `
+సుబ్రహ్మణ్యం సుబ్రహ్మణ్యం షణ్ముఖనాథ సుబ్రహ్మణ్యం (2)
+
+శివ శివ శివ శివ సుబ్రహ్మణ్యం
+హర హర హర హర సుబ్రహ్మణ్యం
+హర హర హర హర సుబ్రహ్మణ్యం
+శివ శివ శివ శివ సుబ్రహ్మణ్యం
+
+శివ శరవణభవ సుబ్రహ్మణ్యం
+గురు శరవణభవ సుబ్రహ్మణ్యం
+శివ శివ హర హర సుబ్రహ్మణ్యం
+హర హర శివ శివ సుబ్రహ్మణ్యం
+
+సుబ్రహ్మణ్యం సుబ్రహ్మణ్యం షణ్ముఖనాథ సుబ్రహ్మణ్యం
+`, `
+Subramanyam Subramanyam Shanmukha Natha Subramanyam (2)
+
+Shiva Shiva Shiva Shiva Subramanyam
+Hara Hara Hara Hara Subramanyam
+Hara Hara Hara Hara Subramanyam
+Shiva Shiva Shiva Shiva Subramanyam
+
+Shiva Sharavana Bhava Subramanyam
+Guru Sharavana Bhava Subramanyam
+Shiva Shiva Hara Hara Subramanyam
+Hara Hara Shiva Shiva Subramanyam
+
+Subramanyam Subramanyam Shanmukha Natha Subramanyam
+`),
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
