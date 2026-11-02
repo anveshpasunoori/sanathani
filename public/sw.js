@@ -1,5 +1,5 @@
 // Offline app shell + notification click handling.
-const CACHE = 'thithi-v3';
+const CACHE = 'thithi-v4';
 // The app may be served from a sub-folder (GitHub Pages: /sanathani/); paths are relative to it.
 const BASE = new URL(self.registration.scope).pathname;
 self.addEventListener('install', (e) => { self.skipWaiting(); });
@@ -12,8 +12,11 @@ self.addEventListener('fetch', (e) => {
   // Song recordings stream with Range requests (206 partial responses, which cannot be cached);
   // let the browser handle them directly.
   if (url.pathname.startsWith(BASE + 'audio/') || e.request.headers.has('range')) return;
+  // The page itself is always checked with the server (GitHub Pages lets browsers keep it for 10 minutes),
+  // so a new version is picked up on the next open; other files are named by content and can be reused.
+  const fresh = e.request.mode === 'navigate' ? fetch(e.request.url, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(e.request);
   e.respondWith(
-    fetch(e.request).then((res) => {
+    fresh.then((res) => {
       if (res.ok && res.status === 200) {
         const copy = res.clone();
         caches.open(CACHE).then((c) => c.put(e.request, copy));
