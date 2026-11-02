@@ -44,6 +44,7 @@ export const ANNUAL: AnnualDef[] = [
   { id: 'janmashtami', name: 'Sri Krishna Janmashtami', nameTe: 'శ్రీ కృష్ణ జన్మాష్టమి', month: 4, tithi: 22, rule: 'nishita', regions: [...NOT_SOLAR, ...EAST, 'ta'] },
   { id: 'avani-avittam', name: 'Avani Avittam (Upakarma)', nameTe: 'ఆవణి అవిట్టం (ఉపాకర్మ)', month: 4, tithi: 14, rule: 'sunrise', regions: ['ta', 'ml'] },
   { id: 'vinayaka-chavithi', name: 'Vinayaka Chavithi', nameTe: 'వినాయక చవితి', month: 5, tithi: 3, rule: 'madhyahna' },
+  { id: 'ananta-chaturdashi', name: 'Ananta Chaturdashi', nameTe: 'అనంత చతుర్దశి', month: 5, tithi: 13, rule: 'sunrise', regions: [...NOT_SOLAR, ...EAST] },
   { id: 'navaratri', name: 'Devi Navaratri begins', nameTe: 'శరన్నవరాత్రులు ప్రారంభం', month: 6, tithi: 0, rule: 'sunrise' },
   { id: 'vijayadashami', name: 'Vijayadashami (Dasara)', nameTe: 'విజయదశమి', month: 6, tithi: 9, rule: 'aparahna' },
   { id: 'pitru-paksha', name: 'Mahalaya (Pitru) Paksha begins', nameTe: 'మహాలయ పక్షం ప్రారంభం', month: 5, tithi: 15, rule: 'sunrise' },

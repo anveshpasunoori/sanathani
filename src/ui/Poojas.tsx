@@ -42,7 +42,7 @@ export const STOTRA_LIST: Array<{ id: string; en: string; te: string; image: Dei
 ];
 
 const ORDER = ['nithya', 'ganapathi', 'lakshmi', 'varalakshmi', 'shiva', 'vishnu', 'venkateswara', 'satyanarayana', 'durga', 'saraswati', 'hanuman', 'rama', 'krishna', 'thiruppavai',
-  'subrahmanya', 'ayyappa', 'lalitha', 'surya', 'navagraha', 'narasimha', 'dattatreya', 'kubera', 'ugadi', 'vehicle', 'birthday', 'anniversary', 'purnima-amavasya', 'pinda'];
+  'subrahmanya', 'ayyappa', 'lalitha', 'surya', 'navagraha', 'narasimha', 'dattatreya', 'kubera', 'ugadi', 'vehicle', 'birthday', 'anniversary', 'purnima-amavasya', 'ananta-chaturdashi', 'aksharabhyasam', 'annaprashana', 'seemantham', 'bhumi-puja', 'upanayanam', 'pinda'];
 
 const STYLE_KEY = 'thithi-reminder:pooja-style';
 

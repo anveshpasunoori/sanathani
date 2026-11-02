@@ -9,7 +9,7 @@ import { weekdayOf } from '../src/engine/tz';
 import { HYD, NJ } from './fixtures';
 import { STOTRA_LIST } from '../src/ui/Poojas';
 
-const PERSONAL = ['birthday', 'anniversary'];
+const PERSONAL = ['birthday', 'anniversary', 'annaprashana', 'seemantham', 'bhumi-puja', 'upanayanam'];
 
 describe('pooja dates', () => {
   it('every pooja has upcoming dates in India and the US', () => {
@@ -98,7 +98,7 @@ describe('new poojas', () => {
 
 describe('all deity poojas', () => {
   it('has 20 poojas, each with a picture on disk, upcoming dates, and both short and detailed styles', () => {
-    expect(POOJAS).toHaveLength(28);
+    expect(POOJAS).toHaveLength(34);
     for (const p of POOJAS) {
       expect(existsSync(`public${DEITY_IMAGES[p.image].src}`)).toBe(true);
       if (!PERSONAL.includes(p.id)) expect(p.next('2026-10-25', HYD, 'te').length).toBeGreaterThan(0);
