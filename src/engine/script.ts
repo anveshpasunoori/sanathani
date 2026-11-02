@@ -5,10 +5,10 @@
 // syllable marks the aspirated and voiced sounds (க² = kha, க³ = ga, க⁴ = gha).
 // Only for Sanskrit text: Telugu-language words (song lyrics, Telugu names) are not converted.
 
-export type Script = 'telugu' | 'kannada' | 'devanagari' | 'malayalam' | 'tamil' | 'bengali' | 'gujarati' | 'odia' | 'gurmukhi';
+export type Script = 'telugu' | 'kannada' | 'devanagari' | 'malayalam' | 'tamil' | 'bengali' | 'gujarati' | 'odia' | 'gurmukhi' | 'latin';
 
 const TE_START = 0x0c00, TE_END = 0x0c7f;
-const OFFSET: Record<Exclude<Script, 'telugu' | 'tamil'>, number> = {
+const OFFSET: Record<Exclude<Script, 'telugu' | 'tamil' | 'latin'>, number> = {
   kannada: 0x0c80 - TE_START,
   devanagari: 0x0900 - TE_START,
   malayalam: 0x0d00 - TE_START,
@@ -128,6 +128,7 @@ const TAMIL_TEXT_LETTER: Record<string, string> = { 'గ': 'క', 'డ': 'ట', 
 /** Tamil-language text written in Telugu script → the given script. */
 export function tamilTextFromTelugu(text: string, script: Script): string {
   if (script === 'telugu') return text;
+  if (script === 'latin') return toLatin(text);
   if (script === 'tamil') {
     const plain = text.replace(/ట్ర/g, 'ఱ్ఱ').replace(/[గడదబశజ]/g, (c) => TAMIL_TEXT_LETTER[c]);
     return toTamil(plain);
@@ -139,6 +140,49 @@ export function tamilTextFromTelugu(text: string, script: Script): string {
 /** Sanskrit text in Telugu script → the given script. */
 export function fromTelugu(text: string, script: Script): string {
   if (script === 'telugu') return text;
+  if (script === 'latin') return toLatin(text);
   if (script === 'tamil') return toTamil(text);
   return byOffset(text, script);
+}
+
+// ---- English letters ----------------------------------------------------------------------------
+// For readers who chose English: Telugu-script text (stotrams, mantras, songs, the sankalpam) in plain
+// English letters, the way bhajan books print them — long vowels doubled (aa, ee, oo), no diacritics.
+
+const LAT_VOWEL: Record<string, string> = { 'అ': 'a', 'ఆ': 'aa', 'ఇ': 'i', 'ఈ': 'ee', 'ఉ': 'u', 'ఊ': 'oo', 'ఋ': 'ri', 'ౠ': 'ree', 'ఌ': 'lu', 'ఎ': 'e', 'ఏ': 'e', 'ఐ': 'ai', 'ఒ': 'o', 'ఓ': 'o', 'ఔ': 'au' };
+const LAT_SIGN: Record<string, string> = { 'ా': 'aa', 'ి': 'i', 'ీ': 'ee', 'ు': 'u', 'ూ': 'oo', 'ృ': 'ri', 'ౄ': 'ree', 'ె': 'e', 'ే': 'e', 'ై': 'ai', 'ొ': 'o', 'ో': 'o', 'ౌ': 'au' };
+const LAT_CONS: Record<string, string> = {
+  'క': 'k', 'ఖ': 'kh', 'గ': 'g', 'ఘ': 'gh', 'ఙ': 'n', 'చ': 'ch', 'ఛ': 'chh', 'జ': 'j', 'ఝ': 'jh', 'ఞ': 'n',
+  'ట': 't', 'ఠ': 'th', 'డ': 'd', 'ఢ': 'dh', 'ణ': 'n', 'త': 't', 'థ': 'th', 'ద': 'd', 'ధ': 'dh', 'న': 'n',
+  'ప': 'p', 'ఫ': 'ph', 'బ': 'b', 'భ': 'bh', 'మ': 'm', 'య': 'y', 'ర': 'r', 'ఱ': 'r', 'ల': 'l', 'ళ': 'l', 'ఴ': 'zh',
+  'వ': 'v', 'శ': 'sh', 'ష': 'sh', 'స': 's', 'హ': 'h',
+};
+const VIRAMA = '్';
+const TE_DIGIT = '౦౧౨౩౪౫౬౭౮౯';
+
+/** Telugu script → English letters. Each line starts with a capital letter. */
+export function toLatin(text: string): string {
+  const ch = [...text.replace(/క్ష/g, 'ⓚ').replace(/జ్ఞ/g, 'ⓙ')];
+  let out = '';
+  for (let i = 0; i < ch.length; i++) {
+    const c = ch[i], next = ch[i + 1];
+    if (c === 'ⓚ' || c === 'ⓙ' || LAT_CONS[c]) {
+      out += c === 'ⓚ' ? 'ksh' : c === 'ⓙ' ? 'gny' : LAT_CONS[c];
+      // The consonant's vowel: a sign, none (virama), or the inherent a.
+      if (next && LAT_SIGN[next]) { out += LAT_SIGN[next]; i++; }
+      else if (next === VIRAMA) i++;
+      else out += 'a';
+    } else if (LAT_VOWEL[c]) out += LAT_VOWEL[c];
+    else if (c === 'ం') {
+      // Anusvara: m before p/b/m and at a word's end, n elsewhere (Shankara, Govinda, Shambho, Om).
+      const n = next ?? '';
+      out += !LAT_CONS[n] || 'పఫబభమ'.includes(n) ? 'm' : 'n';
+    } else if (c === 'ః') out += 'h';
+    else if (c === 'ఁ') out += 'n';
+    else if (c === 'ఽ') out += "'";
+    else if (TE_DIGIT.includes(c)) out += String(TE_DIGIT.indexOf(c));
+    else if (c === '।') out += '|';
+    else out += c;
+  }
+  return out.replace(/(^|\n)(\s*)([a-z])/g, (_m, a: string, b: string, l: string) => a + b + l.toUpperCase());
 }

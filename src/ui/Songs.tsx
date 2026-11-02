@@ -63,8 +63,11 @@ export function SongsScreen({ deity, song }: { deity?: string; song?: string }) 
 
 type Deity = (typeof SONG_DEITIES)[number];
 
+/** Song cues written in Telugu, as they read once converted to English letters. */
+const englishCues = (t: string) => t.replace(/\(Koras\)/g, '(Chorus)').replace(/\((\d+) saarlu\)/g, '($1 times)');
+
 /** A language tag for each script, for the browser's fonts and screen readers. */
-const SCRIPT_TAG: Record<string, string> = { telugu: 'te', kannada: 'kn', devanagari: 'sa', malayalam: 'ml', tamil: 'ta', bengali: 'bn', gujarati: 'gu', odia: 'or', gurmukhi: 'pa' };
+const SCRIPT_TAG: Record<string, string> = { latin: 'en', telugu: 'te', kannada: 'kn', devanagari: 'sa', malayalam: 'ml', tamil: 'ta', bengali: 'bn', gujarati: 'gu', odia: 'or', gurmukhi: 'pa' };
 
 /**
  * A song as this reader sees it. Songs are shown in their own language: a Tamil song in Tamil to Tamil readers and
@@ -78,8 +81,10 @@ function useSongView() {
     if (s.romanOnly) return { title: s.title.en, sub: '', text: s.roman!, lang: 'en' };
     const own = s.lang ?? 'te';
     if (own === 'sa' && lang !== 'en') return { title: saTitle(s.title.te), sub: s.title.en, text: sa(s.text), lang: SCRIPT_TAG[script] };
+    // English readers get English letters: the song's own roman text, or the Telugu converted.
+    if (lang === 'en' && !s.roman) return { title: s.title.en, sub: '', text: englishCues(sa(s.text)), lang: 'en' };
     if (own === lang || !s.roman) return { title: s.title.te, sub: s.title.en, text: s.text, lang: own };
-    return { title: s.title.en, sub: own === 'sa' ? '' : s.title.te, text: s.roman, lang: 'en' };
+    return { title: s.title.en, sub: lang === 'en' || own === 'sa' ? '' : s.title.te, text: s.roman, lang: 'en' };
   };
 }
 
@@ -212,7 +217,7 @@ function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Lis
           {stanzas.map((lines, k) => (
             <p key={k} className="stanza">
               {lines.map((l, j) => (
-                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|పల్లవి|అనుపల్లవి|చరణం|మంగళం$|\((కోరస్|கோரஸ்|Chorus)\))/.test(l.trim()) ? 'cue' : undefined}>
+                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|పల్లవి|అనుపల్లవి|చరణం|మంగళం$|Shlokam$|Pallavi$|Anupallavi$|Charanam$|Mangalam$|\((కోరస్|கோரஸ்|Chorus)\))/.test(l.trim()) ? 'cue' : undefined}>
                   {l.split(/(\((?:కోరస్|கோரஸ்|Chorus)\)|\(\d+\)|\(\d సార్లు\))/).map((part, m) => (/^\((కోరస్|கோரஸ்|Chorus|\d)/.test(part) ? <span key={m} className="cue"> {part}</span> : part))}
                   <br />
                 </span>

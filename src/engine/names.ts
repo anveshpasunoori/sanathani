@@ -8,7 +8,7 @@ export type Lang = 'en' | 'te' | 'kn' | 'ta' | 'ml' | 'hi' | 'mr' | 'bn' | 'gu' 
 
 /** The script each language is written in (English shows Sanskrit texts in Telugu script). */
 export const SCRIPT_OF: Record<Lang, Script> = {
-  en: 'telugu', te: 'telugu', kn: 'kannada', ta: 'tamil', ml: 'malayalam', hi: 'devanagari', mr: 'devanagari',
+  en: 'latin', te: 'telugu', kn: 'kannada', ta: 'tamil', ml: 'malayalam', hi: 'devanagari', mr: 'devanagari',
   // Punjabi families read stotrams from Devanagari books; Gurmukhi can't write many Sanskrit sounds.
   bn: 'bengali', gu: 'gujarati', pa: 'devanagari', raj: 'devanagari', or: 'odia', bho: 'devanagari',
 };

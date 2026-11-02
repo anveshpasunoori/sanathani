@@ -14,7 +14,7 @@ type Bi = { en: string; te: string };
 export const pickName = (t: Bi, lang: Lang, table?: Record<Other, Record<string, string>>, key?: string) =>
   lang === 'te' ? t.te : lang === 'en' ? t.en : (key && table?.[lang][key]) || t.en;
 /** The smaller second name under a title: Telugu under English, English under the others. */
-export const subName = (t: Bi, lang: Lang) => (lang === 'en' ? t.te : t.en);
+export const subName = (t: Bi, lang: Lang) => (lang === 'en' ? '' : t.en);
 
 /** [title, deity] by pooja id. */
 export const POOJA_NAMES: Record<Other, Record<string, [string, string]>> = {
