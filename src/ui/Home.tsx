@@ -5,7 +5,7 @@ import { displayMonth, solarLabel, traditionYear } from '../data/traditions';
 import { LOCALE, untilTime, useText } from '../i18n';
 import { festivalName } from '../locales/festivals';
 import { HOME_TEXT } from '../locales/home';
-import { nakshatraName, pakshaName, pakshaOf, samvatsaraName, tithiFullName, tithiName, weekdayName, yogaName, karanaName } from '../engine/names';
+import { nakshatraName, samvatsaraName, tithiFullName, tithiName } from '../engine/names';
 import { observancesInRange } from '../engine/observances';
 import { dayPanchang, type Span } from '../engine/panchang';
 import { ritualsFor } from '../engine/rituals';
@@ -35,7 +35,7 @@ export function HomeScreen() {
   const yr = useMemo(() => traditionYear(today, place, tradition, p), [today, place, tradition, p]);
   const yearName = 'era' in yr ? x(yr.era, { n: yr.n }) : x('samvatsaram', { name: samvatsaraName(yr.samvatsara, lang) });
   const events = useMemo(() => upcoming(s.events, s.settings, today, 60).slice(0, 5), [s.events, s.settings, today]);
-  const obs = useMemo(() => observancesInRange(today, addDays(today, 30), place, tradition).slice(0, 6), [today, place, tradition]);
+  const obs = useMemo(() => observancesInRange(today, addDays(today, 30), place, tradition).slice(0, 3), [today, place, tradition]);
   const [q, setQ] = useState('');
   const tz = place.tz;
   const t0 = p.tithis[0];
@@ -63,7 +63,7 @@ export function HomeScreen() {
       <Card className="hero">
         <div className="greg">{formatCivil(today, loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
         <div className="lunar">{solar ?? displayMonth(p.month, t0.index, tradition, lang)} · {tithiFullName(t0.index, lang)}</div>
-        <div className="muted">{yearName} · {weekdayName(p.weekday, lang)}</div>
+        <div className="muted">{yearName}</div>
         <form className="ask-box" onSubmit={(e) => { e.preventDefault(); if (q.trim()) go({ tab: 'ask', q }); }}>
           <label className="sr-only" htmlFor="home-ask">{t('ask')}</label>
           <input id="home-ask" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('askPlaceholder')} />
@@ -75,7 +75,7 @@ export function HomeScreen() {
       <DailyPracticeCard />
 
       <Card title={t('upcomingFamily')} action={<button className="btn saffron" onClick={() => go({ tab: 'events', id: 'new' })}>+ {t('addEvent')}</button>}>
-        {events.length === 0 ? <p className="muted">{t('noEvents')} {x('noEventsHint')}</p> : (
+        {events.length === 0 ? <p className="muted">{x('noEventsHint')}</p> : (
           <ul className="list">
             {events.map((o) => (
               <li key={o.event.id + o.date} className="row" style={{ gap: 6, flexWrap: 'nowrap' }}>
@@ -118,19 +118,11 @@ export function HomeScreen() {
           <dd>{p.tithis.map((x, i) => <div key={i}>{tithiName(x.index, lang)} <span className="muted">{until(x.end)}</span></div>)}</dd>
           <dt>{t('nakshatra')}</dt>
           <dd>{p.nakshatras.map((x, i) => <div key={i}>{nakshatraName(x.index, lang)} <span className="muted">{until(x.end)}</span></div>)}</dd>
-          <dt>{t('paksha')}</dt><dd>{pakshaName(pakshaOf(t0.index), lang)}</dd>
-          <dt>{t('month')}</dt><dd>{solar ? <>{solar} <span className="muted">({displayMonth(p.month, t0.index, tradition, lang)})</span></> : displayMonth(p.month, t0.index, tradition, lang)}</dd>
-          <dt>{t('year')}</dt><dd>{'era' in yr ? yearName : samvatsaraName(yr.samvatsara, lang)} <span className="muted">({x('shaka', { n: p.shakaYear })})</span></dd>
-          <dt>{t('yoga')}</dt><dd>{yogaName(p.yogas[0].index, lang)} <span className="muted">{until(p.yogas[0].end)}</span></dd>
-          <dt>{t('karana')}</dt><dd>{karanaName(p.karanas[0].index, lang)} <span className="muted">{until(p.karanas[0].end)}</span></dd>
         </dl>
-      </Card>
-
-      <Card title={t('timings')}>
         <div className="times">
           <div className="time"><b>{t('sunrise')}</b>{clock(p.sunrise)}</div>
           <div className="time"><b>{t('sunset')}</b>{clock(p.sunset)}</div>
-          {([['rahu', p.rahuKalam], ['yama', p.yamagandam], ['gulika', p.gulikaKalam]] as const).map(([k, sp]) => (
+          {([['rahu', p.rahuKalam]] as const).map(([k, sp]) => (
             <div key={k} className={`time bad ${isNow(sp) ? 'now' : ''}`}><b>{t(k)}{isNow(sp) ? ` · ${x('now')}` : ''}</b>{clock(sp.start)} – {clock(sp.end)}</div>
           ))}
           <div className={`time good ${isNow(p.abhijit) ? 'now' : ''}`}><b>{t('abhijit')}</b>{p.abhijit ? `${clock(p.abhijit.start)} – ${clock(p.abhijit.end)}` : x('abhijitWed')}</div>
@@ -163,10 +155,12 @@ export function HomeScreen() {
 
       <VerseOfDayCard today={today} />
 
-      <Card title={t('guidance')}>
-        {guidance.length ? <ul className="stack" style={{ margin: 0, paddingLeft: 18 }}>{guidance.map((g, i) => <li key={i}>{g}</li>)}</ul> : <p>{x('noGuidance')}</p>}
-        <p className="tiny muted">{x('guidanceNote')}</p>
-      </Card>
+      {guidance.length > 0 && (
+        <Card title={t('guidance')}>
+          <ul className="stack" style={{ margin: 0, paddingLeft: 18 }}>{guidance.map((g, i) => <li key={i}>{g}</li>)}</ul>
+          <p className="tiny muted">{x('guidanceNote')}</p>
+        </Card>
+      )}
     </>
   );
 }

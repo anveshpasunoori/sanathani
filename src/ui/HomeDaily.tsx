@@ -30,9 +30,9 @@ export function DailyPracticeCard() {
       {items.filter((a) => !a.p.done).map((a) => <DeekshaCard key={a.kind} kind={a.kind} startDate={a.start} compact />)}
       <Card title={x('dailyPractice')}>
         <div className="row">
-          <button className="btn" onClick={() => go({ tab: 'japa' })}>📿 {x('openJapa')}</button>
-          <button className="btn" onClick={() => go({ tab: 'deeksha' })}>🪔 {x('startDeeksha')}</button>
-          {cloudEnabled && <button className="btn" onClick={() => go({ tab: 'groups' })}>👥 {gx('groups')}</button>}
+          <button className="btn small" onClick={() => go({ tab: 'japa' })}>📿 {x('openJapa')}</button>
+          <button className="btn small" onClick={() => go({ tab: 'deeksha' })}>🪔 {x('startDeeksha')}</button>
+          {cloudEnabled && <button className="btn small" onClick={() => go({ tab: 'groups' })}>👥 {gx('groups')}</button>}
         </div>
         {soon.length > 0 && (
           <ul className="list" style={{ marginTop: 8 }}>
