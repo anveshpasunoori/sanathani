@@ -31,6 +31,7 @@ export const SONG_DEITIES: Array<{ id: SongDeity; image: DeityImageId; en: strin
   { id: 'surya', image: 'surya', en: 'Surya', te: 'సూర్య భగవానుడు' },
   { id: 'shani', image: 'shani', en: 'Shani', te: 'శనైశ్చరుడు' },
   { id: 'kubera', image: 'kubera', en: 'Kubera', te: 'కుబేరుడు' },
+  { id: 'guru', image: 'dattatreya', en: 'Guru', te: 'గురువు' },
 ];
 
 const SIZE_KEY = 'thithi-reminder:song-size';
@@ -71,6 +72,7 @@ function useSongView() {
   const { lang, script, sa, saTitle } = useScript();
   return (s: Listed): { title: string; sub: string; text: string; lang?: string } => {
     if (s.mine) return { title: s.title.te, sub: s.title.en, text: s.text };
+    if (s.romanOnly) return { title: s.title.en, sub: '', text: s.roman!, lang: 'en' };
     const own = s.lang ?? 'te';
     if (own === 'sa' && lang !== 'en') return { title: saTitle(s.title.te), sub: s.title.en, text: sa(s.text), lang: SCRIPT_TAG[script] };
     if (own === lang || !s.roman) return { title: s.title.te, sub: s.title.en, text: s.text, lang: own };

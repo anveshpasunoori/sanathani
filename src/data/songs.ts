@@ -6,7 +6,7 @@
 
 export type SongDeity =
   | 'ganapathi' | 'lakshmi' | 'shiva' | 'vishnu' | 'venkateswara' | 'ayyappa' | 'hanuman' | 'durga'
-  | 'saraswati' | 'subrahmanya' | 'rama' | 'krishna' | 'lalitha' | 'surya' | 'shani' | 'narasimha' | 'dattatreya' | 'kubera';
+  | 'saraswati' | 'subrahmanya' | 'rama' | 'krishna' | 'lalitha' | 'surya' | 'shani' | 'narasimha' | 'dattatreya' | 'kubera' | 'guru';
 
 export interface Song {
   id: string;
@@ -23,12 +23,17 @@ export interface Song {
   lang?: 'te' | 'ta' | 'sa';
   /** The words in English letters, for readers of other languages. */
   roman?: string;
+  /** Only the English-letter words are written so far: everyone sees those until the song's own script is added. */
+  romanOnly?: true;
   /** Optional recording (file in public/audio) and who sings it, if known. */
   audio?: { src: string; singer: string };
 }
 
 const song = (id: string, deities: SongDeity[], te: string, en: string, text: string): Song =>
   ({ id, deities, title: { te, en }, text: text.trim() });
+/** A song written so far only in English letters, as its source book prints it. */
+const inRoman = (lang: 'te' | 'ta' | 'sa', id: string, deities: SongDeity[], title: string, roman: string): Song =>
+  ({ ...song(id, deities, title, title, roman), lang, roman: roman.trim(), romanOnly: true });
 /** A song with its words in its own script and in English letters. */
 const sung = (lang: 'te' | 'ta' | 'sa', id: string, deities: SongDeity[], title: string, en: string, text: string, roman: string): Song =>
   ({ ...song(id, deities, title, en, text), lang, roman: roman.trim() });
@@ -1764,11 +1769,11 @@ export const SONGS: Song[] = [
 ॥ హరోం హర ॥
 `),
 
-  // Murugan nama bhajan (author not known), as the app owner sent it; "మామ్ పళని వేళాయుధహవే" read as
-  // "మాం పాహి వేలాయుధనే" (protect me, bearer of the Vel), రక్షకనే, సుబ్రహ్మణ్య, వల్లి corrected, chorus cued.
-  song('vel-muruga-mam-pahi', ['subrahmanya'], 'వేల్ మురుగా మాం పాహి వేలాయుధనే', 'Vel Muruga Mam Pahi Velayudhane', `
+  // Murugan nama bhajan (author not known), as the app owner sent it; వేళాయుధహవే → వేలాయుధనే, రక్షకనే,
+  // సుబ్రహ్మణ్య, వల్లి corrected, chorus cued. "మామ్ పళని" as sent (the NJABM book prints "Maam Pazhani" too).
+  song('vel-muruga-mam-pahi', ['subrahmanya'], 'వేల్ మురుగ మామ్ పళని వేలాయుధనే', 'Vel Muruga Maam Pazhani Velayudhane', `
 వేల్ వేల్ వేల్ వేల్ వేల్ మురుగ వేల్ (2)
-వేల్ మురుగ మాం పాహి వేలాయుధనే (2)
+వేల్ మురుగ మామ్ పళని వేలాయుధనే (2)
 
 స్కంద కదంబ కుమార కార్తికేయ (2)
 కరుణతోన కాపాడు వేలాయుధనే (2)
@@ -3047,6 +3052,2155 @@ Shiva Shiva Hara Hara Subramanyam
 Hara Hara Shiva Shiva Subramanyam
 
 Subramanyam Subramanyam Shanmukha Natha Subramanyam
+`),
+
+  // From the NJABM (New Jersey Ayyappa Bhaktha Mandali) Bhajan Book, 2019: the traditional nama bhajans and
+  // classical songs (Meera, Purandara Dasa, the abhangs, Arunagirinathar, Oothukkadu) the app did not have.
+  // Written for now in English letters as the book prints them; their own scripts follow. The Telugu songs are
+  // in Telugu. Film and album songs in the book are left out.
+  inRoman('ta', 'gajamugane-gananaatha', ['ganapathi'], 'Gajamugane Gananaatha', `
+Gajamukhane Gananatha Gowri Nandhana
+Gajavadhana
+
+Kaithala niraikani appamodu avalpori
+Kappiya Karimugan Adipeni
+Katridum Adiyavar Buthiyil Uraibava
+Karpagam Enavinai Kadithegum
+
+Gajamukhane Gananatha Gowri Nandhana
+Gajavadhana
+Mathamum Mathiyamum Vaithidum
+Aranmagan, Matroru Thiralpuya
+Madhayanai
+Mathala Vayitranai Uththami Puthalvanai Mattavizh Malarkodu Paniveney
+Gajamukhane Gananatha Gowri Nandhana
+Gajavadhana
+Athuyar Adhukodu Subira Manipadum
+Appunam Adhanidai Ibamagi
+Akkura Magaludan Acchiru Muruganani
+Akkanam Manamarul Perumaley
+Gajamukhane Gananatha Gowri Nandhana
+Gajavadhana
+`),
+
+  inRoman('sa', 'gana-gana-gana-gana', ['ganapathi'], 'Gana Gana Gana Gana', `
+Gana Gana Gana Gana Gananatha (2)
+Gajamukha Vadana Gananatha (2)
+Gajana Hey Gajavadana (2)
+Gajavadana Hey Gajaanana (2)
+
+Thumbikaiyone Gajaanana
+Nambikkaiyone Gajaanana
+Much-chandiyone Gajaanana
+Moola Porule Gajaanana
+Gana Gana Gana Gana Gananatha (2)
+Gajamukha Vadana Gananatha (2)
+Gajana Hey Gajavadana (2)
+Gajavadana Hey Gajaanana (2)
+Sidhi Budhi Gajaanana
+Budhiyai Tharuvaai Gajaanana
+Thondi Ganapathi Gajaanana
+Mangala Vinayaka Gajaanana
+
+Gana Gana Gana Gana Gananatha (2)
+Gajamukha Vadana Gananatha (2)
+Gajana Hey Gajavadana (2)
+Gajavadana Hey Gajaanana (2)
+`),
+
+  inRoman('sa', 'ganapathy-ganapathy', ['ganapathi'], 'Ganapathy Ganapathy', `
+Ganapathy Ganapathy Ganapathy Ganapathy Ganapathy Ganapathy Paalayamaam
+Ganapathy Gunapathy Ganapathy Gunapathy Ganapathy Gunapthy Paalayamaam
+Ganapathy Gunapathy Gajapathy Ganapathy Gunapathy Gajapathy Paalayamaam
+Ganapathy Gunapathy Gajapathy Mamapathy Ganapathy Gunapathy Paalayamaam
+
+Ganapathy Gunapathy Gajapathy Mamapathy Varapathy Ganapathy Paalayamaam
+Ganapathy Gunapathy Gajapathy Mamapathy Varapathy Pasupathy Paalayamaam
+Ganapathy, Raja Ganapathy, Buddhi Ganapathy
+Siddhi Ganapathy Ganapathy Ganapathy
+Ganapathy Ganapathy Ganapathy Paalayamaam
+Ganapathy Gunapathy Gajapathy Mamapathy Varapathy Pasupathy Paalayamaam
+`),
+
+  inRoman('sa', 'mangala-ganapathey', ['ganapathi'], 'Mangala Ganapathey', `
+Mangala Ganapathey Karunanidhey
+Mangala Ganapathey Karunanidhey
+Mangala Sarva Mangala Siddhi Mangala
+Ganapathey Karunanidhey
+
+Managala Ganapathey Karunanidhey
+Ekadantha Sankaran Maindha
+Sankaran Maindha Skanda Sahodhara
+Mangala Sarva Mangala Siddhi Mangala
+Ganapathey Karunanidhey
+Mangala Ganapathey Karunanidhey
+`),
+
+  inRoman('sa', 'om-ganapathi', ['ganapathi'], 'Om Ganapathi', `
+Om Ganapathi, Siddhi Ganapathi
+Moola Dhaara Sevitha Mushika Vagana
+Ganapathi
+Om Ganapathi, Siddhi Ganapathi
+Gum Gum Ganapathi Gana Mulaku Adhipathi
+Vighna Mulanu Tholaginchae Akila Loga Subha Pathi
+Charanu Ganesha Charanu Ganesha
+Charanu Ganesha Charanu Ganesha
+Om Ganapathi, Siddhi Ganapathi
+Gauri Priya Nandhana Dhusta Chintha Banjana
+Bava Rogamu Hari Enchae Bhagtha Jana Ranjana
+
+Charanu Ganesha Charanu Ganesha
+Charanu Ganesha Charanu Ganesha
+Om Ganapathi, Siddhi Ganapathi
+Om Ganapathi, Siddhi Ganapathi
+Nava Roopa Ganapathi Pranava Roopa Vedha Noothi
+Siddhi Budhi Thayaga Bagtha Moksha Thayaga
+Charanu Ganesha Charanu Ganesha
+Charanu Ganesha Charanu Ganesha
+Om ganapathi Siddhi Ganapathi
+Om ganapathi Siddhi Ganapathi
+Moola Dhaara Sevitha Mushika Vagana
+Ganapathi
+Om Ganapathi Siddhi Ganapathi
+Om Ganapathi Siddhi Ganapathi
+`),
+
+  inRoman('sa', 'raja-ganapathy', ['ganapathi'], 'Raja Ganapathy', `
+Raja Ganapathi Raaya Ho Maharaaja
+Ganapathi Raaya Ho
+Paayaancha Kankaru Vaasathi Naachata
+Aaley Ganapathi
+Gowri Haraa'ncha Kumaara Tyancha
+Naama Lambhodhara
+Rutthi, Siddi Sow-Dhaadhaa Thoravigna
+Nivaaritaa
+Tukhaamaney Yeka Sapaayi Vittala
+Ganapathi Tujanahi
+Vittala Ganapathy Vittala Ganapathy
+Vittala Ganapathy Vittala Ganapathy
+Raja Ganapathi Raaya Ho Maharaja
+Ganapathi Raaya Ho (4)
+`),
+
+  inRoman('sa', 'suramuni-vanditha', ['ganapathi'], 'Suramuni Vanditha', `
+Suramuni Vanditha Vinayaka
+Ananda Dayaka Vinayaka
+Suramuni Vanditha Vinayaka
+Ananda Dayaka Vinayaka
+Hey Shiva Nandana Shubha Nana
+Shree Ganesha Vinayaka
+Shree Ganesha - Shree Ganesha - Shree
+Ganesha Vinayaka
+Suramuni Vanditha Gajanana
+Pada Namaste Gajanana
+Suramuni Vanditha Gajanana
+Pada Namaste Gajanana
+Mushika Vahana Shubha Nana
+Modaka Hastha Gajanana
+Modaka Hastha - Modaka Hastha - Modaka Hastha Gajanana
+Moraya Re Bappa - Moraya Re Bappa
+Ganapati Bappa Moraya - Mangala Murti
+Moraya
+`),
+
+  inRoman('sa', 'vinayaka-vinayaka', ['ganapathi'], 'Vinayaka Vinayaka', `
+Vinaayaka Vinaayaka (2)
+Vighna Vinaashaka Vinaayaka (2)
+Shambho Kumaaraa Vinaayaka (2)
+Shankari Puthra Vinaayaka (2)
+Baala Ganapathe Vinaayaka (2)
+Parama Dayala Vinaayaka (2)
+Bhaktha Jana Priya Vinaayaka (2)
+Paada Namaste Vinaayaka (2)
+`),
+
+  inRoman('sa', 'aanantha-guru', ['guru'], 'Aanantha Guru', `
+Aanantha Guru Raja Ramana Aanantha Guru Natha
+Aanantha Paramanantha Guru RajaRamana
+Aanantha Guru Natha
+Aanantha Paramanantha Sachithanantha
+Guru RajaRamana Aanantha Guru Natha
+Aanantha Paramanantha Sachithanantha
+Gyananantha Guru RajaRamana Aanantha ndha Guru Natha Aanantha Paramanantha Sachithanantha Gyananantha Chinmayaanantha Guru
+RajaRamana Aanantha Guru Natha
+Aanantha Paramanantha Sachithanantha
+Gyenanantha Chinmayaanantha Dhayanantha
+Guru RajaRamana Aanantha Guru Natha
+Aanantha Paramanantha Sachithanantha
+Gyananantha Chinmayaanantha Dhayaanantha
+Shivanantha Guru RajaRamana Aanantha Guru Natha
+`),
+
+  inRoman('sa', 'gnananandaa-gnanananda-deva', ['guru'], 'Gnananandaa Gnanananda Deva', `
+Gnana Nanda Gnana Nanda Deva
+Gnana Nanda Gnana Nanda Deva
+Manam Ninaikumbothu Unnai Thuthikkum
+Bhothu Enthan Arugil Vanthu Nirkum
+Gurunatha (2)
+Naan Paadum Bhothu Ennai Paada Vaithu
+
+Annanda Nadana Midum Guru Natha
+Gnana Nanda Gnana Nanda Deva (3)
+Manam Tharlartha bhothu Soorv Adaitha
+Bhothu Adhil Shakthi Enna Vantha
+Gurunatha
+Naan Thalarantha Bhothu Naan Bayantha
+Bhothu Bhayam Thelia Vaitha En Guru Natha
+Naan Bhyantha Bhothu Yaamirukka Bhayam
+Etharkku Enru Theriya Vaitha En Gurunatha
+Gnana Nand Gnana Nanda Deva (4)
+
+Manam Ninaikumbothu Unnai Thuthikkum
+Bhothu Enthan Arugil Vanthu Nirkum
+Gurunatha (Fast)
+Naan Bhyantha Bhothu Naan Errukka Bhyam
+
+Etharkku Enru Theriya Vaitha En Gurunatha
+
+(fast)
+
+Gnana Nand Gnana Nanda Deva
+Gnana nanda Gnana nanda
+`),
+
+  inRoman('sa', 'guru-hamaare', ['guru'], 'Guru Hamaare', `
+Guru Hamaare Man Mandhir Mein, Guru
+Hamaare Pyar (2)
+Saare Vishwa-Ka Woh Hai Dhaatha, Naarayana Bhagwaan (2)
+Om Guru Deva Shri Guru Deva
+Shri Guru Deva Sathguru Deva
+Sathguru Deva, Jai Guru Deva
+Guru Hamaare Dhan Dhaulat Hai, Guru
+Hamaare Pyar (2)
+Gyan Bhakthi Ka Who Hai Dhaatha, Naarayana Bhagwaan (2)
+Om Guru Deva
+Guru Hamaare Tan Man Sabh Hai, Guru
+
+Guru Page 15 of 227
+Hamaare Pyar (2)
+Saare Vishwa-Ka Woh Hai Dhaatha, Naarayana Bhagwaan (2)
+Om Guru Deva
+`),
+
+  inRoman('sa', 'om-gurunadha', ['guru'], 'Om Gurunadha', `
+Om Gurunadha Nyananandha Charanam
+Charanam Gurudeva
+Seerperugum Paramanandha Desiga
+Chinmayane Gurunadha
+Chindhai Adangida Sivavaram Alindharum Desigane Gurunadha
+Om Gurunadha Nyananandha Charanam
+Charanam Gurudeva
+Paarmuzhudum Paramaghi Inaindhitta
+Bhaagiyane Gurunadha
+Yaar tharuvar arulinar anubhavam
+aandavane Gurunadha
+Om Gurunadha Nyananandha Charanam
+Charanam Gurudeva
+Nithya Niranjana Nirmalanagiya Nirgunane Gurunadha Sathiya Nyanandha Maghagiya Saasvadhane Gurunadha
+Om Gurunadha Nyananandha Charanam
+Charanam Gurudeva
+`),
+
+  inRoman('sa', 'sachidananda-guru', ['guru'], 'Sachidananda Guru', `
+Sachidananda Guru Sachidananda
+Sachidananda Guru Sachidananda
+Om Guru Jaya Guru Sachidananda
+Sri Guru Siva Guru Sachidananda
+Abhinava Vidhya Guru Sachidananda
+Aadhi Shankara Guru Sachidananda
+
+Guru Page 17 of 227
+Kamakoti Jagath Guru Sachidananda
+Chandra Moulishwara Sathguru
+Sachidananda
+Sringeri JagathGuru Sachidananda
+Saradha Peeta Guru Sachidananda
+Parama Dayala Guru Sachidananda
+Parama Hamsa Guru Sachidananda
+Nichayamai Hariyaikaatum Sachidananda
+Uchiyil Vaithadiduvom Sachidananda
+`),
+
+  inRoman('sa', 'shankara-guru', ['guru'], 'Shankara Guru', `
+Shankara Guru Jaya Shankara Guru
+Shanmadha Staapaga Shankar Guru
+Apaara Mahimaa Gurunaadha
+Kripasaagara Gurunaadha
+Anudinam Thozhuvom Gurunaadha
+Anugraham Purivaai Gurunaadha
+Om Guru Jaya Guru Gurunaatha
+Shringeri Jagat Guru Gurunatha
+Kaanchi Kaamakoti Vaasi Gurunatha
+Anudinam Thozhuvom Gurunaadha
+
+Anugraham Purivaai Gurunaadha
+`),
+
+  inRoman('sa', 'amba-bhavani-saradhey', ['saraswati'], 'Amba Bhavani Saradhey', `
+Amba Bhavani Saradhey
+Jagadamba Bhavani Saradhey
+Sankara boojitha saradhey
+Shringa Nivasini saradhey
+Pustaka hasthey saradhey
+Veena vaani saradhey
+Mayura gamani saradhey
+Hamsavahini saradhey
+Amba bhavani saradhey
+Jagadamba bhavani saradhey
+`),
+
+  inRoman('sa', 'ambuja-vasini-sundari-vani-saraswati', ['saraswati'], 'Ambuja Vasini Sundari Vani Saraswati', `
+Ambuja Vasini Sundari Vani Saraswati Devi Namosthuthe (2)
+Pustaka Dharini Buddhi Pradhayini (2)
+Veena Vani Trinayani Pani (2)
+Veda Shastra Nuthe Vidhi Priya Subhage (2)
+Vidya Varidhi Pahi Pahi (2)
+`),
+
+  inRoman('sa', 'jaga-janani', ['saraswati'], 'Jaga Janani', `
+Jagat Janani Jagan Maatha
+Vani Saraswathi Vak Devi
+Amma Om Lakshmi Sree Lakshmi
+Om Sree Lakshmi Maha Lakshmi
+Amma Om Shakthi Sree Shakthi
+Om Sree Sakthi Para Sakthi
+Amma Om Maatha Sree Maatha
+Om Sree Maatha Jagan Maatha
+Amma Jaga Janani Jagan Maatha
+Vaani Saraswathi Vak Devi
+`),
+
+  inRoman('sa', 'jaya-jaya-devi-daya-lahari', ['saraswati'], 'Jaya Jaya Devi Daya Lahari', `
+Jaya Jaya Devi Daya Lahari
+Janani Saraswathi Paalayamam
+Amale Kamala Sana sahithe
+Adbutha Charithe Palaya Maam
+Maadhar Mangala Gunashaali
+Manogya Sheele Paalayamaam
+Kireeta Kundala Shushobithe
+Kinnara Keethey Paalayamaam
+`),
+
+  inRoman('sa', 'saranam-jagat-janani', ['saraswati'], 'Saranam Jagat Janani', `
+Saranam Jagat Janani, Satya Dharma Paalini
+Dhavala Vasthra Dhaarini, Daanava
+Samhaarini
+Mahishasura Mardhini, Mridhu Manjula
+Bhashini
+Kanchipura Vasini, Vanchita Phaladayini
+Kalikalmasha Nasini, Karunaamritha Varshini
+`),
+
+  inRoman('sa', 'saradhe-om-saradhe', ['saraswati'], 'Saradhe Om Saradhe', `
+Sharade sharade Veena Vani Shaarade (2)
+Sharade sharade Pustaka Pani Shaarade (2)
+Sharade sharade Manju Bhashini Shaarade (2)
+Sharade sharade Mangala Dayini sharade (2)
+`),
+
+  inRoman('sa', 'vani-saraswathi-vaakdevi', ['saraswati'], 'Vani Saraswathi Vaakdevi', `
+Vani saraswathi Vaakdevi
+Veena Dhaarini Paalayamaam
+Veda Sasthra Paripaalini Devi
+Vidhya Roopini Paalayamaam
+Bhagavathi Bharathi Keervani
+Pannaga Veni Paalayamaam
+Mukthi Daayini Moksha Pradaayini
+Pustaka Paani Paalayamaam
+`),
+
+  inRoman('ta', 'araharohara-swami-araharohara', ['subrahmanya'], 'Araharohara Swami Araharohara', `
+Araharo Haraa Swami Araharo Haraa
+Araharo Haraa Swami Araharo Haraa
+Kathirkaama Velanukku Araharo Haraa
+Kanthappa Swamikku Araharo Haraa
+Thirupparangiri Theeranukku Araharo
+Haraa
+Thiruchenthoor Thevanukku Araharo Haraa
+Thiruppalani Selvanukku Araharo Haraa
+Thiruveraga Paalanukku Araharo Haraa
+Kunrilaadum Kumaranukku Araharo Haraa
+Kunchirithan Kanavanukku Araharo Haraa
+Kuravalli Kaanthanukku Araharo Haraa
+Kunangadantha Lolanukku Araharo Haraa
+
+Solaimalai Kilavanukku Araharo Haraa
+Sogusukkaara Maruganukku Araharo Haraa
+Sivasakthi Velanukku Araharo Haraa
+Singaara Velanukku Araharo Haraa
+Agangaara Naasarukku Araharo Haraa
+Anparkalin Neyarukku Araharo Haraa
+Onkaarath Thathuvarkku Araharo Haraa
+Om Sakthi Thanthavarkku Araharo Haraa
+Araharo Haraa Swami Araharo Haraa
+Araharo Haraa Swami Araharo Haraa
+`),
+
+  inRoman('ta', 'muruga-kumara-arohara', ['subrahmanya'], 'Muruga Kumara Arohara', `
+Muruga Kumara Arohara
+Engal Muruga Kumara Arohara
+Shakthiyin Maindha Shanmuga
+Shiva Sakthiyin Maindha Shanmuga
+Muruga Kumara Arohara
+Engal Muruga Kumara Arohara
+Arulai Tharuliya Baalane
+Pugazhai Vazhangiya Devane
+Thirupugazhai Vazhangiya Devane
+Muruga Kumara Arohara
+Engal Muruga Kumara Arohara
+
+Swamimalai Vaazhum Naadhane
+Swaaminaadha Perumane
+Engal Swaaminaadha Perumane
+Muruga Kumara Arohara
+Engal Muruga Kumara Arohara
+`),
+
+  inRoman('ta', 'saranam-saranam-muthaiyah', ['subrahmanya'], 'Saranam Saranam Muthaiyah', `
+Saranam Saranam Muthaiyah
+Saravana Bhavane Muthaiyah
+Muthaiyah, Muthaiyah, Muthaiyah
+Muthaiyah
+
+Muthaiyah, Muthaiyah, Muthaiyah
+Muthaiyah, Muthaiyah, Muthaiyah
+Muthaiyah
+Anbadhu Arulvaai Muthaiyah
+Aruladhu Tharuvaai Muthaiyah
+Aarudhal Tharuvaai Muthaiyah
+Yerudhal Solvaai Muthaiyah
+Saranam Saranam
+Inbam Tharuvaai Muthaiyah
+Innal Theerppai Muthaiyah
+Eesan Magane Muthaiyah
+Eedera Arulvaai Muthaiyah
+Saranam Saranam
+`),
+
+  inRoman('sa', 'vel-muruga-maal-maruga', ['subrahmanya'], 'Vel Muruga Maal Maruga', `
+Vel Muruga Malmaruga Valli Manala
+Shakthi Vadi Velavane Shanmuganatha
+Kanda Kumara Muruga Karthikeyane
+Karthikeyane
+
+Araharohara Muruga Araharohara
+
+Arohara Shanmuga Araharohara
+`),
+
+  inRoman('sa', 'bholo-natha-umapathe', ['shiva'], 'Bholo Natha Umapathe', `
+Bholo Natha Umapate Sambho Sankara
+pasupate
+Nandi Vahana Naga Bhooshana
+Chandrashekara Jadadhara
+
+Shooladhara Jyoti Prakasa Viboodhi
+Sundara Paramesa (Bholo)
+Kailasa Vasa kanaka Sabesa Gauri
+Manohara Visvesa
+Smasana Vasa Chidambaresa Neelakanda
+Mahadeva (Bholo)
+Dum Dum Dum Dum Damarooka natha
+Parvathi Ramana Mahadeva
+Gangadhara-hara Gauri Manohara
+Girijakantha Sadashiva (Bholo)
+`),
+
+  inRoman('sa', 'bolo-bolo-sab-mil-bolo', ['shiva'], 'Bolo Bolo Sab Mil Bolo', `
+Bolo Bolo Sab Mil Bolo Om Namah Shivay
+Om Namah Shivaya Om Namah Shivaya
+
+Joot Jata Mein Ganga Dhari
+Trishula Dhari Damaru Bajai
+Dama dama dama dama damaru bajai
+Goonj Uthao Namah Shivaya
+om namah shivaya
+Hari om namah shivaya
+Bolo bolo sab mil bolo
+Om namah shivaya
+om namah shivaya
+`),
+
+  inRoman('sa', 'daya-karo-bhagwan-shankar', ['shiva'], 'Daya Karo Bhagwan Shankar', `
+Dhaya Karo Bhagavanu Shankara, Dhaya Karo Bhagavan (2)
+Thrinethradhaari Thrishooladhaari
+Gangadhaari Dhayaa Karo
+Dhaya Karo Bhagavanu Shankara, Dhaya Karo Bhagavan (2)
+Chandrasekhara Gangajadaadhara, Sambha SadhaShiva Dhayaa Karo
+Paarvathi Ramana, Pannaga Booshana, Sri Neelakanta Dhayaa Karo
+Dhaya Karo Bhagavanu Shankara, Dhaya Karo Bhagavan (2)
+`),
+
+  inRoman('sa', 'hara-hara-bolo', ['shiva'], 'Hara Hara Bolo', `
+Hara Hara Bolo
+Siva Siva Bolo
+Bum Bum Bolo Bolonatha
+Nandi Vaahana Naga Booshana
+Chandrasekara Jadaathara (Hara Hara)
+Sooladhara Jothi Prakaasa Viboothi Sundara Paramesa (Hara Hara)
+Kailasa Vaasa Kanaka Sabesa, Gowri
+Manohara Viswesha (Hara Hara)
+`),
+
+  inRoman('sa', 'hari-om-namah-shivaya', ['shiva'], 'Hari Om Namah Shivaya', `
+Hari Om Namah Shivaaya
+Shiva Shiva Sankara, Hara Parameswara, Om Nama Shivaya Om (2)
+Hara Hara Sankara, Hara Parameswara, Om Nama Shivaya Om (2)
+Hari Om Namah Shivaaya (slow)
+`),
+
+  inRoman('sa', 'kailasapathey-maha-deva-sambho', ['shiva'], 'Kailasapathey Maha Deva Sambho', `
+Om Namo Namo Namah Sivaya (4)
+Kailasapathey Maha Deva Sambho
+Maha Deva Sambho . Maha Deva Sambho
+Dama Dama Dama Dama Damarupathey
+Dama Dama Dama Dama Damarupathey
+Gana Gana Gana Gana Gangapathey
+Gana Gana Gana Gana Gangapathey
+Thaka Thimi Thaka Thimi Natanapathey
+Thaka Thimi Thaka Thimi Natanapathey
+Saamba Sadasiva Pasupathey
+Saamba Sadasiva Pasupathey
+Kailasapathey Maha Deva Sambho
+Maha Deva Sambho . Maha Deva Sambho
+Om Namo Namo Namah Sivaya
+Om Namo Namo Namah Sivaya
+Sivaya Namah Om Haraaya Namah Om
+Siva Siva Siva Siva Sivaya Namah Om
+Hara Hara Hara Hara Haraaya Namah Om
+Sivaya Namah Om Haraya Namah Om
+`),
+
+  inRoman('sa', 'namah-parvati-pataye', ['shiva'], 'Namah Parvati Pataye', `
+Namah Parvati Pataye Hara Hara Mahadeva Deva Deva
+Nandi Vaahana Naga Bushana
+Chandrasekara Jatadhara
+Rishaba Vaahana Rudra Thaandava
+Somasekara Gangadhara
+Namah Parvati Pataye Hara Hara Mahadeva Deva Deva
+
+Nataraja Natarja Nardhana Sundara Nataraja
+Sivaraja Sivaraja Sivagami Priya Sivaraja
+Bolo Shankara Bolo Shankara Bolo
+Shankara Bolo
+
+Bolo Shankara Bolo Shankara Bolo
+
+Shankara Bolo (2)
+
+Bolo Shankara Umapathey, Bolo Shankara
+
+Gowripathey
+Namah Parvati Pataye Hara Hara Mahadeva Deva Deva
+`),
+
+  inRoman('sa', 'om-nama-sivaaya-sivaaya-nama-om', ['shiva'], 'Om Nama Sivaaya Sivaaya Nama Om', `
+Om Nama Sivaaya Sivaaya Nama Om
+Om Nama Sivaaya Sivaaya Nama Om
+Om Nama Sivaaya Sivaaya Nama Om
+Om Nama Sivaaya Sivaaya Nama Om
+Hara Hara Hara Haraya Nama Om
+Hara Hara Hara Haraya Nama Om
+Siva Siva Siva Sivaya Nama Om
+Siva Siva Siva Sivaya Nama Om
+Dama Dama Dama Damaru Pathey
+Dama Dama Dama Damaru Pathey
+Dhimithaka Dhimithaka Mridhanga Baaje
+Dhimithaka Dhimithaka Mridhanga Baaje
+Hara Hara Mahaa Devaa Hara Hara Mahaa
+Devaa
+Hara Hara Mahaa Devaa Hara Hara Mahaa
+Devaa
+Gangadhara Gangadhara Gangadhara
+Gangadhara (2)
+Gangadhara Gangadhara (6)
+`),
+
+  inRoman('sa', 'sambo-shankara-gowreesha', ['shiva'], 'Sambo Shankara Gowreesha', `
+Sambo Shankar Gowreesha Siva Saamba
+Shankara Gowreesha
+Kumboth Bhavanutha Gowreesha Siva
+Saamba Sankara Gowreesha
+Saamagana Priya Gowreesha Siva Saamba
+Sankara Gowreesha
+Soma Kalaadhara Gowreesha Siva Saamba
+Sankara Gowreesha
+
+Kailasaadipa Gowreesha Siva Saamba
+Sankara Gowreesha
+Shailadeeditha Gowreesha Siva Saamba
+Sankara Gowreesha
+Ghoraantha Kaale Gowreesha Siva Saamba Sankara Gowreesha
+Srirama Poojitha Gowreesha Siva Saamba Sankara Gowreesha
+Sambo Sankara Gowreesha Siva Saamba
+Sankara Gowreesha
+`),
+
+  inRoman('sa', 'sankara-sadhashiva', ['shiva'], 'Sankara Sadhashiva', `
+Shankara Sadashiva Shankari Manohara
+Chadrasekara Jadathara Umamaheshwara
+Chandrasekara Chandrasekara
+Chandrasekara Jadathara Umamaheshwara
+Neelakanta Sooladari Shankar Sadashiva Baalanethra Thripuraari Sambosivashankara
+Jai Jai Shankar Jaya Abhayankara
+Jai Jai Shankar Jaya Abhayankara
+Jai Jai Shankar Jaya Abhayankara
+Jai Jai Shankar Jaya Abhayankara
+Shankara Sadashiva Shankari Manohara
+Chadrasekara Jadathara (Fast)
+`),
+
+  inRoman('sa', 'shambo-shankara', ['shiva'], 'Shambo Shankara', `
+Shamboo Shankaraah ! Shiva Shamboo Shankaraah
+Shambo Shankara Sambhasadhashiva! Shamboshankara
+Parvathi Nayakaaaa, Paraameshaa Paahimaaah (2)
+Bhagtha Jana Priya-Pankaja Lochana, Eesha Rakshamam (2)
+Eesha Vishvesha! Jagadesha Vishveshaa.
+Kailasa Vasa Kanagasabeshaa ! Eeshaaa Vishwayshaa (2)
+FAST: Shamboshankara ! Shiva Shamboshankara (2)
+Shamboshankara Sambhasadhashiva Shamboshankara (2)
+Parvathi Nayakaaaa Paraamesha Paahimaaa
+Bhagtha Jana Priya, Pankaja Lochana, Eesha Rakshamam
+Eesha Vishvesha! Jagadesha Vishveshaa.
+Kailasa Vasa Kanasabesha ! Eesha Vishwayshaa
+`),
+
+  inRoman('sa', 'shankara-shankara', ['shiva'], 'Shankara Shankara', `
+Shankara Shankara Shankara Shankara Shambho Shankara
+Shiva Shambho Hara Shambho Shiva Shiva Shiva Shambho
+Shiva Shambho Hara Shambho
+Shambho Shankara Shailesha
+Trishoola Dhaari, Trinethra Dhaari
+Shiva Shambho Hara Shambho
+Shambho Shankara Shailesha
+Hara Hara Mahadeva, Siva Siva Mahadeva
+`),
+
+  inRoman('sa', 'shiva-shiva-bhava-bhava', ['shiva'], 'Shiva Shiva Bhava Bhava', `
+Siva Siva Bhava Bhava Charanam Mama
+Bhavathu Sadha Thava Smaranam
+Ganghadara Chandrachooda Jagan Mangala Sarvaloga Needa
+
+Kailaasaachala Vaasa Sambho, Sivagara
+
+Puraharadaasa
+Siva Siva Bhava Bhava Charanam, Mama
+Bhavathu Sadha Thava Smaranam
+Basmothdhoolitha Deha Sambho
+Paramapurusha Vrisha Vaahaa
+Panchaanana Faniboosha Sambho
+Paramapurusaa Munivesha
+Siva Siva Bhava Bhava Charanam, Mama
+Bhavathu Sadha Thava Smaranam
+Aanandha Nadana Vinodha Sambho
+Aanandha Tharulitha Kedha
+Paramaanandha Nadana Vinodha Sambho
+Aanandha Tharulitha Kedha
+
+Navavyakarana-Swabhava Sambho
+
+Naarayanakeertha Deva
+Siva Siva Bhava Bhava Charanam, Mama
+Bhavathu Sadha Thava Smaranam (2)
+Mama Bhavathu Sadha Thava Smaranam (4)
+`),
+
+  inRoman('sa', 'shiva-shiva-shambo', ['shiva'], 'Shiva Shiva Shambo', `
+Shiva Shiva Shambho Hara Hara Shambho Siva Siva Shambho Shankara
+Vyagrambara Dhara Vibhuthi Sundara Sai Shambho Shankara
+Chandra Kala Dhara Shankara Ganga Jata Dhara Shankara
+Tandava Priyakara Natana Manohara Halahaladhara Shankara
+Vyagrambara Dhara Vibhuthi Sundara Sai Shambho Shankara
+`),
+
+  inRoman('sa', 'shiva-shiva-shankaraya', ['shiva'], 'Shiva Shiva Shankaraya', `
+Shiva Om .Shiva Om Shiva Om
+Shiva Shiva Shankaraaya, Shiva, Shiva
+Shiva Shankaraa
+Shiva Om Namah Shivaya, Shiva Om
+
+Namah Shivaya
+
+Shiva Om Namah Shivaya, Shiva Om
+
+Namah Shivaya
+
+Shiva Om .Shiva Om
+Hara Hara Om Hara Om
+Dama Dama Damarubaje, Har Har Ghanu
+Ghanu Ghanta Bhaje
+Bolenaath Shambo, Har Har, Kashinath
+Shambo
+Shankara Shiva Shankara Shiva Shambo
+Mahadeva (4)
+Dama Dama Damarubaje, Har Har Ghanu
+Ghanu Ghanta Bhaje
+
+Bolenaath Shambo, Har Har, Kashinath
+
+Shambo
+Shankara Shiva Shankara Shiva Shambo
+Mahadeva (4)
+Shiva Shiva Shiva Shiva Shiva Shiva Shiva Shiva Shiva Om
+
+Hara Hara Hara Hara Hara Hara Hara
+
+Hara Hara Om
+
+Shiva Om, Shiva Om Hara Om, Hara
+Om
+`),
+
+  inRoman('sa', 'sivaya-parameswaraya', ['shiva'], 'Sivaya Parameswaraya', `
+Sivaya Parameshwaraya Sasisekaraya Namah Om
+Bhavaya Gunasambhavaya Siva Thaandavaya Namah Om
+Siva Thaandavaya Namah Om (3)
+Siva Siva Siva Siva Sivaya Namah Om
+Hara Hara Hara Hara Haraya Namah Om
+Sivaya Namah Om
+
+Haraya Namah Om
+`),
+
+  inRoman('sa', 'jai-jai-vaishnavi-devi', ['durga'], 'Jai Jai Vaishnavi Devi', `
+Jai Jai Vaishnavi Devi Maa, Jai Jai Vaishnavi Devi Maa
+Jai Maa, Jai Maa, Jai Maa, Devi Maa
+Jai Jai Maa, Jai Jai Maa, Jai Jai Maa, Devi
+
+Maa
+
+Jai Jai Vaishnavi Devi Maa, Jai Jai Vaishnavi
+
+Devi Maa
+Sherawaali Maa, Jyodhaawaali Maa
+Pahaadawaali Maa, Jai Jagajjanani Devi Maa
+
+Jai Maa, Jai Maa, Jai Maa, Devi Maa
+Jai Jai Maa, Jai Jai Maa, Jai Jai Maa, Devi Maa
+`),
+
+  inRoman('sa', 'om-shakthi-om', ['durga'], 'Om Shakthi Om', `
+Om Shakti Om, Om Shakti Om, Om Shakti
+Om, Parashakti Om
+Hema Mala Dhari Shyamale Sukumari (2)
+Navaratna Kankana Dhari Mam Pahi Pandya Kumari
+Om Shakti Om, Om Shakti Om, Om Shakti
+Om, Parashakti Om
+
+Mangala Dharini Devi Maha Kali Sridevi (2)
+Sundara Vadani Devi Suguna Manohari Devi (2)
+
+Om Shakti Om, Om Shakti Om, Om Shakti
+Om, Parashakti Om
+`),
+
+  inRoman('sa', 'parvatha-raajakumari', ['durga'], 'Parvatha Raajakumari', `
+Parvatha Raajakumaari Bhavaani
+Panchaya Krupayaa Mama Dhurithaani
+Dheena Dhayaapari Poorna Kataakshi
+Thripura Sundari Devi Meenaakshi
+Aarani Naarani Kaarani Neeli
+Poorani Yoga Puraadhana Seeli
+Sankaran Naayaki Saantha Maheswari
+Sundaraiye Vidakshani Gowree
+Parvatha Raajakumaari
+Amba Chidhambara Naadha Nateshwari
+Ambana Saambavi Devi Sarveshwari
+Sambhu Mohini Saantha Dhayaabari
+Dushta Vinashini Soka Nivaarini
+Parvatha Raajakumaari
+Pancha Dasaakshara Panchara Vaasini
+Kunchitha Paadha Mahesa Vilaasini
+Kaanchi Kaamaakshi Kaasi Visaalaakshi
+Kaarunya Laavanya Akilaandeswari
+Parvatha Raajakumaari
+`),
+
+  inRoman('sa', 'shankari-parameshwari', ['durga'], 'Shankari Parameshwari', `
+Shankari Parameshwari Sashi Shekari Amba Sarveshwari Jagadeeswari Maaheshwari Ambaa
+Sundari Kunamanjari Sivashankari Amba
+
+Saagambari Saakaaambari Hari Sodhari
+Amba
+`),
+
+  inRoman('sa', 'aatma-raama', ['rama'], 'Aatma Raama', `
+Aatma Raama Aanandha Ramana
+Achudha Kesava Harinarayana
+Bhava Bhaya Harana Vandidha Charana
+Raghukula Bhooshana Raajeva Lochana
+Aadhi Narayana Ananthasayana
+Sachindananda Shree Sathyanarayana
+Aatma Raama Aanandha Ramana
+Achudha Kesava Harinarayana
+`),
+
+  inRoman('sa', 'aatmaya-raama', ['rama'], 'Aatmaya Raama', `
+Aatmaya Raama Aghochara Raama
+Aananda gana mega jaya poorna kama
+Jaya jaya raama sri jaya raama
+jayathi jaya rama jaya jaya rama
+sundara raama sachita raama
+Raama Mano hara Ramaneeya Kama
+Raama Manohara Ramaneeya Kama
+Vyapyathu Raama Vyapaka raama
+Vyapyathu Raama Vyapaka raama
+raama raama raaa ma thaaraka brahma
+Sulabha Raama Durlaba Raama
+Yogi jana mana Mohana Raama
+Yogi jana mana Mohana Raama
+Aadhithuu Raama Anadhithu Raama
+Aadhithuu Raama Anadhithu Raama
+Ekhajanardhani Vishrama dhama
+Ekhajanardhani Vishrama dhama
+
+Aatmaya Raama Aghochara Raama
+Aananda gana mega jaya poorna kama
+Jay jay ram jay ram jay jay ram sitaram
+Jay jay ram jay ram jay jay ram sitaram
+Jay Jay ram sitaram
+Jay Jay ram sitaram
+Raja Ramachandra Murthi ki Jai
+`),
+
+  inRoman('sa', 'andar-raamah', ['rama'], 'Andar Raamah', `
+Andhar Rama Oh Bahar Rama (2)
+Jaha Dekhe Waha a Rama Purana
+Kaama ho Purana Kaama(low pitch)
+Andhar Rama Oh Bahar Rama (2)
+Jaha Dekhe Waha a Rama Purana
+Kaama ho Purana Kaama(high pitch)
+Andhar Rama Oh Bahar Rama (2)
+Guru Krupanchana Payo Mein Bhai
+Andar Ram a Ho Bahar Rama
+Andhar Rama Oh Bahar Rama (2)
+Ram Bina Kuch Dekhat Naahi Andar
+Ram a Ho Bahar Rama
+Andhar Rama Oh Bahar Rama (2)
+Jaagat Rama Ho Sowath Rama
+Andhar Rama Oh Bahar Rama (2)
+Sapane mein Dekhath Raja
+Ram Raja Ram Raja Ram
+Andhar Rama Oh Bahar Rama (2)
+Kehathu Kabeeraa ho
+Hanubhavanika
+Andhar Rama Oh Bahar Rama (2)
+Jahan dekhe Waha Rama-Rama
+Sarika Ho Rama Sarika
+Andhar Rama Oh Bahar Rama (2)
+`),
+
+  inRoman('sa', 'ayodhya-vaasi-ram-ram', ['rama'], 'Ayodhya Vaasi Ram Ram', `
+Ayodhya Vaasi Ram Ram
+Dasaradha Nandhana Ram Ram
+Patheetha Paavana Janaki Jeevana
+Seetha Mohana Ram Ram Ram
+Kishkantha Vaasi Ram Ram Ram
+Sukhreeva Sedhara Ram Ram Ram
+Anjani Puthra Rama Dhootha
+Maruthidhanaya Ram Ram Ram
+`),
+
+  inRoman('sa', 'dasaratha-nandana-raam-raam', ['rama'], 'Dasaratha Nandana Raam Raam', `
+Dasaratha Nandana Ram Ram
+Dasamukha Mardhana Ram Ram
+Pasupathi Nandhana Ram Ram
+Paapa Vimochana Ram Ram
+Yamuna Theera Vihaari
+Brindhavana Sanchaari
+Govardhana-O-Dhaari
+Gopaala Krishna Muraari
+`),
+
+  inRoman('sa', 'dasaratha-nandana-raama', ['rama'], 'Dasaratha Nandana Raama', `
+Rama Rama jaya Rama; Rama Rama jaya
+Rama
+Dasharatha Nandana Rama; Dayasagara
+Rama
+Dashamuka mardhana Rama; Daithya
+kulanthaka Rama
+Lakshmana sevita Rama; Lakshmi vallabha Rama
+Sukshma swaroopa Rama; Sundara roopa
+Rama
+Rama Rama jaya Rama; Rama Rama jaya
+Rama
+Ayodhya vasi Rama; Auranya vasi Rama
+Ahalyodaraka Rama; Abhat bhandava Rama
+Bhakta vatsala Rama; Bhavabaya harana
+Rama
+Janaki jeevana Rama; Maruti sevita Rama
+Rama Rama jaya Rama; Rama Rama jaya
+Rama
+Sriram jaya Ram jai jai Ram; Sriram jaya Ram jai jai Ram
+`),
+
+  inRoman('sa', 'premamuditha', ['rama'], 'Premamuditha', `
+Premamuditha Manse Kaho Ram Ram Ram (2)
+Ram Ram Ram - Shri Ram Ram Ram (2)
+
+Paap Kate Dukha Mite Leth Ram Naam (2)
+Bhava Samudra Sukhada Naam Ek Ram Naam (2)
+Ram Ram Ram – Shri Ram Ram Ram - Ram Ram
+Ram - Shri Ram Ram Ram
+Parama Shanthi Sukh Nidhan Divya Ram Naam (2)
+Niradhar Ko Adhaar Ek Rama Naam (2)
+Ram Ram Ram – Shri Ram Ram Ram - Ram Ram
+Ram - Shri Ram Ram Ram
+
+Parama Gopya Parama Divya Mantra Ram Naam (2)
+Bhakt Janana Jeevan Dhana Ek Raam Naam
+Ram Ram Ram – Shri Ram Ram Ram - Ram Ram
+Ram - Shri Ram Ram Ram
+
+Mahadev Satathu Japathu Divya Ram Naam (2)
+Matha Pitha Bhandu Sakha Sabahi Ram Naam (2)
+Ram Ram Ram – Shri Ram Ram Ram - Ram Ram
+Ram - Shri Ram Ram Ram (2)
+Premamuditha Manse Kaho Ram Ram Ram (2)
+Ram Ram Ram - Shri Ram Ram Ram (2)
+`),
+
+  inRoman('sa', 'raam-naam-jab-lena', ['rama'], 'Raam Naam Jab Lena', `
+Raam Naam Jab Lena .Raam Naam Jab Lena Yeh Jeevan Bana
+Yeh Jeevan Doh Din Ka
+Yeh Jeevan Hai Paani Ka Machili
+Paani Sukhjave Paa Jaave, Paani Sukhjave Paa Jaave Samaj Nahi Aave
+Raam Naam Jab Lena
+Yeh Jeevan Hai Kaagaj Ki Chidiyah
+Hawa Uthu Jaave Thale Jaave, Hawa Uthu Jaave Thale Jaave Samaj Nahi Aave
+Raam Naam Jab Lena
+Yeh Jeevan Hai Jungle Ki Lakdi
+Yeh Jeevan Hai Jungle Ki Lakdi, Aag Lag Jaye Jal Jaave
+Aag Lag Jaaye Jal Jaave Samaj Nahi Aave
+Raam Naam Jab Lena
+Yeh Jeevan Hai Mitti Ka Puthla
+Jaise Paani Aave Chale Jaave, Jaise Paani Aave Chale Jaave Samaj Nahi Aave
+Raam Naam Jab Lena
+Raam Naam Jab Lena Raam Naam Jab Lena
+`),
+
+  inRoman('sa', 'raghava-sundara', ['rama'], 'Raghava Sundara', `
+Raghava Sundara Raama Raghuvara
+Raghava Sundara Raama Raghuvara
+Raama Raghuvara, Raama Raghuvara
+Raamaaa Raghuvara
+
+Raama Raghuvara
+Parama Paavana’hey, Jagad Vandhana
+Pathitho Dhaarana Bhakta Parayaana (2)
+Raavana Mardhana Vighna Bhanjana
+Raghava Sundara Raama Raghuvara
+Raghavaa Sundaraa Raamaa Raghuvara
+Raghavaa Sundaraa Raamaa Raghuvara
+Raghava Sundara Raama Raghuvara
+
+Raghava Sundara Raama Raghuvara
+Raghava Sundara
+Chorus : Raama Raghuvara Chorus :
+Raghava Sundara
+Chorus : Raama Raghuvara Chorus :
+
+Raghava Sundaraaaa
+Chorus :
+Chorus : Raama Raghuvara
+
+Raghava Sundaraaaaa
+Chorus :
+Chorus : Raama Raghuvara
+Jaanaki Kaanthah Smaranam jai Jai
+raama raama !
+`),
+
+  inRoman('sa', 'raghupati-raghava', ['rama'], 'Raghupati Raghava', `
+Raghupati Raghav Raja Ram Patita Pavan Sitaram
+Sitaram, Sitaram, Bhaj Pyare Thu Sitaram
+Ishwar Allah Tero Nam, Sabako Sanmati De Bhagawan
+Bansivala Hay Ghanshyam, Dhanushya Dhari Sitaram
+Raath Ko Nindiya Din Ko Kaam, Kabhi Bhajoge Ram Ka Naam
+Hathose Karo Gharka Kam, Mukhase Bolo Sitaram
+Dasharatha Nandana Raja Ram, Janaki Vallabha Sitaram
+Hanuman Ke Swami Ram, Jai Raghu Nandana Jai Siyaram
+Sriram Jai Ram Jai Jai Ram, Sriram Jai Ram Jai Jai Ram
+`),
+
+  inRoman('sa', 'ram-ram-ram', ['rama'], 'Ram Ram Ram', `
+Ram Ram Ram Jai Jai Ram Ram Ram
+Ram Ram Ram Hare Ram Ram Ram
+Dheenabandho Ram Ram Dheenadayalo Ram
+Ram
+Dheenabandho Ram Ram Ram, Dheenadayalo Ram Ram
+
+Paramakrupalo Ram Ram Bhagthavatsala Ram
+
+Ram
+Ram Ram Ram Sita Ram Ram Ram
+Ram Ram Ram Hare Ram Ram Ram
+Aabhathpandava Ram Ram
+Anaadha Rakshaka Ram Ram Ram
+Aabhathpandava Ram Ram Ram
+Anaadha Ratchaka Ram Ram
+
+Kripa Sindho Ram Ram Karunaa Sindho Ram
+
+Ram
+Ram Ram Ram Sita Ram Ram Ram
+Ram Ram Ram Hare Ram Ram Ram
+Dhasarathanandana Ram Ram Dhasamukha
+Vardhana Ram Ram
+Dharsarathanandana Ram Ram Ram
+Dhasamukha Vardhana Ram Ram
+
+Sajjana Paalaka Ram Ram
+
+Durjana Siddhaka Ram Ram
+Ram Ram Ram Ragupathi Ram Ram Ram
+Ram Ram Ram Kothanda Ram Ram Ram
+Ram Ram Ram Pattabi Ram Ram Ram
+Ram Ram Ram Ayodhya Ram Ram Ram
+
+Ram Ram Ram Sita Ram Ram Ram
+Ram Ram Ram Hare Ram Ram Ram
+`),
+
+  inRoman('sa', 'rama-namo-rama-namo', ['rama'], 'Rama Namo Rama Namo', `
+Rama namo Rama namo Rama namo Sita
+Rama namo
+Krishna namo Krishna namo Krishna namo Radha Krishna namo
+
+Dasharatha nandana Rama namo
+
+Vasudeva nandana Krishna namo
+
+Ravana mardhana Rama namo
+
+Kamsa mardhana Krishna namo
+Vali mardhana Rama namo
+Kaliya nardhana Krishna namo
+Seetha vallabha Rama namo
+Radha madhava Krishna namo
+`),
+
+  inRoman('sa', 'ramachandra-raghu-veera', ['rama'], 'Ramachandra Raghu Veera', `
+Ramachandra Raghu Veera
+Ramachandra Rana Dheera
+Ramachandra Raghu Raama
+Ramachandra Parandhaama
+Ramachandra Raghu Naadha
+Ramachandra Jagan Naadha
+Ramachandra mama BandhO
+Ramachandra Dhaya SindhO
+
+Ramachandra mama Deiyvam
+Ramchandra kula Deiyvam
+`),
+
+  inRoman('sa', 'sri-raama-jaya-raama', ['rama'], 'Sri Raama Jaya Raama', `
+Sri Raama Jaya Raama Jaya Jaya Raama
+Sri Raama Jaya Raama Sundara Raama
+Sri Raama Jaya Raama Mangala Raama
+Sri Raama Jaya Raama Aatma Raama
+Sri Raama Jaya Raama Seetha Raama
+Sri Raama Jaya Raama Raja Raama
+Sri Raama Jaya Raama Jaya Jaya Raama
+Sri Raama Jaya Raama Pattabhi Raama
+Sri Raama Jaya Raama Kodhanda Raama
+Sri Raama Jaya Raama Kalyaana Raama
+Sri Raama Jaya Raama Raja Raama
+Sri Raama Jaya Raama Jaya Jaya Raama
+Sri Raama Jaya Raama Dasaratha Raama
+Sri Raama Jaya Raama Janaki Raama
+Sri Raama Jaya Raama Raja Raama
+Sri Raama Jaya Raama Jaya Jaya Raama
+`),
+
+  inRoman('sa', 'aapat-baandhava-narayana', ['vishnu',  'shiva'], 'Aapat Baandhava Narayana', `
+Aapat Baandhava Narayana
+Anaatha Ratchaga SathaSiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+Omkaarap Priya Narayana
+Oordhava Thaandava Sadashiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+Aravinda Lochana Narayana
+Aananda Thaandava Sadasiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+Indhu Kulothama Narayana
+Indra Viboojitha Sadasiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+Dheena Bandhu Narayana
+Deena Rakshaka SathaSiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+Hari Hari Hari Hari Narayana
+Hara Hara Hara Hara Sadasiva
+Hari Om Hari Om Narayaana
+Hara Om Hara Om Sadashiva
+`),
+
+  inRoman('sa', 'bansidhara-kanhaiya', ['krishna'], 'Bansidhara Kanhaiya', `
+Bansidhara Kanhaiya Ganashyam Sundara
+Bansidhara .Bansidhara .Bansidhara Kanyaiya Ganashyam Sundara
+Giridhaari Gopa-baala Brindavana Vihaara
+Raajaraja Gopala Vrindhavana Vihaara
+Bansidhara .
+Madhavahare Madhusudhana Mukundha
+Radhe Govindha, Radhe Govindha, Radhe Govindha, Radhe Bansidhara
+`),
+
+  inRoman('sa', 'ghunguru-baandhu-meera-nachi', ['krishna'], 'Ghunguru Baandhu Meera Nachi', `
+Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+Mein Apne Toh Vrajamohanuki
+Hogayi Aapki Daasi-rey
+Hogayi Aapki Daasi-rey (2)
+Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachire
+Naachire
+Paga Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+Visha-Ka Pyaala-Ranaaji ne Bheja
+Peevatha Meera Haansi Re
+Peevatha Meera Haansi Re (2)
+Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachire
+Naachire
+Paga Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+
+Meera Ke Prabhu Giridharanaagar
+Hari charan Nahi Gaathi Re
+Hari charan Nahi Gaathi Re (2)
+Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachire
+Naachire
+Paga Ghunguru Baandha Meera Naachi
+Paga Ghunguru Baandha Meera Naachi
+Radhe Krishna Bhajare Mathura
+Radhe Krishna Bhajare
+Radhe Krishna
+(Chorus) Radhe Krishna (2) Chorus:
+Radhe Krishna
+(Chorus) Gopala Krishna (2) Chorus:
+Radhe Krishna
+(Chorus)
+(Chorus) Radhe Gopala (2)
+Radhe Krishna Bhajare Mathura
+Radhe Krishna Bhajare
+`),
+
+  inRoman('sa', 'govinda-krishna-jai', ['krishna'], 'Govinda Krishna Jai', `
+Govinda Krishna Jai
+Gopala Krishna Jai
+Gopala Pala Pala Radha Krishna Jai
+Krishna Jai, Krishna Jai, Krishna Jai
+
+Krishna Krishna Krishna Krishna Jai
+Gopika Maala Haari Pyari
+Maayi Meera Manavihari
+Madana Mohana Muralidhaari Krishna
+Jai
+Krishna Jai Raama Krishna Jai Raadha
+Krishna Jai
+Baala Krishna Krishna Krishna Jai
+Govinda Krishna Jai
+Gopala Krishna Jai
+Gopala Pala Pala Radha Krishna Jai
+Govinda Krishna Jai
+Gopala Krishna Jai
+Gopala Pala Pala Radha Krishna Jai
+Krishna Jai, Krishna Jai, Krishna Jai
+
+Krishna Krishna Krishna Krishna Jai
+`),
+
+  inRoman('sa', 'guruvayoorpura-sri-hari-krishna', ['krishna'], 'Guruvayoorpura Sri Hari Krishna', `
+Guruvayoorpura Sri Hari Krishna Narayana Gopal
+Mukunda Madhava Muralidhaari Narayana
+Gopal
+Narayana Gopal Srihari Narayana Gopal (2)
+
+Changachakra Peethambaradhaari
+Narayana Gopal
+Narayana Gopal Srihari Narayana Gopal
+Mohanamurali Dhaari Sri Hari Narayana
+Gopal
+Narayana Gopal Srihari Narayana Gopal
+
+Govardhana Giri Dhaari Muraari Narayana Gopal
+Narayana Gopal Srihari Narayana Gopal
+`),
+
+  inRoman('sa', 'hare-rama-hare-rama', ['krishna',  'rama'], 'Hare Rama Hare Rama', `
+Hare Rama Hare Rama
+Rama Rama Hare Hare
+Hare Krishna Hare Krishna
+Krishna Krishna Hare Hare
+Hare Renga Hare Renga
+Paandu Renga Hare Hare
+Hare Rama Hare Rama
+Rama Rama Hare Hare
+Aadisesha Ananthasayana Srinivasa Sri
+Venkatesa
+Raghu Kula Thilaka Raghurama Chandra
+Seethapathey Sri Rama Chandra (Aadhi
+Sesha)
+Yadhukula Bhooshana Yashodha Baala
+Radhapathey Sri Gopala Krishna (Aadhi
+Sesha)
+Pannaga Bhooshana Kailasa Vaasa
+Gowri Pathey Shiva Shambo Shankara
+(Aadhi Sesha)
+Vanpuli Vaahana Villali Veera
+Sabari Girisheesha Sri Dharma Saastha
+(Aadhi Sesha)
+`),
+
+  inRoman('sa', 'hari-gunagavathu', ['krishna'], 'Hari Gunagavathu', `
+Hari Guna Gavathu Nachoonghi, Guru Guna Gavathu Nachoonghi (2)
+Hari Guna Gavatha, Guru Guna Gavathu
+Prabhu Guna Gavathu Nachoonghi (2)
+Nachoonghi Mein, Nachoonghi Mein, Hari
+Guna Gavatha Nachoonghi (2)
+Apney Mandir Mein Bait bait kar Geetha Bhagavatha Bachoonghi
+Hari Guna Gavathu Nachoonghi, Guru Guna Gavathu Nachoonghi (2)
+Hari Guna Gavatha, Guru Guna Gavathu
+
+Prabhu Guna Gavathu Nachoonghi (2)
+Meera Kahey Prabhu Giridhara Naagara
+Sadha Premarasu Chahoongi
+FAST: Hari Guna Gavathu Nachoonghi
+Guru Guna Gavathu Nachoonghi
+`),
+
+  inRoman('sa', 'hari-mana', ['krishna'], 'Hari Mana', `
+Hari-Mana Tumi Govinda-Mana Tumi
+Gopala-Mana Tumi Narayana
+Govinda Gopala Hari Narayana
+Rama-Mana Raja Rama-Mana, Sitaram
+Mana Atma Rama-Mana
+Hari-Mana Tumi Govinda-Mana Tumi
+Gopala-Mana Tumi Narayana
+Govinda Gopala Hari narayana
+Shyama-Mana Gana-Shyama-Mana Megha
+Shyama-Mana Radhe Shyama-Mana
+Kunja Vihara Govinda, Gorasa Chora
+Govinda
+Gopikaa Hridaya Nandkishora
+Pitambaradhara Govinda
+Hari-Mana Tumi Govinda-Mana Tumi
+Gopala-Mana Tumi Narayana
+Govinda Gopala Hari Narayana
+jai Jai Ram Jai Jai Ram Jai Jai Ramkrishna Hari jai Jai Ram Jai Jai Ram Jai Jai Radhakrishna Hari
+
+Jai Jai Ramkrishna Hari Jai Jai Radhakrishna
+
+Hari
+`),
+
+  inRoman('sa', 'hari-sundara-nanda', ['krishna'], 'Hari Sundara Nanda', `
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (2)
+Hari Keshava Hari Govinda, Hari Narayana Hari Om (2)
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om
+Hari Keshava Hari Govinda, Hari Narayana Hari Om
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (high pitch)
+Vanamaali Murali Dhari Govardhana Girivara Dhaari (2)
+Nitha Nitha Kara Maakhana Chori Gopi Manadhaari (2)
+
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om
+Hari Keshava Hari Govinda, Hari Narayana Hari Om
+Aao Rey Gao Rey Gokula Key Pyare
+Aao Rey Kaanha Rey Gokula Key Pyare
+Aao Rey Nacho Rey Raas Racha O Rey
+Gaao Rey Nacho Rey Raas Racha O Rey
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (fast, high pitch)
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (fast, low pitch)
+Hari Keshava Hari Govinda, Hari Narayana Hari Om (fast, regular pitch) – 2 times
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (fast, high pitch) – 2 times
+Vanmaali Murali Dhari Govardhana Girivara Dhaari
+Nitha Nitha Kara Maakhana Chori Gopi Manadhaari
+Aao Rey Gao Rey Gokula Key Pyare
+Aao Rey Nacho Rey Raas Racha O Rey
+Hari Sundara Nanda Mukunda, Hari Narayana Hari Om (fast, high pitch) – 2 times
+Hari Keshava Hari Govinda, Hari Narayana Hari Om (fast, low pitch) – 2 times
+Hari Narayana Hari Om (4)
+`),
+
+  inRoman('sa', 'krishna-krishnaa-govinda-krishna', ['krishna'], 'Krishna Krishnaa Govinda Krishna', `
+Krishna Krishna Govinda Krishna
+Krishna-Krishna-Krishna Govinda Krishna Hare Krishna-Krishna-Krishna Govinda Krishna
+
+Govinda Govinda Gopala Krishna
+
+Govinda Govinda Gopaala-Krishna
+
+Vaikunta Vaasa Sri Vasu Deva
+Navaniya Rupa Gopala Krishna
+Govardanagiri Dhari Gokula Bala
+Guruyayurappa Gopala Krishna
+Nandana Sachita Neela Karuththara
+Sadhu Manohara Navaneetha Krishna
+Devaki Nanda Yashoda Bala
+Gokula vasa Gopala Krishna
+Kesava Madava Radhe Govinda
+Tirupathi Vasa Venkataramana
+`),
+
+  inRoman('sa', 'krishna-krishnaa-mukundaa-janaardhana', ['krishna'], 'Krishna Krishnaa Mukundaa Janaardhana', `
+Krishna Krishnaa Mukundaa Janaardhana
+Krishna Govindha Naaraayanaa Hare
+Achyudhaanandha Govinda Maadhavaa
+Sachidhaanandha Naaraayanna Hare
+Aalilai Kannanai (Naan) Kaananum
+Andha
+Kaallinga Nardhananai Kaananum
+Sree Guruvaayoorappanai Kumbitaal
+Avar
+Guruvaahi Vandhu (Nammai) Kaappare
+Hare Muraleedharaa Hare Muraleedharaa
+Hare Muraleedharaa Hare Maadhavaa
+Hare Hare Muraleedharaa Hare
+Muraleedharaa
+Hare Muraleedharaa Hare Maadhavaa
+Krishna Krishnaa Mukundaa Janaardhana
+Krishna Govindha Naaraayanaa Hare
+
+Jai Muralee Sreedhara
+RadhE Krishna RadhE Shyaam
+Govindha Maadhava Gopaala Kesava
+RadhE Krishnaa RadhE Shyaam
+VenuvilOlaa RadhE Shyaam
+Vijaya GOPaalaa RadhE Shyaam
+Yaadhava Maadhava Gopaala KEshavaa
+RadhE Krishnaa RadhE Shyaam
+Paandurangaa RadhE Shyaam
+Pandarinaatha RadhE Shyaam
+Govindha Maadhava Gopaala Kesava
+RadhE Krishnaa RadhE Shyaam
+
+Krishna Krishnaa Mukundaa Janaardhana
+Krishna Govindha Naaraayanaa Hare
+Achyudhaanandha Govinda Maadhavaa
+Sachidhaanandha Naaraayanna Hare
+`),
+
+  inRoman('sa', 'naarayanam-bhaje', ['vishnu'], 'Naarayanam Bhaje', `
+Narayanam bhaje narayanam lakshmi
+Narayanam bhaje narayanam
+Vrindaavanasthitham narayanam deva
+Vrindaiva vishnutham narayanam
+Dinakara madhyakam narayanam divya
+Kanakambaradharam narayanam
+Narayanam Bhaje
+Pankajalochanam narayanam bhaktha
+Sankatamochanam narayanam
+Karuna Bayonithim Narayanam bhavya
+Charanagathanithim Narayanam
+
+Narayanam Bhaje
+Rakshitha Jagathrayam Narayanam chakra Sikshitasurachayam Narayanam
+Agyana naasakam narayanam bhaktha
+Vigyana vaasutham narayanam
+Narayanam Bhaje
+Sreevalsa bhooshanam narayanam nanda
+Govalsa poshanam narayanam
+Srikandasevitham narayanam nitya
+Vaikundavasitham narayanam
+Narayanam Bhaje
+Narayana Narayana Narayana Narayana
+Hari Narayana Narayana Narayana
+Narayana (3)
+Hari Narayana Jaya Narayana – 2 ties
+
+Narayana Narayana Narayana
+`),
+
+  inRoman('sa', 'neelamega-shyamala-roopa', ['krishna'], 'Neelamega Shyamala Roopa', `
+Neelamegha Shyamala Roopa Gopaala
+Nithyanandha Swaroopa Krishna Gopaala
+Deva Deva Devaki Baala Gopaala
+Vasudeva Vaareesa Nethra Gopaala
+Sankaraandhi Sevitha Charanaa Gopaala
+Sankuchakra Dhaarana Swami Gopaala
+Raaja Raaja Raajamurali Rasika Gopaala
+Raaja Lokha Raadhika Ramanaa Gopaala
+Prema Baktha Mandala Baala Gopaala
+Brindhaavana Neekundha Lolaa Gopaala
+`),
+
+  inRoman('sa', 'paahi-paahi-jagan', ['krishna'], 'Paahi Paahi Jagan', `
+Paahi Paahi Jagan Mohana Krishna
+Paramaananda Sri Krishnaaaaaaa
+Paramaananda Sri Krishnaaaaaaa
+Devaki Vasudeva Nandana Krishna
+Devaki Vasudeva Nandana Krishna
+Divya Sundara Sri Krishnaaaa
+Paahi Paahi Jagan Mohana Krishna
+Paramaananda Sri Krishnaaaaaaa
+Paramaananda Sri Krishnaaaaaaa
+Nanda Yasodha Nandana Krishna
+Nanda Yasooodha Nandana Krishna
+Induvadanaaaa Sri Krishnaaaa
+Paahi Paahi Jagan Mohana Krishna
+Paramaananda Sri Krishnaaaaaaa
+Paramaananda Sri Krishnaaaaaaa
+Paalitha Naarayana Teertha Krishna
+Paalitha Naarayana Teertha Krishna
+Parama Paavana Sri Krishnaaa
+Paahi Paahi Jagan Mohana Krishna
+Paramaananda Sri Krishnaaaaaaa
+Paramaananda Sri Krishnaaaaaaa
+`),
+
+  inRoman('sa', 'panduranga-vittale', ['krishna'], 'Panduranga Vittale', `
+Panduranga Vittale Hari Narayana
+Hari Narayana Bhaja Narayana
+Bhaktajana Priya Pankaja Lochana
+Paramaananda Sadashiva Shankara
+Govindam Bhajare Maanasa Gopalam Bhajare Govinda .Gopala
+`),
+
+  inRoman('sa', 'panduranga-ye-re', ['krishna'], 'Panduranga Ye Re', `
+Panduranga Yae Re Panduranga Yae Re (4)
+Panduranga Yae Re Vittobha Re (2)
+Radha Ani Baama Rakku Maayi Thae Rani (4)
+Raja Pandari Cha Vittobha Re (4)
+Karaneam Makara Kundalam Kandeem Kou Sthubha Manim (4)
+Kaasi Pitambara Vittobha Re (4)
+Panduranga Yae Re Panduranga Yae Re (2)
+Panduranga Yae Re Vittobha Re (2)
+Mukhim Mandha Hasa Mathe Makuta Shobhem (4)
+Mangalamga Yere Vittobha Re (4)
+Prema Mahne Chandra Bhagathim Vaase (4)
+Pundalika Bhakta Vittobha Re (4)
+Panduranga Yae Re Panduranga Yae Re (2)
+Panduranga Yae Re Vittobha Re (2)
+Panduranga Yae Re
+Hari Vittala Vittala Vittala Vittala Vittala Vittala Vittala
+`),
+
+  inRoman('sa', 'radha-rasika-vara', ['krishna'], 'Radha Rasika Vara', `
+Radha Rasika Vara Rasa Vihara
+Radha Rasika Vara Rasa Vihara
+Radhakrishna Radhakrishna Radhakrishna Radhakrishna
+Rasa Vilola Ramya Susheela
+Radhakrishna Radhakrishna Radhakrishna Radhakrishna
+Mohana Murali Gana Vilola
+Radhakrishna Radhakrishna Radhakrishna Radhakrishna
+Mukunda Madhava Jaya Ghana Shyama
+Radhakrishna Radhakrishna Radhakrishna Radhakrishna
+
+Radha Rasika Vara Rasa Vihara
+Radhakrishna Radhakrishna Radhakrishna Radhakrishna
+`),
+
+  inRoman('sa', 'seethapathi-ramachandra', ['rama',  'krishna'], 'Seethapathi Ramachandra', `
+Seethapathi Ramachandra Ki Jai
+Radhapathi Krishna Chandra Ki Jai
+Gowripathi Chandrachooda Ki Jai
+Pavana Sutha Hanuman Ki Jai
+Tapovan Gyanananda Ki Jai
+Tapovan Gyanananda Ki Jai
+Bhava Bhakthi Ka Bhooka Soi Jog Jugath Nahi Pave
+Bhagath Bhool Gaye Ram Dilwane Nij Pad Vako Deve Seethapathi
+Vyaad Kon Aacharya Kiya Tha Dhruv Ki Umar Thodi
+Kahan Gajendra Padha Tha Vidya Vyaad Vidur Ki Kaduvi
+Kya Mardaani Ugrasena Ki Soorat Kya Kubja Ki
+Bhaari Dhan Se Raam Milath Naahi Jaane Sudhaama Ji Seethapathi
+Keheth Kabira Suno Bhai Saadho Ram Milath Hai Bhakti
+Jantar Mantar Latpat Se Nahi Ram Bhajan Se Mukti Seethapathi
+Raja Ram Raja Ram Raja Ram Raja Ram
+Sita Ram Sita Ram Sita Ram Sita Ram
+Sita Ram Raja Ram Sita Ram Raja Ram
+Bolo Sita Ram Sita Ram Sita Ram Sita Ram
+Bolo Raja Ram Raja Ram Raja Ram Raja Ram
+Bolo Raja Ram Sita Ram
+`),
+
+  inRoman('sa', 'shanka-chakra-dhara', ['krishna'], 'Shanka Chakra Dhara', `
+Vittala Panduranga Vittala Panduranga
+Shanka Chakra Dhara Vaijayanthi Dara
+Pithambaradara Govardhanadhara
+Tulasimala Shobhavikala
+Garuda Gamana Hari Pankaja Nabha
+(Chorus)
+(Chorus) Vittala Yere Pandhari Raya (2)
+
+Mastaka Lingaa Swaroopa Lingaa
+Roopa Bangaa Sajjana Sanghaa
+Yadukula Thilaka Manmatha Janaka
+Pathitha Pavana Dheena Dayala
+(Chorus)
+(Chorus) Vittala Yere Pandhari Raya (2)
+Vittala Panduranga Vittala Panduranga
+Tribhuvana Roopa Vishwa Swaroopa
+Bhava Bhaya Thaapa Harisi Papa
+Rukmini Kaantha Roopa-(a)nanthaa
+Janani Janaka Tuji Mavakalena
+(Chorus)
+(Chorus) Vittala Yere Pandhari Raya (2)
+Chandra Bhagethiri Ubha Vitevari
+Kara Kataavari Ranga Shilevari
+Mahaadwari Garuda Baahiree
+Vinavee-natha Janardhana Swamy
+(Chorus)
+(Chorus) Vittala Yere Pandhari Raya (2)
+Vittala Panduranga Vittala Panduranga
+Panduranga Panduranga Panduranga
+Panduranga
+`),
+
+  inRoman('sa', 'smitha-smitha-sundara', ['krishna'], 'Smitha Smitha Sundara', `
+Smitha smitha sundara mukharavinda
+Nacho nandalala
+Meera bhai ko pyaara
+Meera bhai ko pyaaaaara
+
+Meera bhai ko pyaara
+Nandalala Yathu Nandalala
+Nandalala Yathu Nanda laa la
+Vrindavana Govinda Lala
+Radha madhava nandalala
+Radha madhava nandalala
+Rajagopala nandalala
+Smitha smitha sundara mukharavinda
+Smitha smitha sundara mukharavinda
+Radhe Krishna Radhe Krishna Radhe Krishna Radhe Shyam
+Radhe Krishna Radhe Krishna Radhe Krishna Radhe Shyam
+
+Radhe Krishna Radhe Krishna Radhe Krishna
+
+Radhe Shyam
+`),
+
+  inRoman('sa', 'vanamaali-radha-ramana', ['krishna'], 'Vanamaali Radha Ramana', `
+Vanamaali Radha Ramana, Giridhaari Govinda
+Neelamega Sundara, Narayana Govinda
+Nanda Nanda Goba brindha Naarayana
+Govinda
+Naraayana Naraayana Naraayana Govinda
+Naraayana Naraayana Naraayana Govinda
+Naraayana Govinda
+Naraayana Govinda
+
+Bhakta Hrudaya Mandaara Bhanu Koti
+Sundara
+Nanda Nanda Goba brindha Naarayana
+Govinda
+Naraayana Naraayana Naraayana Govinda
+Naraayana Naraayana Naraayana Govinda
+`),
+
+  inRoman('sa', 'vanamaali-vasudeva', ['krishna'], 'Vanamaali Vasudeva', `
+Vanamaali Vasudeva, Jaganmohana Radha
+Ramana
+Sasivadhana Sarasijanayana Jaganmohana Radha Ramana
+Parkadalil Palli konda Parandama Radha Ramana
+Bhaktargalil Kurai Teerkkum Shri Ranga Radha Ramana (Vanamali )
+
+Vennai Unda Mayavane Kanna Ni Radha
+Ramana
+Vendum Varam Thandhiduvai Shri Ranga Radha Ramana (Vanamali)
+`),
+
+  inRoman('ta', 'vishamakkaara-kannan', ['krishna'], 'Vishamakkaara Kannan', `
+Vishamakara kannan polladha
+Vishamakara Kannan
+Vedikaiyaai paatu paadi
+vidham vidhamai aatam aadi
+Nazhikoru leelai seeyum
+nandha gopala krishnan
+Vishamakara Kannan
+Neelamegam pola iruppaan, paadinalo
+nenjil vandhu kudi irupaan
+Kola pullankuzhal oodhi
+gopigalai kallam aadi
+
+konjum bodhu vennai thaadi
+endru kettu aatamadum
+Vishamakara Kannan
+Pinnalai Pnnadi izhupaan, yedho pesi, pesi jadai kaati azhaippan
+Ennathukku Pinnalai nee Izhuthadhen Nada
+Endraal, Kann azhagu yendi endhan
+
+Karuthai ezhutha dhenbaan
+Vishamakara Kannan
+Pakkathu Veetu Pennai Azhaippaan, Mukaari
+Raagam Paada Solli Vambukkishuppaan
+Enakadhu theriyadhendraal
+Mukkari raagama
+
+enakadhu theriyadhendraal
+nekkurgi killi vittu
+vikki vikki azhumbodhu
+nidhaandi Mukaari enbaan
+Vishamakara Kannan
+Vennaipaanai mooda koodadhu, ooril ulla vennaipaanai mooda koodadhu
+Vennaipaanai mooda koodadhu, ivan
+vandhu vizhunginalum ketka koodadhu
+
+Ivan amma kitta solla koodadhu
+
+solli vittal attagasam thaangavonnadhu
+
+Summa oru pechukanum thirudanendru solli vittaal, amma paati athai thatha athanayum thirudanenbaan Vishamakara Kannan
+`),
+
+  inRoman('sa', 'vittala-vittala', ['krishna'], 'Vittala Vittala', `
+Vittala Vittala Vittala Paaduranga (4)
+Raagi thandira, bhikshake raagi thandira
+Yogya raagi bhogya raagi bhagya vanthava raagi
+Raagi thandira, bhikshake raagi thandira
+Vittala vittala vittala paanduranga
+Annadhanavamaaduva raagi, annachatradha nittavaragi Anyavaarthaya bittavaraagi anudina bhajanaya maaduvaraagi
+Raagi thandira, bhikshake raagi thandira
+Vittala vittala vittala panduranga
+Gurukarunya padathavaragi guruvina
+marmadha kalidhavaraagi guruvina paatha smarisavuraagi paramapunyava maaduvaraagi
+Raagi thandira, bhikshake raagi thandira
+Vittala vittala vittala panduranga
+Sreeramanana sadha smarisuvaraagi gurkite padho rankaravaagi parakara samsaara nirkuvaraagi purandhara vittalana sevithvaraagi
+Raagi thandira, bhikshake raagi thandira
+Vittala vittala vittala panduranga
+`),
+
+  inRoman('sa', 'vitu-rayacha-nagari-pandari', ['krishna'], 'Vitu Rayacha Nagari Pandari', `
+Vitu Rayacha Nagari Pandari Vitu Rayacha Nagari Pandari
+Vitu Rayacha Nagari Pandari Vitu Rayacha Nagari Pandari Pandari Pandari (Chorus) Rayacha Nagari Pandari Pandari
+Chrous: Vittu Rayacha Nagari
+Vitu Rayacha Nagari Pandari
+Namacha Geti Nama Cha Dethi
+Koti Kula Uddhar
+Koti Kula Uddhar Pandari
+Namacha Bazar Bazar Bazar
+(Chorus) Pandari Namacha Bazar Bazar Bazar
+Vitu Rayacha Nagari Pandari
+Tayim Tayim Santha Mil laalen
+Kariti Jai Jai Kar
+Kariti Jai Jai Kar Pandari
+Namacha Bazar Bazar Bazar
+(Chorus) Pandari Namacha Bazar Bazar Bazar
+Vitu Rayacha Nagari Pandari
+Ashada Karthika Yatra Bhaaraathi
+Vittala Ha Sardhar
+Vittala Ha Sardhar Pandari
+Namacha Bazar Bazar Bazar
+(Chorus) Pandari Namacha Bazar Bazar Bazar
+Vitu Rayacha Nagari Pandari
+`),
+
+  inRoman('sa', 'vyjayanthi-shobitha', ['krishna'], 'Vyjayanthi Shobitha', `
+Vyjayanthi Shobitha Radha Ramana Radha Ramana (3) Medium
+Vanamali Giridhari Radha Ramana Radha Ramana (3) Medium
+Sangeetha Rasa Rasiga Radha Ramana Radha Ramana (3) Medium
+Sri Raja Gopala Radha Ramana Radha Ramana (3) Medium
+Radha Ramana Radha Ramana (2) Base
+Radha Ramana Radha Ramana (2) Medium
+Radha Ramana Radha Ramana (2) High
+Radha Ramana Radha Ramana (2) Closing
+Radha Ramana (Base), Radha Ramana (High), Radha Ramana (Closing)
+`),
+
+  sung('te', 'ayyappa-nee-naamam-entho', ['ayyappa'], 'అయ్యప్పా నీ నామం ఎంతో మధురమయ్యా', 'Ayyappa Nee Naamam Entho Madhuramayya', `
+అయ్యప్పా నీ నామం ఎంతో మధురమయ్యా
+స్వామి అయ్యప్పా నీ నామం ఎంతో మధురమయ్యా
+స్వామి పాదమున శరణమయ్యా
+
+ఎందుకు ఈ కంఠం స్వామి నీ మాల వేయనిదే
+ఎందుకు ఈ దేహం స్వామి నీ దీక్ష తీయనిదే
+ఎందుకు ఈ కరము స్వామి నీ భజన చేయనిదే
+ఎందుకు ఈ పాదాలు స్వామి నీ కొండ ఎక్కనిదే
+ఎందుకు ఈ కన్నులు స్వామి నీ జ్యోతి చూడనిదే
+॥ అయ్యప్పా నీ నామం ॥
+`, `
+Ayyappa Nee Naamam Entho Madhuramayya
+Swamy Ayyappa Nee Naamam Entho Madhuramayya
+Swamy Paadamuna Sharanamayya
+
+Endhuku Ee Kantam Swamy Nee Maala Veyanidhe
+Endhuku Ee Deham Swamy Nee Deeksha Theeyanidhe
+Endhuku Ee Karamu Swamy Nee Bhajana Cheyanidhe
+Endhuku Ee Paadaalu Swamy Nee Konda Ekkanidhe
+Endhuku Ee Kannulu Swamy Nee Jyothi Choodanidhe
+(Chorus) Ayyappa Nee Naamam
+`),
+
+  inRoman('sa', 'ayyappane-saranam-saranam', ['ayyappa'], 'Ayyappane Saranam Saranam', `
+Ayyappa Saranam .Saranam Pon Ayyappa
+Harihara Sudhane Saranam Pon Ayyappa
+Aayiram Aayiram Un Thirunaamangal
+Naavil Udikkanum Ayyappa
+Anaadha Rakshaka Aathmika Vathsala Nee Arul Eidhanum Ayyappa
+Mohini Sudhane Mohanaroopa Mogam
+Agarruga Ayyappa
+Saranam Vilithaal Maranam Illai Swamiye Saranam Ayyappa
+Thedi Thedi Alaindhom Dharisanam
+Tharuvaai Ayyappa
+Koovikkovvi Koovi Alaindhom Kookural
+Ketpaai Ayyappa
+
+Ayyappa Saranam .Saranam Pon Ayyappa
+Harihara Sudhane Saranam Pon Ayyappa
+Harihara Sudhane Saranam Pon Ayyappa
+`),
+
+  inRoman('sa', 'ayyappane-vaa-vaa', ['ayyappa'], 'Ayyappane Vaa Vaa', `
+Ayappane vaa vaa Harimagane vaa vaa
+Anandane vaa vaa Arulpuriya vaa vaa
+Sabarimalai vasane Shantapuniye murtiye
+Shantapuniye murtiye Shatru Samharane
+Kanthamalai Jyothiye Karunya Murthiye
+Karunya Murthiye Kaliyugathu varadane
+
+Villadi Veerane Veeramani Kantanae
+Veeramani Kantanae Ponnambala Vasane
+`),
+
+  inRoman('sa', 'harihara-sudhane-charanam-charanam', ['ayyappa'], 'Harihara Sudhane Charanam Charanam', `
+Harihara Sudhane Charanam Charanam
+Ayyappa
+Anaadhimoola Porule Charanam Ayyappa
+Parama Dayaala Gunaalaa Charanam Ayyappa
+Parandaama Jayataaraka Naama Ayyappa
+
+Pandala Kundala Sundara Chandra Ayyappa
+Paandiya Raja Kumara Charanam Ayyappa
+
+Chandana Varna Suvarna Shareera Ayyappa
+Shabari Gireesha Hridhaya Guhesha Ayyappa
+
+Annadhaana Vistaara Udaara Ayyappa
+Akhilalokha Saranagatha Rakshaka Ayyappa
+
+Ennayum Ettarul Seivaai Charanam Ayyappa
+Ekha Yoga Sajjana Gurunatha Ayyappa
+
+(Fast) Porul Unar-Chin Mutthirai Kaattiya ( Ayyappa
+Punniya Pamba Theera Vihaari Ayyappa
+Maruvum Agasthiya Vaachaka Ramana
+Ayyappa
+Mangala Vaazhvu Vazhangida Vaa Vaa
+Ayyappa
+
+Mangala Vaazhvu Vazhangida Vaa Vaa
+
+Ayyappa
+
+Inge Mangala Vaazhvu Vazhangida Vaa Vaa
+
+Ayyappa
+Engum Mangala Vaazhvu Vazhangida Vaa Vaa Ayyappa
+`),
+
+  inRoman('sa', 'harihara-sudhane-charanam-pon', ['ayyappa'], 'Harihara Sudhane Charanam Pon', `
+Harihara Sudhane Charanam Charanam
+Ayyappa
+Ayyappa Charanam Charanam Pon Ayyappa
+Harihara Sudhane Charanam Pon Ayyappa
+Aayiram Aayiram Un Thirunaamangal Naavil Udhikkanum Ayyappa
+Anaadha Rakshaka Aathmika Vathsala Nee Arul Eidhanum Ayyappa Mohinisudhane Mohanaroopa Mogam Agatruga Ayyappa
+Charanam Vilithaal Maranam Illai Swamiye Charanam Ayyappa
+
+Thedi Thedi Thedi Alaindhom Dharisanam Tharuvaai Ayyappa
+Koovi Kovvi Koovi Alaindhom Kookural
+Ketpaai Ayyappa
+Ayyappa Charanam Charanam Pon Ayyappa
+Harihara Sudhane Charanam Pon Ayyappa
+Harihara Sudhane Charanam Pon Ayyappa
+`),
+
+  inRoman('sa', 'neela-vasthra-dhaariye', ['ayyappa'], 'Neela Vasthra Dhaariye', `
+Neelavastra Dhaariye Swami Ayyappa
+Nityabrahmachariye Saranam Ayyapa
+Pambanadhi Jaathane Swami Ayyappa
+Panjagiri Vaasane Saranam Ayyappa
+Deva Deva Devothama Swami Ayyappa
+Deva Deva Devadhi Deva Devothama
+Swami Ayyappa
+Deva Deva Devadhi Deva DevaDevaDeva
+
+Devothama Swami Ayyappa
+
+Vedhagama Boojitha Saranam Ayyappa
+Raja Raja Gambeera Swami Ayyappa
+Raaja Raaja Raja Gambeera Swami
+Ayyappa
+Raaja Raaja Rajaathi Raaja RajaRajaRaja
+
+Raja Gambeera Swami Ayyappa
+Raaja Kula Thilaka Saranam Ayyappa
+Mandahaasa Vadhana Swami Ayyappa
+Pandhalathu Baalane Saranam Ayyappa
+Nitham Nitham Kai Thozhum Swami
+Ayyappa
+Veeramani Gandane Saranam Ayyappa
+Neelavastra Dhaariye Swami Ayyappa
+Nityabrahmachariye Saranam Ayyapa
+`),
+
+  inRoman('sa', 'paahi-paahi-manikanta', ['ayyappa'], 'Paahi Paahi Manikanta', `
+Paahi Paahi Manikanta
+Maamalai Vaasa Manikanta
+
+Vanpuli Vaahana Manikanta
+Vaanavar Boojitha Manikanta
+
+Mahishi Mardhana Manikanta
+Mohanaanchana Manikanta
+
+Mohini sudhane Manikanta
+Mohana roopa Manikanta
+
+Madagaja Vaahana Manikanta
+Maargha bandha Manikanta
+
+Sabari gireehwara Manikanta
+Saashwatha roopa Manikanta
+`),
+
+  sung('te', 'saadhu-laara', ['ayyappa'], 'సాధులారా మీరు రండి', 'Saadhulaara Meeru Randi', `
+సాధులారా మీరు రండి, భక్తులారా అందరు రండి
+పరశురామ క్షేత్రమునకు పాదయాత్ర
+పంపా నది తీరమునకు పాదయాత్ర (2)
+
+స్వామి శరణం అయ్యప్పా, శరణం శరణం అయ్యప్పా
+స్వామియే శరణం అయ్యప్పా, శరణం శరణం అయ్యప్పా (2)
+
+కార్తీక మాసములో మాల వేసి, పూజ చేసి
+గంధ ముద్దలు మోసుకొని పాదయాత్ర
+పంపా నది తీరమునకు పాదయాత్ర (2)
+॥ స్వామి శరణం ॥
+
+ఇక్కడ చూడు అయ్యప్ప స్వామి, అక్కడ చూడు అయ్యప్ప స్వామి
+అక్కడ చూస్తే అయ్యప్ప స్వామి, ఇక్కడ చూస్తే అయ్యప్ప స్వామి
+అక్కడ ఇక్కడ ఎక్కడ చూస్తే అయ్యప్ప స్వామియే
+మన హృదయములో నివసించిన అయ్యప్ప స్వామి
+
+సాధులారా మీరు రండి, భక్తులారా అందరు రండి (3)
+పరశురామ క్షేత్రమునకు పాదయాత్ర
+పంపా నది తీరమునకు పాదయాత్ర (2)
+స్వామి శరణం అయ్యప్పా, శరణం శరణం అయ్యప్పా
+`, `
+Saadhulaara Meeru Randi, Bhakthulaara Andaru Randi
+Parasurama Kshetramunaku Paadayaathra
+Pampaa Nadhi Theeramunaku Paadayaathra (2)
+
+Swamy Saranam Ayyappa, Saranam Saranam Ayyappa
+Swamiye Saranam Ayyappa, Saranam Saranam Ayyappa (2)
+
+Karthika Maasamulo Maala Vesi, Pooja Chesi
+Gandha Muddalu Mosukoni Paadayaathra
+Pampaa Nadhi Theeramunaku Paadayaathra (2)
+(Chorus) Swamy Saranam
+
+Ikkada Choodu Ayyappa Swamy, Akkada Choodu Ayyappa Swamy
+Akkada Choosthe Ayyappa Swamy, Ikkada Choosthe Ayyappa Swamy
+Akkada Ikkada Ekkada Choosthe Ayyappa Swamiye
+Mana Hrudayamulo Nivasinchina Ayyappa Swamy
+
+Saadhulaara Meeru Randi, Bhakthulaara Andaru Randi (3)
+Parasurama Kshetramunaku Paadayaathra
+Pampaa Nadhi Theeramunaku Paadayaathra (2)
+Swamy Saranam Ayyappa, Saranam Saranam Ayyappa
+`),
+
+  inRoman('sa', 'sabareeswara-saranaagatha', ['ayyappa'], 'Sabareeswara Saranaagatha', `
+Sabareeshwara Saranagatha, Sree Dharma Shaastha Paraath paraa
+Sree Dharma Shaastha Paraath paraa
+Giri Naadhane, Vana Vaasane, Sree Hari Hara Sutha Manikantane Mahaathmathe Karunaanithe Maaligathamede Manamanthrame Sabareeshwara
+Shiva Poojitha Munisevithaa, Saathvika Guna Dharma bodhaka Sanaathanaa Sakaleshwara Swami Janagade Sahayaathrika
+Sabareeshwara Saranagatha, Sree Dharma Shaastha Paraath paraa
+Sree Dharma Shaastha Paraath paraa
+`),
+
+  inRoman('sa', 'saranam-ayyappa-swamy-saranam-ayyappa', ['ayyappa'], 'Saranam Ayyappa Swamy Saranam Ayyappa', `
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Sabari Malayile Swamy Veetriruppavan
+Inge Saranam Azhaithaal Avar Odi Varuvaar
+
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Erumeliyil Swamy Dharma Saastha
+Inge Engalukellam Avar Paadha Saasta
+
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Achaan Kovilil Swamy Accham Theerpavar
+Indha Aariyangaavil Swamy Anandha
+Roopan
+
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Kamban Kodiyinil Swamy Maadanaanavan
+Inge Engalukellam avan Vedanaanavan
+
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Kantha Malayile Swamy Jothi Swaroopan
+Enga Sabarimaliyile Avan Saantha
+Swaroopan
+
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Saranam Ayyappa Swamy Saranam Ayyappa
+Varanam Ayyappa Inge Varanam Ayyappa
+`),
+
+  inRoman('sa', 'saranam-ayyappa-swamy-saranam-ayyappa-swamy', ['ayyappa'], 'Saranam Ayyappa Swamy Saranam Ayyappa Swamy', `
+Saranam Ayyappa Swamy, Saranam Ayyappa
+Swamy, Saranam Ayyappa Swamy
+Saranamayya
+Saranam Ayyappa Swamy, Saranam Ayyappa
+
+Swamy, Saranam Ayyappa Swamy
+
+Saranamayya
+Mandala Vradham Irundhu Mani Malayum
+Tharithu, Bhakthipoorvam Saamimudra
+Rudraksham Yendhi
+Trippadigal Padinettum Bhaktiyodu
+
+Koopidumbol, Sikhil Vilayadi Denam
+
+Maayavaibhava
+Saranam Ayyappa Swamy
+Karimala Mannil Njangal Kaaleduthu Vechaal
+Pinne Karampidicha Gnangale Kayattedane Swamiye Ayyappo .
+Jyotiroopa Satya Dharma Punyanidhi
+
+Bhoologesha Bhaktanaam Njangale Kaakkum
+
+Deivame
+
+Saranam Ayyappa Swamy
+`),
+
+  inRoman('sa', 'saranam-saranam-ayyappa', ['ayyappa'], 'Saranam Saranam Ayyappa', `
+Saranam Saranam Ayyappa
+Swamiye Saranam Ayyappa
+Madhagaja Vaahana Ayyappa
+Harihara Sudhane Ayyappa
+Saranam Saranam Ayyappa
+Swamiye Saranam Ayyappa
+Pandhala Raajane Ayyappa
+Parama Krupakara Ayyappa
+Saranam Saranam Ayyappa
+Swamiye Saranam Ayyappa
+Magishi Mardhana Ayyappa
+Manikanta Porule Ayyappa
+Ayyappa Ayyappa
+Swamiye Saranam Ayyappa
+`),
+
+  inRoman('sa', 'shanthi-shanthi-sabari-vaasane', ['ayyappa'], 'Shanthi Shanthi Sabari Vaasane', `
+Shanthi Shanthi Shanthi Shanthi Sabari Vaasane Shantham Un Swaroopamandro Chatrunaasane
+Gaana Mazhayil Nanaindha Piragum
+Kuliravillaya
+Gyanajothi Jwaalayaaga Olirum Ayyappa
+Aindhu Pulangal Aindhu Malaigal
+Aalavandhidu
+Aingaran Sagodhara Nee Amaidhi Thandhidu
+Sindhai Engum Jeevageetham Nee Isaithidu
+Sithvilaasa Deepame Nee Amaidhi Thandhidu
+Thandhai Thaayum Aanava Nee Dhayai
+Purindhudu
+Sandhadham Un Sarana Gosham Saanthi
+Thandhidu
+`),
+
+  sung('te', 'sundarmayya-swami', ['ayyappa'], 'సుందరమయ్యా స్వామి శుభకుల రూపం', 'Sundaramayya Swami Subhakula Roopam', `
+సుందరమయ్యా స్వామి శుభకుల రూపం
+శబరి కొండ గూటిలోని అయ్యప్ప రూపం
+
+అయ్యప్పను కొలవతరమా మాటలతోటి
+ఆ స్వామిని పిలవవయ్యా గుండెలతోటి
+మనసులోన స్వామి రూపు నిలిపి చూడరా
+అయ్య అప్ప అంటూ నువ్వు ముక్తి చూడరా
+ఓ సారి మాల వేసి మహిమ చూడరా
+అయ్యప్ప నిను వీడిపోడురా
+కన్నెస్వామి మీ కోసం అయ్యప్ప స్వామి
+నీ వెంటే ఉంటాడు తోడుగా స్వామి
+॥ సుందరమయ్యా ॥
+
+హరిహరుల అవతారము అయ్యప్ప స్వామి
+మనకోసం కలియుగమున వెలసిన స్వామి
+మండలము దీక్ష తోటి వేడి చూడరా
+ఈ కష్టాలన్నీ తీరే మార్గం తానే చూపురా
+॥ సుందరమయ్యా ॥ (2)
+`, `
+Sundaramayya Swami Subhakula Roopam
+Sabari Konda Gootiloni Ayyappa Roopam
+
+Ayyappanu Kolavatharamaa Maatalathoti
+Aa Swamini Pilavavayya Gundelathoti
+Manasulona Swami Roopu Nilipi Choodaraa
+Ayya Appa Antu Nuvvu Mukthi Choodaraa
+O Saari Maala Vesi Mahima Choodaraa
+Ayyappa Ninu Veedipoduraa
+Kanneswami Mee Kosam Ayyappa Swamy
+Nee Vente Untaadu Thoduga Swamy
+(Chorus) Sundaramayya
+
+Hariharula Avataaramu Ayyappa Swamy
+Manakosam Kaliyugamuna Velasina Swamy
+Mandalamu Deeksha Thoti Vedi Choodaraa
+Ee Kashtaalanni Theere Maargam Thaane Choopuraa
+(Chorus) Sundaramayya (2)
+`),
+
+  inRoman('sa', 'swami-ayyappa-charanam-ayyappa', ['ayyappa'], 'Swami Ayyappa .Charanam Ayyappa', `
+Swami Ayyappa Charanam Ayyappa Swami
+Charanam Ayyappa
+Pamba Baala Ponmalai Vaasa, Swami
+Charanam Ayyappa
+Mohini Sudhane Mohana Roopa, Swami
+Charanam Ayyappa
+Villali Veera Veeramanikanda, Swami
+Charanam Ayyappa
+Rajaadhi Raaja, Raaja Gambeera, Swami
+Charanam Ayyappa
+Erumeli Saastha, Ezhai Pangaala, Swami Charanam Ayyappa
+Paarvathi Baala Parama Dayaala, Swami
+Charanam Ayyappa
+Bhoolokanaadha Bhoomiprapanja, Swami
+Charanam Ayyappai
+
+Sabarigireesa Sri Dharma Saastha, Swami Charanam Ayyappa
+Kaathu Rakshikkum, Kaliyuga Varadha
+Kaatchi Thandarulvaaye
+`),
+
+  inRoman('ta', 'mangalam', ['ayyappa'], 'Mangalam', `
+Villale Veeranukkum Veera Manikandanukkum
+Jaya Mangalam Nithya Subamangalam
+Jaya Mangalam Nithya Subamangalam
+
+Rajathi Rajanukkum Raja Kula Thilakanukkum
+Jaya Mangalam Nithya Subamangalam
+Jaya Mangalam Nithya Subamangalam
+
+Boologa Nathanukum Bommi Prapanjanukum
+Jaya Mangalam Nithya Subamangalam
+Jaya Mangalam Nithya Subamangalam
+`),
+
+  inRoman('ta', 'vazhi-nadai-charanam', ['ayyappa'], 'Vazhi Nadai Charanam', `
+Swamiye Ayyappo
+Iyyappo Swamiye
+Pallikattu Sabarimalaikku
+Kallum Mullum Kaalukku Meththai
+Yetri Vidaiya Thooki Vidaiya
+Thooki Vidaiya Yetri Vidaiya
+Dhega Balam Thaa Paadam Balam Thaa
+Paadam Balam Thaa Dhega Balam Thaa
+Aathma Balam Thaa Mano Balam Thaa
+Mano Balam Thaa Aathma Balam Thaa
+Yaarai Kaana Swamiyai Kaana
+Swamiya Kandaaal Moksham Kittum
+
+Eppo Kittum Ippo Kittum
+Palli Kattu Sabarimalaikku
+Irumudi Kattu Sabarimalaikku
+Kattum Kattu Sabarimalaikku
+Nammudaiya Yatra Sabarimalaikku
+Nei Abhishegam Swamikke
+Paalabhishegam Swamikke
+Panneerabhishegam Swamikke
+Thenabhishegam Swamikke
+Avalum Malarm Swamikke
+Karpoora Dheepam Swamikke
+Basmabishekam Swamikke
+Swaami Thindhaga Iyyappa Thindhaga
+Thom Thom Thom Thom
+Iyyappa Thindhaga Swaami Thindhaga
+Thom Thom Thom Thom
+Villali Veerane Veeramani Kandane
+Raajathi Raajane Raja Kumarane
+Boologa Naathane Bhoomi Prabanjane
+Swamiyappa Ayyappa
+Saranamappa Ayyappa
+Vandomappa Ayyappa
+Vaaromappa Ayyappa
+En Gurunadha Ayyappa
+Sathgurunaadha Ayyappa
+Ezhai Pangaala Ayyappa
+Ekaanda Vaasa Ayyappa
+Swamiye Ayyappo
+`),
+
+  inRoman('sa', 'hey-raamadhootha', ['hanuman'], 'Hey Raamadhootha', `
+Hey Raamadootha, Hey Raamabhaktha
+Hey Raamadaasa, Namo Namo
+Seetha Maatha Shoka Vinaasha
+Anaatha Naatha Namo Namo
+Maaruthiraaya Maahanubhaava
+Athi Bhalavantha Namo Namo
+Anjaneya Namo Namo
+`),
+
+  inRoman('sa', 'jai-hanuman-jai-hanuman', ['hanuman'], 'Jai Hanuman Jai Hanuman', `
+Jai Hanuman Jai Hanuman Jai Jai Hanuman Jai Hanuman
+Rama Thootha Jai Hanuman, Jaya Vaayuputra Jai Hanuman
+Anjani Putra Jai Hanuman Jai Aanjaneya Jai Hanuman
+Raama Lakshmana Janaki Jai Jai Bolo Jai Hanumanuki Jai Jai
+
+Jai Jai Hanuman Jai Hanuman
+`),
+
+  inRoman('sa', 'rama-lakshmana-janaki', ['hanuman'], 'Rama Lakshmana Janaki', `
+Rama Lakshmana Janaki Jai Bolo Hanumanuki (2)
+
+Anjani Putra Balabeema Aanjaneya Balabeema
+Bala Bheem Bala Bheem Bala Bheem Bala Bheem
+Bala Bheem Bala Bheema
+
+Rama Lakshmana Janaki Jai Bolo Hanumanuki (2)
+
+Vayukumara Bala Beema Vaanara Veera
+Balabeema
+Bala Bheem Bala Bheem Bala Bheem Bala Bheem
+Bala Bheem Bala Bheema
+`),
+
+  inRoman('sa', 'rama-rama', ['hanuman'], 'Rama Rama', `
+Raama Raama Raama Raama Raama Raam
+Raama Raama Raama Raama Raama Raam
+Raama Raama Raama Raam Avar Raamarin
+Parama Bhaktharaam
+Raama Naamam Olikum Idathil Vaasam
+Seibhavaraam
+
+Raama Raama Ram Jaya Raama Raama Ram
+
+Seetha
+Raama Raama Ramma Ramma Ramma Raama
+Raama Raama
+Raama Dhootharam Raama Dhyana
+Hanumaraam
+Manathil Raamarai Endrum Thuthipavaraam Maaruthi Dhyaana Raam
+Vaayu Puthraraam Avar Vishwa Rooparaam
+Vaanara Veeraraam Parakrama Dheeraraam
+Anjali Puthalvarram Avar Anjaneeyaram
+Thanjam Endru Varubhavari Anjeal Endru
+
+Kaapavaraam
+`),
+
+  inRoman('sa', 'veera-maaruthi', ['hanuman'], 'Veera Maaruthi', `
+Veera Maaruthi Gambheera Maaruthi
+Veera Maaruti Gambhira Maaruti (2)
+
+Dheera Maaruti Atidheeraa Maaruti (2)
+Geeta Maaruti Sangeeta Maaruti (2)
+Dhoota Maaruti Raamadhoota Maaruti (2)
+Bhaktha Maaruthi Raama Bhaktha Maaruthi
+Bhakta Maaruti Parama Bhakta Maaruti (2)
+Veera Maaruti Gambhira Maaruti (2)
 `),
 ];
 
