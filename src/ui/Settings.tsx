@@ -7,6 +7,7 @@ import { downloadIcs } from './Calendar';
 import { LANGS, useText } from '../i18n';
 import { traditionName } from '../locales/festivals';
 import { SETTINGS_TEXT } from '../locales/settings';
+import { DAILY_TEXT } from '../locales/daily';
 import { traditionNote } from '../locales/setup';
 import { Card } from './components';
 import { FollowList } from './FollowList';
@@ -58,6 +59,8 @@ export function SettingsScreen() {
         <p className="tiny muted">{x('locationNote')}</p>
       </Card>
 
+      <MorningCard />
+
       <Card title={x('reminders')}>
         <label className="field">{x('reminderTime')}
           <input type="time" value={st.reminderTime} onChange={(e) => updateSettings({ reminderTime: e.target.value })} style={{ maxWidth: 180 }} />
@@ -108,5 +111,26 @@ export function SettingsScreen() {
 
       <button className="btn ghost" onClick={() => updateSettings({ onboarded: false })}>{x('runSetup')}</button>
     </>
+  );
+}
+
+/** The morning message: on or off, and at what time (phone apps). */
+function MorningCard() {
+  const { x } = useText(DAILY_TEXT);
+  const morning = useStore((s) => s.settings.morning) ?? { on: false, time: '06:30' };
+  return (
+    <Card title={x('morningTitle')}>
+      <p className="small muted" style={{ marginTop: 0 }}>{x('morningNote')}</p>
+      <label className="radio"><input type="checkbox" checked={morning.on} onChange={(e) => {
+        updateSettings({ morning: { ...morning, on: e.target.checked } });
+        if (e.target.checked && nativeReminders) askReminderPermission();
+      }} /> {x('morningOn')}</label>
+      {morning.on && (
+        <label className="field">{x('morningTime')}
+          <input type="time" value={morning.time} onChange={(e) => updateSettings({ morning: { ...morning, time: e.target.value || '06:30' } })} style={{ maxWidth: 180 }} />
+        </label>
+      )}
+      {!nativeReminders && <p className="tiny muted" style={{ marginBottom: 0 }}>{x('morningPhone')}</p>}
+    </Card>
   );
 }

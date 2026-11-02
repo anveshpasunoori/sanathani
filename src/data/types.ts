@@ -81,6 +81,8 @@ export interface Settings {
   theme: 'system' | 'light' | 'dark';
   calendarMode: 'gregorian' | 'lunar';
   textSize: 'normal' | 'large';
+  /** A short note each morning (phone apps): the day's thithi, festivals, family days and Rahu Kalam. */
+  morning?: { on: boolean; time: string };
   /** Festivals (observance ids, e.g. 'ugadi', 'ekadashi') and poojas ('pooja:lakshmi') to be reminded of the day before. */
   follows?: string[];
 }
@@ -128,6 +130,8 @@ export interface MyPooja {
   updatedAt: string;
 }
 
+export type SadhanaKind = 'mandala' | 'karthika' | 'dhanurmasam' | 'navaratri';
+
 export interface AppState {
   version: 1;
   settings: Settings;
@@ -140,6 +144,10 @@ export interface AppState {
   /** The user's own songs and poojas. */
   mySongs?: MySong[];
   myPoojas?: MyPooja[];
+  /** Japa counter: the chosen mantra, the beads counted in the current round, and each day's total. Device-only. */
+  japa?: { mantra: string; custom?: string; count: number; byDay: Record<string, number> };
+  /** Deekshas and sacred months being kept: when each began, and the practices ticked off each day. Device-only. */
+  sadhana?: { active: Array<{ kind: SadhanaKind; start: string }>; checks: Record<string, number[]> };
   /** Deleted event/profile ids → deletion time, so cloud sync doesn't bring them back. */
   tombstones?: Record<string, string>;
   /** When settings last changed (for sync). */

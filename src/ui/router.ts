@@ -11,6 +11,8 @@ export type Route =
   | { tab: 'stotram'; id: string }
   | { tab: 'login' }
   | { tab: 'songs'; deity?: string; song?: string }
+  | { tab: 'japa' }
+  | { tab: 'deeksha' }
   | { tab: 'settings' };
 
 function parseHash(): Route {
@@ -27,6 +29,8 @@ function parseHash(): Route {
     case 'stotram': return id ? { tab, id } : { tab: 'pooja' };
     case 'login': return { tab };
     case 'songs': return { tab, deity: id || undefined, song: sub || undefined };
+    case 'japa': return { tab };
+    case 'deeksha': return { tab };
     case 'settings': return { tab };
     default: return { tab: 'home' };
   }
@@ -46,6 +50,8 @@ export function href(r: Route): string {
     case 'stotram': return `#stotram/${r.id}`;
     case 'login': return '#login';
     case 'songs': return `#songs${r.deity ? `/${r.deity}${r.song ? `/${r.song}` : ''}` : ''}`;
+    case 'japa': return '#japa';
+    case 'deeksha': return '#deeksha';
     case 'settings': return '#settings';
     default: return '#home';
   }

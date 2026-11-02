@@ -12,6 +12,9 @@ import { ritualsFor } from '../engine/rituals';
 import { addDays, formatCivil, formatTime, formatTimeRel, todayIn } from '../engine/tz';
 import { Avatar, Card, categoryLabel, DateBox, relativeDay, ShareButton } from './components';
 import { go } from './router';
+import { DailyPracticeCard, GetReadyCard, VerseOfDayCard } from './HomeDaily';
+import { DAILY_TEXT } from '../locales/daily';
+import { shareText } from '../data/shopping';
 
 function useNow(ms = 60000) {
   const [now, setNow] = useState(() => new Date());
@@ -21,6 +24,7 @@ function useNow(ms = 60000) {
 
 export function HomeScreen() {
   const { t, x, lang } = useText(HOME_TEXT);
+  const { x: dx } = useText(DAILY_TEXT);
   const s = useStore((x) => x);
   const { place, tradition } = s.settings;
   const now = useNow();
@@ -67,12 +71,15 @@ export function HomeScreen() {
         </form>
       </Card>
 
+      <GetReadyCard observances={obs} today={today} />
+      <DailyPracticeCard />
+
       <Card title={t('upcomingFamily')} action={<button className="btn saffron" onClick={() => go({ tab: 'events', id: 'new' })}>+ {t('addEvent')}</button>}>
         {events.length === 0 ? <p className="muted">{t('noEvents')} {x('noEventsHint')}</p> : (
           <ul className="list">
             {events.map((o) => (
-              <li key={o.event.id + o.date}>
-                <button className="item" onClick={() => go({ tab: 'events', id: o.event.id })}>
+              <li key={o.event.id + o.date} className="row" style={{ gap: 6, flexWrap: 'nowrap' }}>
+                <button className="item grow" onClick={() => go({ tab: 'events', id: o.event.id })}>
                   <DateBox date={o.date} />
                   <Avatar e={o.event} />
                   <div className="grow">
@@ -80,6 +87,11 @@ export function HomeScreen() {
                     <div className="small muted">{o.event.title ?? categoryLabel(o.event.category, lang)} · {relativeDay(today, o.date, lang)}</div>
                   </div>
                 </button>
+                {/* On the day itself: a greeting with today's thithi, ready for WhatsApp. */}
+                {o.date === today && (o.event.category === 'birthday' || o.event.category === 'marriage') && (
+                  <button className="btn small" aria-label={dx('sendWishes')} title={dx('sendWishes')} onClick={() => shareText(dx('sendWishes'),
+                    dx(o.event.category === 'birthday' ? 'wishBirthday' : 'wishAnniversary', { name: o.event.personName, thithi: tithiFullName(t0.index, lang) }) + '\n\n— Sanathani')}>🎉</button>
+                )}
               </li>
             ))}
           </ul>
@@ -148,6 +160,8 @@ export function HomeScreen() {
         <span className="grow"><strong>{x('ceremonyQ')}</strong><span className="small muted">{x('ceremonySub')}</span></span>
         <span aria-hidden="true">→</span>
       </button>
+
+      <VerseOfDayCard today={today} />
 
       <Card title={t('guidance')}>
         {guidance.length ? <ul className="stack" style={{ margin: 0, paddingLeft: 18 }}>{guidance.map((g, i) => <li key={i}>{g}</li>)}</ul> : <p>{x('noGuidance')}</p>}

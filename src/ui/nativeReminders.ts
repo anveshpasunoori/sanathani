@@ -7,6 +7,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { getState, subscribe } from '../data/store';
 import { todayIn } from '../engine/tz';
 import { festivalText, loadPoojaPlanner, planFestivals } from '../reminders/festivals';
+import { planMorning } from '../reminders/morning';
 import { planAhead, reminderText } from '../reminders/schedule';
 import { go, type Route } from './router';
 
@@ -58,8 +59,9 @@ async function rebuild() {
   const festivals = planFestivals(s.settings, today, await loadPoojaPlanner(s.settings)).filter((p) => p.fireAt > now).map((p) => ({
     key: p.key, fireAt: p.fireAt, ...festivalText(p, 0, s.settings), extra: { route: p.route },
   }));
+  const morning = planMorning(s, today, now).map((m) => ({ ...m, extra: { route: { tab: 'home' } as Route } }));
   // iOS keeps at most 64 pending notifications; the soonest go first and opening the app tops up.
-  const planned = [...family, ...festivals].sort((a, b) => a.fireAt.getTime() - b.fireAt.getTime()).slice(0, 60);
+  const planned = [...family, ...festivals, ...morning].sort((a, b) => a.fireAt.getTime() - b.fireAt.getTime()).slice(0, 60);
   const pending = (await LocalNotifications.getPending()).notifications;
   if (pending.length) await LocalNotifications.cancel({ notifications: pending.map((n) => ({ id: n.id })) });
   if (!planned.length) return;
@@ -85,7 +87,7 @@ function scheduleInputs(): string {
   return JSON.stringify([
     events.map((e) => [e.id, e.updatedAt, e.isSample]),
     settings.place.lat, settings.place.lon, settings.place.tz, settings.tradition, settings.lang,
-    settings.follows, settings.reminderTime,
+    settings.follows, settings.reminderTime, settings.morning,
   ]);
 }
 

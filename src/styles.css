@@ -479,3 +479,18 @@ details.note > summary { cursor: pointer; }
 .my-steps { padding-left: 22px; margin: 0; display: grid; gap: 10px; }
 .my-steps p { margin: 4px 0 0; }
 .my-samagri { padding-left: 18px; margin: 0; columns: 2; column-gap: 24px; }
+
+/* Japa counter: one large bead to tap. */
+.japa { display: grid; gap: 12px; margin: 8px 0 16px; }
+.japa-bead { justify-self: center; width: min(78vw, 300px); aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--gold); background: radial-gradient(circle at 40% 30%, var(--surface), var(--champagne, #f3e6c7)); color: var(--text); display: grid; place-content: center; gap: 4px; text-align: center; padding: 18px; box-shadow: var(--shadow-btn, 0 2px 6px rgba(0,0,0,.12)); cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; }
+.japa-bead:active { transform: scale(0.98); }
+.japa-words { font-size: 1rem; line-height: 1.3; color: var(--maroon); }
+.japa-count { font-size: 3.4rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+
+/* Deeksha progress and checklist. */
+.deeksha-bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.deeksha-bar span { display: block; height: 100%; background: var(--gold); }
+.checklist { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 6px; }
+.checklist label { display: flex; gap: 8px; align-items: flex-start; }
+.verse-of-day { font-size: 1.05rem; line-height: 1.6; }
+.get-ready { border-left: 4px solid var(--gold); }
