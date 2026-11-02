@@ -144,10 +144,10 @@ export interface AppState {
   /** The user's own songs and poojas. */
   mySongs?: MySong[];
   myPoojas?: MyPooja[];
-  /** Japa counter: the chosen mantra, the beads counted in the current round, and each day's total. Device-only. */
-  japa?: { mantra: string; custom?: string; count: number; byDay: Record<string, number> };
-  /** Deekshas and sacred months being kept: when each began, and the practices ticked off each day. Device-only. */
-  sadhana?: { active: Array<{ kind: SadhanaKind; start: string }>; checks: Record<string, number[]> };
+  /** Japa counter: the chosen mantra, the beads counted in the current round, and each day's total. */
+  japa?: { mantra: string; custom?: string; count: number; byDay: Record<string, number>; updatedAt?: string };
+  /** Deekshas and sacred months being kept: when each began, and the practices ticked off each day ("kind:date"). */
+  sadhana?: { active: Array<{ kind: SadhanaKind; start: string }>; checks: Record<string, number[]>; updatedAt?: string };
   /** Deleted event/profile ids → deletion time, so cloud sync doesn't bring them back. */
   tombstones?: Record<string, string>;
   /** When settings last changed (for sync). */

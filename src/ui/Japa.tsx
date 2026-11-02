@@ -41,7 +41,7 @@ export function JapaScreen() {
   const [sound, setSound] = useState(() => { try { return localStorage.getItem(SOUND_KEY) !== 'off'; } catch { return true; } });
   useEffect(() => { try { localStorage.setItem(SOUND_KEY, sound ? 'on' : 'off'); } catch { /* ignore */ } }, [sound]);
 
-  const set = (patch: Partial<Japa>) => setState((s) => ({ ...s, japa: { ...(s.japa ?? EMPTY), ...patch } }));
+  const set = (patch: Partial<Japa>) => setState((s) => ({ ...s, japa: { ...(s.japa ?? EMPTY), ...patch, updatedAt: new Date().toISOString() } }));
   function tap() {
     const count = japa.count + 1;
     // Keep the last two months of daily totals.

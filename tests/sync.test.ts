@@ -1,6 +1,6 @@
 import { DEFAULT_SETTINGS } from '../src/data/store';
 import type { BirthProfile, FamilyEvent, MySong } from '../src/data/types';
-import { mergeStates, sameSynced, type SyncedState } from '../src/sync/merge';
+import { mergeJapa, mergeSadhana, mergeStates, sameSynced, type SyncedState } from '../src/sync/merge';
 import { upgrade, upgradeTradition } from '../src/data/traditions';
 import { HYD } from './fixtures';
 
@@ -72,5 +72,34 @@ describe('older Andhra Pradesh / Telangana calendars', () => {
     expect(up.settings.tradition).toBe('te');
     expect(up.events[0].tradition).toBe('te');
     expect(upgradeTradition('ml')).toBe('ml');
+  });
+});
+
+describe('japa and deeksha sync', () => {
+  it('keeps the higher count for each day and the mantra from the device used last', () => {
+    const phone = { mantra: 'shiva', count: 20, byDay: { '2026-11-01': 216, '2026-11-02': 20 }, updatedAt: '2026-11-02T08:00:00Z' };
+    const tablet = { mantra: 'rama', count: 5, byDay: { '2026-11-01': 108, '2026-10-31': 54 }, updatedAt: '2026-11-01T20:00:00Z' };
+    const m = mergeJapa(phone, tablet)!;
+    expect(m.mantra).toBe('shiva');
+    expect(m.byDay).toEqual({ '2026-11-01': 216, '2026-11-02': 20, '2026-10-31': 54 });
+    // Syncing the merged copy again changes nothing (counts are not added up).
+    expect(mergeJapa(m, m)).toEqual(m);
+    expect(mergeJapa(undefined, tablet)).toBe(tablet);
+  });
+
+  it('keeps ticks from both devices, and an ended deeksha ends everywhere', () => {
+    const phone = { active: [{ kind: 'mandala' as const, start: '2026-11-17' }], checks: { 'mandala:2026-11-18': [0, 1] }, updatedAt: '2026-11-18T09:00:00Z' };
+    const tablet = { active: [{ kind: 'mandala' as const, start: '2026-11-17' }, { kind: 'karthika' as const, start: '2026-11-10' }], checks: { 'mandala:2026-11-17': [0], 'karthika:2026-11-17': [2] }, updatedAt: '2026-11-17T21:00:00Z' };
+    const m = mergeSadhana(phone, tablet)!;
+    expect(m.active.map((a) => a.kind)).toEqual(['mandala']);
+    expect(m.checks).toEqual({ 'mandala:2026-11-18': [0, 1], 'mandala:2026-11-17': [0] });
+  });
+
+  it('carries japa and deekshas through a full merge', () => {
+    const phone = state({ japa: { mantra: 'shiva', count: 3, byDay: { '2026-11-01': 3 }, updatedAt: '2026-11-01T06:00:00Z' } });
+    const cloud = state({ sadhana: { active: [{ kind: 'mandala', start: '2026-11-01' }], checks: {}, updatedAt: '2026-11-01T05:00:00Z' } });
+    const m = mergeStates(phone, cloud);
+    expect(m.japa?.byDay['2026-11-01']).toBe(3);
+    expect(m.sadhana?.active).toHaveLength(1);
   });
 });

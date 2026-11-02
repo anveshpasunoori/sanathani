@@ -34,14 +34,14 @@ export function toggleCheck(kind: SadhanaKind, day: CivilDate, i: number) {
     const sad = s.sadhana ?? { active: [], checks: {} };
     const key = `${kind}:${day}`;
     const cur = sad.checks[key] ?? [];
-    return { ...s, sadhana: { ...sad, checks: { ...sad.checks, [key]: cur.includes(i) ? cur.filter((n) => n !== i) : [...cur, i] } } };
+    return { ...s, sadhana: { ...sad, checks: { ...sad.checks, [key]: cur.includes(i) ? cur.filter((n) => n !== i) : [...cur, i] }, updatedAt: new Date().toISOString() } };
   });
 }
 
 function start(kind: SadhanaKind, on: CivilDate) {
   setState((s) => {
     const sad = s.sadhana ?? { active: [], checks: {} };
-    return { ...s, sadhana: { ...sad, active: [...sad.active.filter((a) => a.kind !== kind), { kind, start: on }] } };
+    return { ...s, sadhana: { ...sad, active: [...sad.active.filter((a) => a.kind !== kind), { kind, start: on }], updatedAt: new Date().toISOString() } };
   });
 }
 
@@ -49,7 +49,7 @@ function stop(kind: SadhanaKind) {
   setState((s) => {
     const sad = s.sadhana ?? { active: [], checks: {} };
     const checks = Object.fromEntries(Object.entries(sad.checks).filter(([k]) => !k.startsWith(`${kind}:`)));
-    return { ...s, sadhana: { active: sad.active.filter((a) => a.kind !== kind), checks } };
+    return { ...s, sadhana: { active: sad.active.filter((a) => a.kind !== kind), checks, updatedAt: new Date().toISOString() } };
   });
 }
 
