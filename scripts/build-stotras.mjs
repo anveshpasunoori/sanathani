@@ -2,7 +2,7 @@
 // transcriptions; text CC BY-SA 4.0). Each text is parsed into sections and verses and checked for
 // completeness (verse numbering / name counts); the build fails if a check does not pass.
 // Run: node scripts/build-stotras.mjs
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const UA = { 'User-Agent': 'ThithiReminder-build/0.1 (personal project)' };
 const wsUrl = (t) => `https://te.wikisource.org/wiki/${encodeURIComponent(t.replace(/ /g, '_'))}`;
@@ -14,7 +14,7 @@ const raw = async (t) => {
 
 const TE_DIGITS = '౦౧౨౩౪౫౬౭౮౯';
 const toInt = (s) => Number([...s].map((c) => (TE_DIGITS.includes(c) ? TE_DIGITS.indexOf(c) : c)).join(''));
-const NUM_END = /\s*(?:\|\|?|॥)?\s*\(?\s*([0-9౦-౯]{1,3})\s*\)?\s*(?:\|\|?|॥)?\s*$/;
+const NUM_END = /\s*(?:\|\|?|॥|।।?)?\s*\(?\s*([0-9౦-౯]{1,3})\s*\)?\s*(?:\|\|?|॥|।।?)?\s*$/;
 
 function clean(s) {
   return s
@@ -27,6 +27,9 @@ function clean(s) {
     .replace(/^'''\s*([^'\n]{1,30}?)\s*'''\s*$/gm, '== $1 ==')
     .replace(/'''/g, '')
     .replace(/‖/g, '||')
+    // Some pages write dandas as periods: "… ." ends a half-verse and ".. ౧.." a numbered verse.
+    .replace(/\.\.\s*([0-9౦-౯]{1,3})\s*\.\./g, '॥ $1 ॥')
+    .replace(/ \.$/gm, ' |')
     .replace(/\|[ \t]+\|/g, '||')
     .replace(/[ \t]+/g, ' ');
 }
@@ -47,7 +50,7 @@ function parseVerses(text, { splitHalves = false } = {}) {
     const parts = splitHalves ? line.split(/(?<=[^|]\|)(?!\|)\s*(?=\S)/) : [line];
     for (const p of parts) {
       verse.push(p.trim());
-      if (NUM_END.test(p) && /[|॥)]|[౦-౯]$/.test(p.trim())) flush();
+      if (NUM_END.test(p) && /[|॥।)]|[౦-౯]$/.test(p.trim())) flush();
     }
   }
   flush();
@@ -133,6 +136,9 @@ const SHORT = [
   ['mantra-pushpam', 'మంత్ర పుష్పము', { te: 'మంత్ర పుష్పము', en: 'Mantra Pushpam' }, 'general', 'Vedic hymn (Taittiriya Aranyaka) offered as the "flower of mantras" at the end of every pooja.', 0],
   // Only Tulsidas's original (Awadhi, in Telugu script); the page's modern Telugu translation is not public domain.
   ['hanuman-chalisa', 'హనుమాన్ చాలీసా', { te: 'శ్రీ హనుమాన్ చాలీసా', en: 'Sri Hanuman Chalisa' }, 'hanuman', 'Forty chaupais in praise of Hanuman by Goswami Tulsidas (16th century), recited on Tuesdays and Saturdays.', 40, ['==హిందీ==', '==తెలుగు==']],
+  ['aditya-hridayam', 'ఆదిత్య హృదయము', { te: 'ఆదిత్య హృదయము', en: 'Aditya Hridayam' }, 'surya', 'The hymn to the Sun that Sage Agastya taught Sri Rama before the battle with Ravana (Valmiki Ramayana, Yuddha Kanda). Recited at sunrise, especially on Sundays.', 31, ['__NOTOC__', '-------']],
+  ['shivananda-lahari', 'శివానందలహరి', { te: 'శివానందలహరి', en: 'Shivananda Lahari' }, 'shiva', 'A hundred verses on the bliss of devotion to Lord Shiva, by Adi Shankaracharya.', 100],
+  ['soundarya-lahari', 'సౌందర్యలహరి', { te: 'సౌందర్యలహరి', en: 'Soundarya Lahari' }, 'devi', 'A hundred verses on the beauty and grace of the Divine Mother, by Adi Shankaracharya.', 100],
 ];
 for (const [id, title, titles, deity, about, expected, cut] of SHORT) {
   let s = await raw(title);
@@ -141,14 +147,21 @@ for (const [id, title, titles, deity, about, expected, cut] of SHORT) {
     if (a < 0 || b < 0) throw new Error(`${titles.en}: section markers not found`);
     s = s.slice(a + cut[0].length, b);
   }
-  const body = s.includes('<poem>') ? s.slice(s.indexOf('<poem>'), s.includes('</poem>') ? s.indexOf('</poem>') : undefined) : s;
+  // One poem block: just its text. Several (a text in parts, like Soundarya Lahari): the whole page, headings included.
+  const poems = s.split('<poem>').length - 1;
+  const body = poems === 1 ? s.slice(s.indexOf('<poem>'), s.includes('</poem>') ? s.indexOf('</poem>') : undefined) : s;
   const sections = parseVerses(body);
   if (expected) expectRun(verseNumbers(sections), 1, expected, titles.en);
   else if (sections.flatMap((x) => x.verses).length < 5) throw new Error(`${titles.en}: too short`);
   out.push({ id, deity, title: titles, about, sections, stats: { verses: sections.reduce((n, x) => n + x.verses.length, 0) }, source: { title, url: wsUrl(title) } });
 }
 
-writeFileSync(new URL('../src/data/stotras.json', import.meta.url), JSON.stringify({
+// Texts added by hand from other sources (Thiruppavai) are kept as they are.
+const file = new URL('../src/data/stotras.json', import.meta.url);
+const built = new Set(out.map((t) => t.id));
+for (const t of JSON.parse(readFileSync(file, 'utf8')).stotras) if (!built.has(t.id)) out.push(t);
+
+writeFileSync(file, JSON.stringify({
   license: 'Texts from Telugu Wikisource (te.wikisource.org), available under CC BY-SA 4.0. The scriptures themselves are in the public domain.',
   fetched: new Date().toISOString().slice(0, 10),
   stotras: out,

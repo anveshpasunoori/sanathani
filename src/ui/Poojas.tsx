@@ -36,6 +36,9 @@ export const STOTRA_LIST: Array<{ id: string; en: string; te: string; image: Dei
   { id: 'hanuman-chalisa', en: 'Sri Hanuman Chalisa', te: 'శ్రీ హనుమాన్ చాలీసా', image: 'hanuman', size: [['chaupais', 40]] },
   { id: 'thiruppavai', en: 'Thiruppavai', te: 'తిరుప్పావై', image: 'andal', size: [['verses', 30]] },
   { id: 'mantra-pushpam', en: 'Mantra Pushpam', te: 'మంత్ర పుష్పము', image: 'vishnu', size: [['vedicHymn']] },
+  { id: 'aditya-hridayam', en: 'Aditya Hridayam', te: 'ఆదిత్య హృదయము', image: 'surya', size: [['verses', 31]] },
+  { id: 'shivananda-lahari', en: 'Shivananda Lahari', te: 'శివానందలహరి', image: 'shiva', size: [['verses', 100]] },
+  { id: 'soundarya-lahari', en: 'Soundarya Lahari', te: 'సౌందర్యలహరి', image: 'lalitha', size: [['verses', 100]] },
 ];
 
 const ORDER = ['nithya', 'ganapathi', 'lakshmi', 'varalakshmi', 'shiva', 'vishnu', 'venkateswara', 'satyanarayana', 'durga', 'saraswati', 'hanuman', 'rama', 'krishna', 'thiruppavai',
