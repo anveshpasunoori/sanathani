@@ -8,6 +8,7 @@ import { useSyncExternalStore } from 'react';
 import { deleteAllData, getState, recompute, setState, subscribe } from '../data/store';
 import { mergeStates, sameSynced, toSynced, type SyncedState } from './merge';
 import { supabase } from './supabase';
+import { clearGroupEvents, refreshGroupEvents } from '../groups/cache';
 
 export interface AccountState {
   status: 'disabled' | 'loading' | 'signed-out' | 'signed-in';
@@ -76,14 +77,14 @@ export function startAccount() {
   if (native) NativeApp.addListener('appUrlOpen', ({ url }) => finishNativeSignIn(url));
   subscribe(schedule);
   window.addEventListener('online', () => syncNow());
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { syncNow(); if (account.status === 'signed-in') refreshGroupEvents(); } });
 }
 
 function onSession(user: { id: string; email?: string; user_metadata?: Record<string, unknown> } | undefined) {
   const prev = account.user?.id;
-  if (!user) { set({ status: 'signed-out', user: undefined, sync: 'idle' }); return; }
+  if (!user) { set({ status: 'signed-out', user: undefined, sync: 'idle' }); clearGroupEvents(); return; }
   set({ status: 'signed-in', user: { id: user.id, email: user.email, name: (user.user_metadata?.full_name ?? user.user_metadata?.name) as string | undefined } });
-  if (prev !== user.id) syncNow();
+  if (prev !== user.id) { syncNow(); refreshGroupEvents(); }
 }
 
 // ---- Auth actions ------------------------------------------------------------------------

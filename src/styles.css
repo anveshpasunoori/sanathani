@@ -494,3 +494,11 @@ details.note > summary { cursor: pointer; }
 .checklist label { display: flex; gap: 8px; align-items: flex-start; }
 .verse-of-day { font-size: 1.05rem; line-height: 1.6; }
 .get-ready { border-left: 4px solid var(--gold); }
+
+/* Group chat and private messages. */
+.thread { display: grid; gap: 8px; max-height: 60vh; overflow-y: auto; padding: 2px; }
+.msg { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-input, 12px); padding: 8px 10px; max-width: 88%; justify-self: start; }
+.msg.mine { justify-self: end; background: color-mix(in srgb, var(--gold) 14%, var(--surface)); }
+.msg.announce { border-color: var(--gold); border-width: 2px; max-width: 100%; justify-self: stretch; }
+.msg-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.msg-actions:empty { display: none; }

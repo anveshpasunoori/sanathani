@@ -23,12 +23,13 @@ import { asset } from '../data/asset';
 const PoojasScreen = lazy(() => import('./Poojas').then((m) => ({ default: m.PoojasScreen })));
 const SongsScreen = lazy(() => import('./Songs').then((m) => ({ default: m.SongsScreen })));
 const StotramScreen = lazy(() => import('./Stotram').then((m) => ({ default: m.StotramScreen })));
+const GroupsScreen = lazy(() => import('./Groups').then((m) => ({ default: m.GroupsScreen })));
 const JapaScreen = lazy(() => import('./Japa').then((m) => ({ default: m.JapaScreen })));
 const DeekshaScreen = lazy(() => import('./Deeksha').then((m) => ({ default: m.DeekshaScreen })));
 
 // Five tabs fit a phone without crowding. Songs live under Pooja, and Ask is the question box on Home.
 const TABS: Array<'home' | 'calendar' | 'events' | 'pooja' | 'astro'> = ['home', 'calendar', 'events', 'pooja', 'astro'];
-const TAB_OF: Partial<Record<Route['tab'], (typeof TABS)[number]>> = { muhurtam: 'calendar', stotram: 'pooja', songs: 'pooja', ask: 'home', japa: 'home', deeksha: 'home' };
+const TAB_OF: Partial<Record<Route['tab'], (typeof TABS)[number]>> = { muhurtam: 'calendar', stotram: 'pooja', songs: 'pooja', ask: 'home', japa: 'home', deeksha: 'home', groups: 'home' };
 
 export function App() {
   const route = useRoute();
@@ -103,6 +104,7 @@ export function App() {
           {route.tab === 'pooja' && <PoojasScreen id={route.id} />}
           {route.tab === 'stotram' && <StotramScreen id={route.id} />}
           {route.tab === 'songs' && <SongsScreen deity={route.deity} song={route.song} />}
+          {route.tab === 'groups' && <GroupsScreen id={route.id} sub={route.sub} />}
           {route.tab === 'japa' && <JapaScreen />}
           {route.tab === 'deeksha' && <DeekshaScreen />}
         </Suspense>

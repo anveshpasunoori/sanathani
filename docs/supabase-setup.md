@@ -11,6 +11,9 @@ Accounts are built in but switched off until the app knows your Supabase project
 1. In the project, open **SQL Editor → New query**.
 2. Paste the contents of `supabase/migrations/0001_user_state.sql` and click **Run**.
    This creates one private row per user, protected by Row Level Security.
+3. Do the same with `0002_security.sql` and then `0003_groups.sql` (deeksha groups: events, chat, private
+   messages, nearby groups, block and report). Groups use Realtime for live chat; the migration turns it on
+   for its tables. Reports filed in the app appear in **Table Editor → reports** for you to review.
 
 ## 3. Email sign-in (one-time code)
 1. **Authentication → Providers → Email**: make sure it is enabled.
@@ -47,3 +50,18 @@ edit the same event, the most recent edit wins.
 ## Coming next
 Family sharing (invite relatives to view or edit shared events), phone-number sign-in (needs an SMS
 provider such as Twilio), Apple sign-in (needs an Apple Developer account), and server push reminders.
+
+
+## Testing on your Mac (local Supabase)
+
+Everything above can be tried locally first (Docker Desktop running):
+
+```bash
+supabase start          # first run downloads the images; applies every migration in supabase/migrations
+node scripts/test-groups.mjs   # checks the group security rules end to end with four test users
+```
+
+Put the printed `API_URL` and `ANON_KEY` in `.env.local` as `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`
+and restart `npm run dev`. Sign-in codes arrive in the local mailbox at http://127.0.0.1:54324. The email
+template with the 6-digit code is `supabase/templates/magic_link.html` — use the same text in the live
+project (step 3 of email sign-in above).

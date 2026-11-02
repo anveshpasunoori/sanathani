@@ -146,6 +146,8 @@ export interface AppState {
   myPoojas?: MyPooja[];
   /** Japa counter: the chosen mantra, the beads counted in the current round, and each day's total. */
   japa?: { mantra: string; custom?: string; count: number; byDay: Record<string, number>; updatedAt?: string };
+  /** Upcoming events of the reader's deeksha groups, copied from the server so the phone can remind offline. */
+  groupEvents?: Array<{ id: string; groupId: string; groupName: string; title: string; place?: string; startsAt: string; remindMinutes: number }>;
   /** Deekshas and sacred months being kept: when each began, and the practices ticked off each day ("kind:date"). */
   sadhana?: { active: Array<{ kind: SadhanaKind; start: string }>; checks: Record<string, number[]>; updatedAt?: string };
   /** Deleted event/profile ids → deletion time, so cloud sync doesn't bring them back. */

@@ -59,9 +59,14 @@ async function rebuild() {
   const festivals = planFestivals(s.settings, today, await loadPoojaPlanner(s.settings)).filter((p) => p.fireAt > now).map((p) => ({
     key: p.key, fireAt: p.fireAt, ...festivalText(p, 0, s.settings), extra: { route: p.route },
   }));
+  const groups = (s.groupEvents ?? []).map((e) => ({ e, fireAt: new Date(Date.parse(e.startsAt) - e.remindMinutes * 60000) })).filter((g) => g.fireAt > now).map(({ e, fireAt }) => ({
+    key: `group|${e.id}|${e.startsAt}`, fireAt, title: `${e.groupName}: ${e.title}`,
+    body: [new Date(e.startsAt).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' }), e.place].filter(Boolean).join(' · '),
+    extra: { route: { tab: 'groups', id: e.groupId } as Route },
+  }));
   const morning = planMorning(s, today, now).map((m) => ({ ...m, extra: { route: { tab: 'home' } as Route } }));
   // iOS keeps at most 64 pending notifications; the soonest go first and opening the app tops up.
-  const planned = [...family, ...festivals, ...morning].sort((a, b) => a.fireAt.getTime() - b.fireAt.getTime()).slice(0, 60);
+  const planned = [...family, ...festivals, ...groups, ...morning].sort((a, b) => a.fireAt.getTime() - b.fireAt.getTime()).slice(0, 60);
   const pending = (await LocalNotifications.getPending()).notifications;
   if (pending.length) await LocalNotifications.cancel({ notifications: pending.map((n) => ({ id: n.id })) });
   if (!planned.length) return;
@@ -83,8 +88,9 @@ function reschedule() {
 
 /** What the schedule depends on; a store change that leaves this alone needs no rebuild. */
 function scheduleInputs(): string {
-  const { events, settings } = getState();
+  const { events, settings, groupEvents } = getState();
   return JSON.stringify([
+    (groupEvents ?? []).map((e) => [e.id, e.startsAt, e.remindMinutes]),
     events.map((e) => [e.id, e.updatedAt, e.isSample]),
     settings.place.lat, settings.place.lon, settings.place.tz, settings.tradition, settings.lang,
     settings.follows, settings.reminderTime, settings.morning,

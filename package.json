@@ -13,7 +13,8 @@
     "cap:ios": "npm run cap:sync && cap open ios",
     "cap:android": "npm run cap:sync && cap open android",
     "voice": "vite-node scripts/build-voice.ts",
-    "translate-poojas": "vite-node scripts/translate-poojas.ts"
+    "translate-poojas": "vite-node scripts/translate-poojas.ts",
+    "test:groups": "node scripts/test-groups.mjs"
   },
   "dependencies": {
     "@capacitor-community/text-to-speech": "8.0.2",

@@ -9,14 +9,22 @@ import { DAILY_TEXT } from '../locales/daily';
 import { Card, relativeDay } from './components';
 import { DeekshaCard, useSadhana } from './Deeksha';
 import { go } from './router';
+import { GROUPS_TEXT } from '../locales/groups';
+import { useStore } from '../data/store';
+import { LOCALE } from '../i18n';
+import { cloudEnabled } from '../sync/supabase';
 
 // The Home screen's daily cards: the reader's practice (deekshas running, the japa counter), a verse of the
 // day from the stotrams, and a nudge to get ready a few days before a festival that has a pooja guide.
 
 /** "Your daily practice": running deekshas with today's checklist, and the way to the japa counter. */
 export function DailyPracticeCard() {
-  const { x } = useText(DAILY_TEXT);
+  const { x, lang } = useText(DAILY_TEXT);
+  const { x: gx } = useText(GROUPS_TEXT);
   const { items } = useSadhana();
+  // The next two events of the reader's deeksha groups.
+  const groupEvents = useStore((s) => s.groupEvents);
+  const soon = (groupEvents ?? []).filter((e) => Date.parse(e.startsAt) > Date.now() - 3600000).slice(0, 2);
   return (
     <>
       {items.filter((a) => !a.p.done).map((a) => <DeekshaCard key={a.kind} kind={a.kind} startDate={a.start} compact />)}
@@ -24,7 +32,17 @@ export function DailyPracticeCard() {
         <div className="row">
           <button className="btn" onClick={() => go({ tab: 'japa' })}>📿 {x('openJapa')}</button>
           <button className="btn" onClick={() => go({ tab: 'deeksha' })}>🪔 {x('startDeeksha')}</button>
+          {cloudEnabled && <button className="btn" onClick={() => go({ tab: 'groups' })}>👥 {gx('groups')}</button>}
         </div>
+        {soon.length > 0 && (
+          <ul className="list" style={{ marginTop: 8 }}>
+            {soon.map((e) => (
+              <li key={e.id}><button className="item" onClick={() => go({ tab: 'groups', id: e.groupId })}>
+                <span className="grow"><strong>{e.title}</strong><br /><span className="small muted">{e.groupName} · {new Date(e.startsAt).toLocaleString(LOCALE[lang], { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })}{e.place ? ` · ${e.place}` : ''}</span></span>
+              </button></li>
+            ))}
+          </ul>
+        )}
       </Card>
     </>
   );
