@@ -1,3 +1,4 @@
+import type { Lang } from '../engine/names';
 // Devotional songs (bhajanalu), from the app owner's own song booklet (Ayyappa_Telugu_Combined.pdf).
 // Cleaned for reading: PDF text-extraction splits joined ("స్నా నం" → "స్నానం"), repeat marks made
 // uniform ("(2)", "(కోరస్)"), refrains shown once and then as "॥ … ॥", obvious typos fixed, and
@@ -3057,7 +3058,7 @@ Subramanyam Subramanyam Shanmukha Natha Subramanyam
   // From the NJABM (New Jersey Ayyappa Bhaktha Mandali) Bhajan Book, 2019: the traditional nama bhajans and
   // classical songs (Meera, Purandara Dasa, the abhangs, Arunagirinathar, Oothukkadu) the app did not have.
   // Written for now in English letters as the book prints them; their own scripts follow. The Telugu songs are
-  // in Telugu. Film and album songs in the book are left out.
+  // in Telugu. Film and album songs, and the Malayalam ones, are left out.
   inRoman('ta', 'gajamugane-gananaatha', ['ganapathi'], 'Gajamugane Gananaatha', `
 Gajamukhane Gananatha Gowri Nandhana
 Gajavadhana
@@ -3083,7 +3084,7 @@ Gajamukhane Gananatha Gowri Nandhana
 Gajavadhana
 `),
 
-  inRoman('sa', 'gana-gana-gana-gana', ['ganapathi'], 'Gana Gana Gana Gana', `
+  inRoman('ta', 'gana-gana-gana-gana', ['ganapathi'], 'Gana Gana Gana Gana', `
 Gana Gana Gana Gana Gananatha (2)
 Gajamukha Vadana Gananatha (2)
 Gajana Hey Gajavadana (2)
@@ -3231,7 +3232,7 @@ Gyananantha Chinmayaanantha Dhayaanantha
 Shivanantha Guru RajaRamana Aanantha Guru Natha
 `),
 
-  inRoman('sa', 'gnananandaa-gnanananda-deva', ['guru'], 'Gnananandaa Gnanananda Deva', `
+  inRoman('ta', 'gnananandaa-gnanananda-deva', ['guru'], 'Gnananandaa Gnanananda Deva', `
 Gnana Nanda Gnana Nanda Deva
 Gnana Nanda Gnana Nanda Deva
 Manam Ninaikumbothu Unnai Thuthikkum
@@ -3282,7 +3283,7 @@ Saare Vishwa-Ka Woh Hai Dhaatha, Naarayana Bhagwaan (2)
 Om Guru Deva
 `),
 
-  inRoman('sa', 'om-gurunadha', ['guru'], 'Om Gurunadha', `
+  inRoman('ta', 'om-gurunadha', ['guru'], 'Om Gurunadha', `
 Om Gurunadha Nyananandha Charanam
 Charanam Gurudeva
 Seerperugum Paramanandha Desiga
@@ -3301,7 +3302,7 @@ Om Gurunadha Nyananandha Charanam
 Charanam Gurudeva
 `),
 
-  inRoman('sa', 'sachidananda-guru', ['guru'], 'Sachidananda Guru', `
+  inRoman('ta', 'sachidananda-guru', ['guru'], 'Sachidananda Guru', `
 Sachidananda Guru Sachidananda
 Sachidananda Guru Sachidananda
 Om Guru Jaya Guru Sachidananda
@@ -3321,7 +3322,7 @@ Nichayamai Hariyaikaatum Sachidananda
 Uchiyil Vaithadiduvom Sachidananda
 `),
 
-  inRoman('sa', 'shankara-guru', ['guru'], 'Shankara Guru', `
+  inRoman('ta', 'shankara-guru', ['guru'], 'Shankara Guru', `
 Shankara Guru Jaya Shankara Guru
 Shanmadha Staapaga Shankar Guru
 Apaara Mahimaa Gurunaadha
@@ -3477,7 +3478,7 @@ Eedera Arulvaai Muthaiyah
 Saranam Saranam
 `),
 
-  inRoman('sa', 'vel-muruga-maal-maruga', ['subrahmanya'], 'Vel Muruga Maal Maruga', `
+  inRoman('ta', 'vel-muruga-maal-maruga', ['subrahmanya'], 'Vel Muruga Maal Maruga', `
 Vel Muruga Malmaruga Valli Manala
 Shakthi Vadi Velavane Shanmuganatha
 Kanda Kumara Muruga Karthikeyane
@@ -4350,7 +4351,7 @@ Kesava Madava Radhe Govinda
 Tirupathi Vasa Venkataramana
 `),
 
-  inRoman('sa', 'krishna-krishnaa-mukundaa-janaardhana', ['krishna'], 'Krishna Krishnaa Mukundaa Janaardhana', `
+  inRoman('ta', 'krishna-krishnaa-mukundaa-janaardhana', ['krishna'], 'Krishna Krishnaa Mukundaa Janaardhana', `
 Krishna Krishnaa Mukundaa Janaardhana
 Krishna Govindha Naaraayanaa Hare
 Achyudhaanandha Govinda Maadhavaa
@@ -4595,7 +4596,7 @@ Naraayana Naraayana Naraayana Govinda
 Naraayana Naraayana Naraayana Govinda
 `),
 
-  inRoman('sa', 'vanamaali-vasudeva', ['krishna'], 'Vanamaali Vasudeva', `
+  inRoman('ta', 'vanamaali-vasudeva', ['krishna'], 'Vanamaali Vasudeva', `
 Vanamaali Vasudeva, Jaganmohana Radha
 Ramana
 Sasivadhana Sarasijanayana Jaganmohana Radha Ramana
@@ -4729,7 +4730,7 @@ Endhuku Ee Kannulu Swamy Nee Jyothi Choodanidhe
 (Chorus) Ayyappa Nee Naamam
 `),
 
-  inRoman('sa', 'ayyappane-saranam-saranam', ['ayyappa'], 'Ayyappane Saranam Saranam', `
+  inRoman('ta', 'ayyappane-saranam-saranam', ['ayyappa'], 'Ayyappane Saranam Saranam', `
 Ayyappa Saranam .Saranam Pon Ayyappa
 Harihara Sudhane Saranam Pon Ayyappa
 Aayiram Aayiram Un Thirunaamangal
@@ -4748,7 +4749,7 @@ Harihara Sudhane Saranam Pon Ayyappa
 Harihara Sudhane Saranam Pon Ayyappa
 `),
 
-  inRoman('sa', 'ayyappane-vaa-vaa', ['ayyappa'], 'Ayyappane Vaa Vaa', `
+  inRoman('ta', 'ayyappane-vaa-vaa', ['ayyappa'], 'Ayyappane Vaa Vaa', `
 Ayappane vaa vaa Harimagane vaa vaa
 Anandane vaa vaa Arulpuriya vaa vaa
 Sabarimalai vasane Shantapuniye murtiye
@@ -4760,7 +4761,7 @@ Villadi Veerane Veeramani Kantanae
 Veeramani Kantanae Ponnambala Vasane
 `),
 
-  inRoman('sa', 'harihara-sudhane-charanam-charanam', ['ayyappa'], 'Harihara Sudhane Charanam Charanam', `
+  inRoman('ta', 'harihara-sudhane-charanam-charanam', ['ayyappa'], 'Harihara Sudhane Charanam Charanam', `
 Harihara Sudhane Charanam Charanam
 Ayyappa
 Anaadhimoola Porule Charanam Ayyappa
@@ -4796,7 +4797,7 @@ Ayyappa
 Engum Mangala Vaazhvu Vazhangida Vaa Vaa Ayyappa
 `),
 
-  inRoman('sa', 'harihara-sudhane-charanam-pon', ['ayyappa'], 'Harihara Sudhane Charanam Pon', `
+  inRoman('ta', 'harihara-sudhane-charanam-pon', ['ayyappa'], 'Harihara Sudhane Charanam Pon', `
 Harihara Sudhane Charanam Charanam
 Ayyappa
 Ayyappa Charanam Charanam Pon Ayyappa
@@ -4908,16 +4909,7 @@ Pampaa Nadhi Theeramunaku Paadayaathra (2)
 Swamy Saranam Ayyappa, Saranam Saranam Ayyappa
 `),
 
-  inRoman('sa', 'sabareeswara-saranaagatha', ['ayyappa'], 'Sabareeswara Saranaagatha', `
-Sabareeshwara Saranagatha, Sree Dharma Shaastha Paraath paraa
-Sree Dharma Shaastha Paraath paraa
-Giri Naadhane, Vana Vaasane, Sree Hari Hara Sutha Manikantane Mahaathmathe Karunaanithe Maaligathamede Manamanthrame Sabareeshwara
-Shiva Poojitha Munisevithaa, Saathvika Guna Dharma bodhaka Sanaathanaa Sakaleshwara Swami Janagade Sahayaathrika
-Sabareeshwara Saranagatha, Sree Dharma Shaastha Paraath paraa
-Sree Dharma Shaastha Paraath paraa
-`),
-
-  inRoman('sa', 'saranam-ayyappa-swamy-saranam-ayyappa', ['ayyappa'], 'Saranam Ayyappa Swamy Saranam Ayyappa', `
+  inRoman('ta', 'saranam-ayyappa-swamy-saranam-ayyappa', ['ayyappa'], 'Saranam Ayyappa Swamy Saranam Ayyappa', `
 Saranam Ayyappa Swamy Saranam Ayyappa
 Saranam Ayyappa Swamy Saranam Ayyappa
 Sabari Malayile Swamy Veetriruppavan
@@ -4951,35 +4943,6 @@ Saranam Ayyappa Swamy Saranam Ayyappa
 Varanam Ayyappa Inge Varanam Ayyappa
 `),
 
-  inRoman('sa', 'saranam-ayyappa-swamy-saranam-ayyappa-swamy', ['ayyappa'], 'Saranam Ayyappa Swamy Saranam Ayyappa Swamy', `
-Saranam Ayyappa Swamy, Saranam Ayyappa
-Swamy, Saranam Ayyappa Swamy
-Saranamayya
-Saranam Ayyappa Swamy, Saranam Ayyappa
-
-Swamy, Saranam Ayyappa Swamy
-
-Saranamayya
-Mandala Vradham Irundhu Mani Malayum
-Tharithu, Bhakthipoorvam Saamimudra
-Rudraksham Yendhi
-Trippadigal Padinettum Bhaktiyodu
-
-Koopidumbol, Sikhil Vilayadi Denam
-
-Maayavaibhava
-Saranam Ayyappa Swamy
-Karimala Mannil Njangal Kaaleduthu Vechaal
-Pinne Karampidicha Gnangale Kayattedane Swamiye Ayyappo .
-Jyotiroopa Satya Dharma Punyanidhi
-
-Bhoologesha Bhaktanaam Njangale Kaakkum
-
-Deivame
-
-Saranam Ayyappa Swamy
-`),
-
   inRoman('sa', 'saranam-saranam-ayyappa', ['ayyappa'], 'Saranam Saranam Ayyappa', `
 Saranam Saranam Ayyappa
 Swamiye Saranam Ayyappa
@@ -4997,7 +4960,7 @@ Ayyappa Ayyappa
 Swamiye Saranam Ayyappa
 `),
 
-  inRoman('sa', 'shanthi-shanthi-sabari-vaasane', ['ayyappa'], 'Shanthi Shanthi Sabari Vaasane', `
+  inRoman('ta', 'shanthi-shanthi-sabari-vaasane', ['ayyappa'], 'Shanthi Shanthi Sabari Vaasane', `
 Shanthi Shanthi Shanthi Shanthi Sabari Vaasane Shantham Un Swaroopamandro Chatrunaasane
 Gaana Mazhayil Nanaindha Piragum
 Kuliravillaya
@@ -5053,7 +5016,7 @@ Ee Kashtaalanni Theere Maargam Thaane Choopuraa
 (Chorus) Sundaramayya (2)
 `),
 
-  inRoman('sa', 'swami-ayyappa-charanam-ayyappa', ['ayyappa'], 'Swami Ayyappa .Charanam Ayyappa', `
+  inRoman('ta', 'swami-ayyappa-charanam-ayyappa', ['ayyappa'], 'Swami Ayyappa .Charanam Ayyappa', `
 Swami Ayyappa Charanam Ayyappa Swami
 Charanam Ayyappa
 Pamba Baala Ponmalai Vaasa, Swami
@@ -5167,7 +5130,7 @@ Bala Bheem Bala Bheem Bala Bheem Bala Bheem
 Bala Bheem Bala Bheema
 `),
 
-  inRoman('sa', 'rama-rama', ['hanuman'], 'Rama Rama', `
+  inRoman('ta', 'rama-rama', ['hanuman'], 'Rama Rama', `
 Raama Raama Raama Raama Raama Raam
 Raama Raama Raama Raama Raama Raam
 Raama Raama Raama Raam Avar Raamarin
@@ -5205,3 +5168,10 @@ Veera Maaruti Gambhira Maaruti (2)
 ];
 
 export const songsFor = (d: SongDeity) => SONGS.filter((s) => s.deities.includes(d));
+
+/**
+ * Whether a song is listed for a reader of this language: their own language's songs and the Sanskrit nama
+ * bhajans (sung everywhere). English readers see every song; readers of a language with no songs of its own yet
+ * see the Sanskrit ones.
+ */
+export const songListedFor = (s: Song, lang: Lang) => lang === 'en' || s.lang === 'sa' || (s.lang ?? 'te') === lang;

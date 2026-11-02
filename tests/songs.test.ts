@@ -1,4 +1,4 @@
-import { SONGS, songsFor } from '../src/data/songs';
+import { SONGS, songListedFor, songsFor } from '../src/data/songs';
 import { SONG_DEITIES } from '../src/ui/Songs';
 
 describe('songs', () => {
@@ -55,5 +55,14 @@ describe('songs', () => {
     }
     expect(songsFor('guru').length).toBeGreaterThan(4);
     expect(new Set(SONGS.map((s) => s.id)).size).toBe(SONGS.length);
+  });
+  it('lists each language its own songs plus the Sanskrit bhajans; English lists everything', () => {
+    const listed = (lang: Parameters<typeof songListedFor>[1]) => SONGS.filter((s) => songListedFor(s, lang));
+    expect(listed('en')).toHaveLength(SONGS.length);
+    expect(listed('te').every((s) => (s.lang ?? 'te') === 'te' || s.lang === 'sa')).toBe(true);
+    expect(listed('ta').every((s) => s.lang === 'ta' || s.lang === 'sa')).toBe(true);
+    expect(listed('ta').some((s) => s.lang === 'ta')).toBe(true);
+    expect(listed('kn').every((s) => s.lang === 'sa')).toBe(true);
+    expect(listed('te').find((s) => s.id === 'swami-pon-ayyappa')).toBeUndefined();
   });
 });

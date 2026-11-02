@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { DeityImageId } from '../data/deityImages';
-import { songsFor, type Song, type SongDeity } from '../data/songs';
+import { songListedFor, songsFor, type Song, type SongDeity } from '../data/songs';
 import { useScript, useText } from '../i18n';
+import type { Lang } from '../engine/names';
 import { POOJA_TEXT } from '../locales/pooja';
 import { pickName, SONG_DEITY_NAMES, subName } from '../locales/poojaNames';
 import { Card, DeityPic, DevotionSwitch } from './components';
 import { go } from './router';
 import { asset } from '../data/asset';
-import { deleteMine } from '../data/store';
+import { deleteMine, useStore } from '../data/store';
 import type { MySong } from '../data/types';
 import { MINE_TEXT } from '../locales/mine';
 import { MineActions, MySongForm, useMySongs } from './Mine';
@@ -39,11 +40,12 @@ const SIZE_KEY = 'thithi-reminder:song-size';
 /** A song in a list: one of the booklet's, or one the user added (`mine`). */
 type Listed = Song & { mine?: MySong };
 const asSong = (m: MySong): Listed => ({ id: m.id, deities: [m.deity as SongDeity], title: { te: m.title, en: m.source ?? '' }, text: m.text, mine: m });
-/** The booklet's songs for a deity, then the user's own. */
-const songsWith = (d: SongDeity, mine: MySong[]): Listed[] => [...songsFor(d), ...mine.filter((m) => m.deity === d).map(asSong)];
+/** The songs listed for a deity in this reader's language (see songListedFor), then the user's own. */
+const songsWith = (d: SongDeity, mine: MySong[], lang: Lang): Listed[] => [...songsFor(d).filter((s) => songListedFor(s, lang)), ...mine.filter((m) => m.deity === d).map(asSong)];
 
 export function SongsScreen({ deity, song }: { deity?: string; song?: string }) {
   const mine = useMySongs();
+  const lang = useStore((s) => s.settings.lang);
   const { x, deityName } = useSongText();
   const d = SONG_DEITIES.find((x) => x.id === deity);
   // "#songs/new" or "#songs/<deity>/new": the form for a song of the user's own.
@@ -51,11 +53,12 @@ export function SongsScreen({ deity, song }: { deity?: string; song?: string }) 
     <button className="btn ghost" onClick={() => go(d ? { tab: 'songs', deity: d.id } : { tab: 'songs' })}>← {d ? x('deitySongs', { deity: deityName(d) }) : x('allDeities')}</button>
     <MySongForm deity={d?.id} onDone={(s) => go(s ? { tab: 'songs', deity: s.deity, song: s.id } : d ? { tab: 'songs', deity: d.id } : { tab: 'songs' })} />
   </>;
-  const all = d ? songsWith(d.id, mine) : [];
-  const s = all.find((x) => x.id === song);
-  if (d && s) return <SongView deity={d} song={s} list={all} />;
+  const all = d ? songsWith(d.id, mine, lang) : [];
+  // A link to a song of another language (shared, say) still opens it.
+  const s = all.find((x) => x.id === song) ?? (d ? songsFor(d.id).find((x) => x.id === song) : undefined);
+  if (d && s) return <SongView deity={d} song={s} list={all.includes(s) ? all : [s]} />;
   if (d) return <DeitySongs deity={d} all={all} />;
-  return <DeityMenu mine={mine} />;
+  return <DeityMenu mine={mine} lang={lang} />;
 }
 
 type Deity = (typeof SONG_DEITIES)[number];
@@ -91,10 +94,10 @@ function useSongText() {
   };
 }
 
-function DeityMenu({ mine }: { mine: MySong[] }) {
+function DeityMenu({ mine, lang }: { mine: MySong[]; lang: Lang }) {
   const { x, deityName, deitySub, count } = useSongText();
   const { x: m } = useText(MINE_TEXT);
-  const deities = useMemo(() => [...SONG_DEITIES].sort((a, b) => Number(songsWith(b.id, mine).length > 0) - Number(songsWith(a.id, mine).length > 0)), [mine]);
+  const deities = useMemo(() => [...SONG_DEITIES].sort((a, b) => Number(songsWith(b.id, mine, lang).length > 0) - Number(songsWith(a.id, mine, lang).length > 0)), [mine, lang]);
   return (
     <>
       <DevotionSwitch current="songs" />
@@ -105,7 +108,7 @@ function DeityMenu({ mine }: { mine: MySong[] }) {
       </Card>
       <div className="pooja-grid">
         {deities.map((d) => {
-          const n = songsWith(d.id, mine).length;
+          const n = songsWith(d.id, mine, lang).length;
           return (
             <button key={d.id} className={`pooja-tile${n ? '' : ' empty'}`} onClick={() => go({ tab: 'songs', deity: d.id })}>
               <DeityPic id={d.image} className="pooja-pic" />
