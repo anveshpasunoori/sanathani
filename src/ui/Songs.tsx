@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { DeityImageId } from '../data/deityImages';
 import { songsFor, type Song, type SongDeity } from '../data/songs';
-import { useText } from '../i18n';
+import { useScript, useText } from '../i18n';
 import { POOJA_TEXT } from '../locales/pooja';
 import { pickName, SONG_DEITY_NAMES, subName } from '../locales/poojaNames';
 import { Card, DeityPic, DevotionSwitch } from './components';
@@ -59,7 +59,26 @@ export function SongsScreen({ deity, song }: { deity?: string; song?: string }) 
 
 type Deity = (typeof SONG_DEITIES)[number];
 
-/** Songs are in Telugu, as sung; the screens around them follow the chosen language. */
+/** A language tag for each script, for the browser's fonts and screen readers. */
+const SCRIPT_TAG: Record<string, string> = { telugu: 'te', kannada: 'kn', devanagari: 'sa', malayalam: 'ml', tamil: 'ta', bengali: 'bn', gujarati: 'gu', odia: 'or', gurmukhi: 'pa' };
+
+/**
+ * A song as this reader sees it. Songs are shown in their own language: a Tamil song in Tamil to Tamil readers and
+ * in English letters to everyone else (never in another Indian script), a Telugu song in Telugu (or English letters
+ * where it has them), and a Sanskrit nama bhajan in the reader's own script, like the stotrams.
+ */
+function useSongView() {
+  const { lang, script, sa, saTitle } = useScript();
+  return (s: Listed): { title: string; sub: string; text: string; lang?: string } => {
+    if (s.mine) return { title: s.title.te, sub: s.title.en, text: s.text };
+    const own = s.lang ?? 'te';
+    if (own === 'sa' && lang !== 'en') return { title: saTitle(s.title.te), sub: s.title.en, text: sa(s.text), lang: SCRIPT_TAG[script] };
+    if (own === lang || !s.roman) return { title: s.title.te, sub: s.title.en, text: s.text, lang: own };
+    return { title: s.title.en, sub: own === 'sa' ? '' : s.title.te, text: s.roman, lang: 'en' };
+  };
+}
+
+/** Songs are shown in their own language; the screens around them follow the chosen language. */
 function useSongText() {
   const { x, lang } = useText(POOJA_TEXT);
   return {
@@ -103,7 +122,9 @@ function DeitySongs({ deity, all }: { deity: Deity; all: Listed[] }) {
   const { x, deityName, count } = useSongText();
   const { x: m } = useText(MINE_TEXT);
   const [q, setQ] = useState('');
-  const list = q.trim() ? all.filter((s) => s.title.te.includes(q.trim()) || s.title.en.toLowerCase().includes(q.trim().toLowerCase()) || s.text.includes(q.trim())) : all;
+  const view = useSongView();
+  const needle = q.trim().toLowerCase();
+  const list = needle ? all.filter((s) => [s.title.te, s.title.en, s.text, s.roman ?? '', view(s).text].some((t) => t.toLowerCase().includes(needle))) : all;
   return (
     <>
       <button className="btn ghost" onClick={() => go({ tab: 'songs' })}>← {x('allDeities')}</button>
@@ -125,7 +146,7 @@ function DeitySongs({ deity, all }: { deity: Deity; all: Listed[] }) {
               <li key={s.id}>
                 <button onClick={() => go({ tab: 'songs', deity: deity.id, song: s.id })}>
                   <span className="song-no">{all.indexOf(s) + 1}</span>
-                  <span className="grow"><strong lang={s.mine ? undefined : 'te'}>{s.title.te}{s.audio && <span className="has-audio" title={x('hasRecording')}> 🎵</span>}</strong><span className="small muted">{s.mine ? [m('yours'), s.title.en].filter(Boolean).join(' · ') : s.title.en}</span></span>
+                  <span className="grow"><strong lang={view(s).lang}>{view(s).title}{s.audio && <span className="has-audio" title={x('hasRecording')}> 🎵</span>}</strong><span className="small muted">{s.mine ? [m('yours'), s.title.en].filter(Boolean).join(' · ') : view(s).sub}</span></span>
                   <span aria-hidden="true">→</span>
                 </button>
               </li>
@@ -144,13 +165,13 @@ function DeitySongs({ deity, all }: { deity: Deity; all: Listed[] }) {
 function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Listed[] }) {
   const { x, deityName } = useSongText();
   const [editing, setEditing] = useState(false);
+  const view = useSongView();
+  const shown = view(song);
   const [size, setSize] = useState(() => { try { return Number(localStorage.getItem(SIZE_KEY)) || 1.15; } catch { return 1.15; } });
   useEffect(() => { try { localStorage.setItem(SIZE_KEY, String(size)); } catch { /* ignore */ } }, [size]);
   const i = list.findIndex((s) => s.id === song.id);
   const prev = list[i - 1], next = list[i + 1];
-  const stanzas = song.text.split(/\n\s*\n/).map((st) => st.split('\n'));
-  // The user's own songs are in whatever language they typed, so they are not marked as Telugu.
-  const te = song.mine ? undefined : 'te';
+  const stanzas = shown.text.split(/\n\s*\n/).map((st) => st.split('\n'));
   if (editing && song.mine) return <MySongForm initial={song.mine} onDone={(s) => { setEditing(false); if (s && s.deity !== deity.id) go({ tab: 'songs', deity: s.deity, song: s.id }); }} />;
   return (
     <>
@@ -159,8 +180,8 @@ function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Lis
         <div className="pooja-hero">
           <DeityPic id={deity.image} className="stotra-pic" />
           <div className="grow">
-            <h2 style={{ margin: 0 }} lang={te}>{song.title.te}</h2>
-            <div className="small muted">{song.title.en} · {i + 1} / {list.length}</div>
+            <h2 style={{ margin: 0 }} lang={shown.lang}>{shown.title}</h2>
+            <div className="small muted">{[shown.sub, `${i + 1} / ${list.length}`].filter(Boolean).join(' · ')}</div>
           </div>
         </div>
       </Card>
@@ -182,12 +203,12 @@ function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Lis
         <button className="btn" aria-label={x('larger')} onClick={() => setSize((s) => Math.min(2, +(s + 0.1).toFixed(2)))}>A+</button>
       </div>
       <Card>
-        <div className="song-text" lang={te} style={{ fontSize: `${size}rem` }}>
+        <div className="song-text" lang={shown.lang} style={{ fontSize: `${size}rem` }}>
           {stanzas.map((lines, k) => (
             <p key={k} className="stanza">
               {lines.map((l, j) => (
-                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|పల్లవి|అనుపల్లవి|చరణం|మంగళం$|\(కోరస్\))/.test(l.trim()) ? 'cue' : undefined}>
-                  {l.split(/(\(కోరస్\)|\(\d\)|\(\d సార్లు\))/).map((part, m) => (/^\((కోరస్|\d)/.test(part) ? <span key={m} className="cue"> {part}</span> : part))}
+                <span key={j} className={l.trim().startsWith('॥') ? 'refrain' : /^(శ్లోకం|పల్లవి|అనుపల్లవి|చరణం|మంగళం$|\((కోరస్|கோரஸ்|Chorus)\))/.test(l.trim()) ? 'cue' : undefined}>
+                  {l.split(/(\((?:కోరస్|கோரஸ்|Chorus)\)|\(\d+\)|\(\d సార్లు\))/).map((part, m) => (/^\((కోరస్|கோரஸ்|Chorus|\d)/.test(part) ? <span key={m} className="cue"> {part}</span> : part))}
                   <br />
                 </span>
               ))}
@@ -196,8 +217,8 @@ function SongView({ deity, song, list }: { deity: Deity; song: Listed; list: Lis
         </div>
       </Card>
       <div className="row">
-        {prev ? <button className="btn grow" onClick={() => go({ tab: 'songs', deity: deity.id, song: prev.id })}>← <span lang="te">{prev.title.te}</span></button> : <span className="grow" />}
-        {next && <button className="btn grow" style={{ textAlign: 'right' }} onClick={() => go({ tab: 'songs', deity: deity.id, song: next.id })}><span lang="te">{next.title.te}</span> →</button>}
+        {prev ? <button className="btn grow" onClick={() => go({ tab: 'songs', deity: deity.id, song: prev.id })}>← <span lang={view(prev).lang}>{view(prev).title}</span></button> : <span className="grow" />}
+        {next && <button className="btn grow" style={{ textAlign: 'right' }} onClick={() => go({ tab: 'songs', deity: deity.id, song: next.id })}><span lang={view(next).lang}>{view(next).title}</span> →</button>}
       </div>
       {song.mine ? (
         <MineActions name={song.title.te} share={() => `🎵 ${song.title.te}${song.mine!.source ? `\n${song.mine!.source}` : ''}\n\n${song.text}\n\n— Sanathani`}

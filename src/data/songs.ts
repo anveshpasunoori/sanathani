@@ -11,15 +11,27 @@ export type SongDeity =
 export interface Song {
   id: string;
   deities: SongDeity[];
+  /** `te`: the title in the song's own script (Telugu, Tamil, or Sanskrit written in Telugu); `en`: in English letters. */
   title: { te: string; en: string };
   /** Lines; a blank line separates stanzas. Lines starting with "॥" are refrain cues. */
   text: string;
+  /**
+   * The song's language (Telugu when absent). A Tamil song is shown in Tamil to Tamil readers and in English
+   * letters (`roman`) to everyone else — never in another Indian script; likewise a Telugu song that has `roman`.
+   * A Sanskrit song ('sa', stored in Telugu script) is shown in each reader's own script, as the stotrams are.
+   */
+  lang?: 'te' | 'ta' | 'sa';
+  /** The words in English letters, for readers of other languages. */
+  roman?: string;
   /** Optional recording (file in public/audio) and who sings it, if known. */
   audio?: { src: string; singer: string };
 }
 
 const song = (id: string, deities: SongDeity[], te: string, en: string, text: string): Song =>
   ({ id, deities, title: { te, en }, text: text.trim() });
+/** A Tamil or Sanskrit song: its own script and English letters. */
+const sung = (lang: 'ta' | 'sa', id: string, deities: SongDeity[], title: string, en: string, text: string, roman: string): Song =>
+  ({ ...song(id, deities, title, en, text), lang, roman: roman.trim() });
 
 const A: SongDeity[] = ['ayyappa'];
 
@@ -1917,6 +1929,819 @@ export const SONGS: Song[] = [
 పింఛాలంకృత మంగళం ప్రణమతాం చింతామణే మంగళం
 పంచాస్యధ్వజ మంగళం త్రిజగతామాద్యప్రభో మంగళం
 పంచాస్త్రోపమ మంగళం శ్రుతిశిరోలంకార సన్మంగళం
+`),
+
+  // From Ayyappa_Bhajans_Separated.docx (sent by the app owner): the traditional nama bhajans, in their own
+  // script and in English letters. Sanskrit ones ('sa') are written in Telugu and shown in each reader's script;
+  // Tamil ones are shown only in Tamil or English letters. Words are as sung in the document, spelling tidied.
+  sung('sa', 'gauri-nandana-gajavadana', ['ganapathi'], 'గౌరీనందన గజవదనా', 'Gauri Nandana Gajavadana', `
+గౌరీనందన గజవదనా
+గణేశ వరదా మాం పాహి
+గజముఖ గజముఖ గణనాథా
+గణేశ వరదా మాం పాహి
+
+గజాననా గజాననా
+గజాననా ఓం గజవదనా
+ఏకదంతా గజాననా
+హేరంబా గజాననా (2)
+గజాననా గజాననా
+గజాననా ఓం గజవదనా (2)
+`, `
+Gauri Nandana Gajavadana
+Ganesha Varadaa Maam Pahi
+Gajamukha Gajamukha Gananaatha
+Ganesha Varada Maam Pahi
+Gajaanana Gajaanana
+Gajaanana Om Gajavadanaa
+Ekadantaa Gajaanana
+Heramba Gajaanana (2)
+Gajaanana Gajaanana
+Gajaanana Om Gajavadanaa (2)
+`),
+
+  sung('sa', 'bhavani-shankari-parvathi', ['durga'], 'భవానీ శంకరి పార్వతి', 'Bhavani Shankari Parvathi', `
+భవానీ శంకరి పార్వతి
+పరమదయాకరి పార్వతి
+శివా శివంకరి పార్వతి
+శ్రీపురవాసిని పార్వతి
+
+హిమాచలకుమారి పార్వతి
+ఈశ్వరి శంకరి పార్వతి
+కుమారజనని పార్వతి
+కుంకుమరంజితే పార్వతి
+
+అఖిలాండేశ్వరి పార్వతి
+ఆదిపరాశక్తి పార్వతి
+అఖండపూరణి పార్వతి
+ఆశ్రితహితే పార్వతి
+`, `
+Bhavaani Shankari Paarvathi
+Paramadayaakari Paarvathi
+Shivaa Shivam Kari Paarvathi
+Sripura Vaasini Paarvathi
+Himaachala Kumari Paarvathi
+Eshwari Shankari Paarvathi
+Kumara Janani Paarvathi
+Kum Kuma Rajithe Paarvathi
+Akhilaandeshwari Paarvathi
+Adi ParaaSakthi Paarvathi
+Akhanda Poorani Paarvathi
+Ashritha Rahite Paarvathi
+`),
+
+  sung('sa', 'anjaneya-veera-hanumantha', ['hanuman'], 'ఆంజనేయ వీర హనుమంత శూర', 'Anjaneya Veera Hanumantha Soora', `
+ఆంజనేయ వీర హనుమంత శూర (2)
+వాయుకుమార వానర వీర (2)
+ఆంజనేయ వీర హనుమంత శూర
+
+శ్రీరామ్ జయ రామ్ జయ జయ రామ్
+సీతారామ్ జయ రాధేశ్యామ్ (8)
+॥ ఆంజనేయ వీర ॥
+`, `
+Aanjeneya Veera Hanumanta Soora (2)
+Vaayukumara Vaanara Veera (2)
+Aanjeneya Veera Hanumanta Soora
+Sri Ram Jaya Ram Jaya Jaya Ram,
+Seetha Ram Jaya Radhe Shyam (8)
+Aanjeneya Veera Hanumanta Soora
+`),
+
+  sung('sa', 'shivaya-nama-om', ['shiva'], 'శివాయ నమః ఓం', 'Shivaya Nama Om', `
+శివ శివ శివ శివ శివాయ నమః ఓం
+శివాయ నమః ఓం
+శివాయ నమః ఓం నమః శివాయ
+
+హర హర హర హర హరాయ నమః ఓం
+హరాయ నమః ఓం
+హరాయ నమః ఓం నమః శివాయ
+
+ధిమి ధిమి ధిమి ధిమి రుద్రాయ నమః ఓం
+రుద్రాయ నమః ఓం
+రుద్రాయ నమః ఓం నమః శివాయ
+
+శివ శివ శివ శివ శివాయ నమః ఓం
+హరాయ నమః ఓం
+రుద్రాయ నమః ఓం
+శివాయ నమః ఓం
+నమః శివాయ
+`, `
+Siva Siva Siva Siva Sivaaya Namah Om
+Sivaaya Namah Om
+Sivaaya Namah Om Nama Sivaaya
+Hara Hara Hara Hara Haraaya Nama Om
+Haraaya Nama Om
+Haraaya Nama Om Nama Sivaaya
+Dhimi Dhimi Dhimi Dhimi Rudraaya Nama Om
+Rudraaya Nama Om
+Rudraaya Nama Om Nama Sivaaya
+Siva Siva Siva Siva Sivaaya Nama Om
+Haraaya Nama Om
+Rudraaya Nama Om
+Sivaaya Nama Om
+Nama Sivaaya
+`),
+
+  sung('sa', 'hara-om-sadashiva', ['shiva',  'vishnu'], 'హర ఓం హర ఓం సదాశివ', 'Hara Om Hara Om Sadashiva', `
+హర ఓం హర ఓం సదాశివ
+హరి ఓం హరి ఓం నారాయణ (2)
+
+పార్వతీరమణా సదాశివ
+లక్ష్మీపతయే నారాయణ
+కైలాసవాసా సదాశివ
+వైకుంఠవాసా నారాయణ
+
+వృషభవాహన సదాశివ
+గరుడవాహన నారాయణ
+శ్రీనీలకంఠా సదాశివ
+నీలమేఘశ్యామల నారాయణ
+
+శంభో శంకర సదాశివ
+అంబుజనయన నారాయణ
+వైక్కత్తప్పనే సదాశివ
+గురువాయూరప్పనే నారాయణ
+
+అభిషేకప్రియనే సదాశివ
+అలంకారప్రియనే నారాయణ
+
+శివాయ నమః ఓం నమః శివాయ
+ఓం నమః శివాయ శివాయ నమః ఓం
+హర ఓం హర ఓం హరాయ నమః ఓం
+హరాయ నమః ఓం శివాయ నమః ఓం
+
+హర ఓం హర ఓం సదాశివ
+హరి ఓం హరి ఓం నారాయణ
+`, `
+Hara Om Hara Om Sadaasiva,
+Hari Om Hari Om Naraayanaa (2)
+Paarvathi Ramanaa Sadaasiva,
+Lakshmi pathaye Naaraayana
+Kailaasa Vaasa Sadaasiva,
+Vaikuntha Vaasa Naaraayana
+Rishabha Vaahana Sadaasiva,
+Garuda Vaahana Naaraayana
+SreeNeela Kantane Sadaasiva,
+Neelamegha Shyaamala Naaraayana
+Sambho Sankara Sadaasiva,
+Ambuja nayana Naaraayana
+Vaikkath-appane Sadaasiva,
+Guruvayoorappane Naaraayana
+Abhisheka Priyane Sadaasiva,
+Alankara Priyane Naaraayana
+Shivaaya Nama Om Namashivaaya
+Om Namashivaaya Shivaaya Nama Om
+Hara Om Hara Om Haraaya Nama Om
+Haraaya Nama Om Shivaaya Nama Om
+Hara Om Hara Om Sadaasiva
+Hari Om Hari Om Naaraayana
+`),
+
+  sung('ta', 'ganesa-saranam-tamil', ['ganapathi',  'ayyappa'], 'கணேச சரணம் சரணம் கணேசா', 'Ganesa Saranam Saranam Ganesa', `
+கணேச சரணம் சரணம் கணேசா
+சரணம் தரணே சரணம் கணேசா
+
+மூஷிக வாகன சரணம் கணேசா
+மூலப்பொருளே சரணம் கணேசா
+விக்ன விநாயக சரணம் கணேசா
+விக்னங்கள் போகணும் சரணம் கணேசா
+
+பார்வதி பாலா சரணம் கணேசா
+பாவங்கள் போகணும் சரணம் கணேசா
+சங்கர தனயா சரணம் கணேசா
+சங்கடம் தவிர்க்கணும் சரணம் கணேசா
+
+ஆறுமுக சோதரா சரணம் கணேசா
+ஆறுதல் தருவாய் சரணம் கணேசா
+ஐயப்ப சோதரா சரணம் கணேசா
+ஐயங்கள் போகணும் சரணம் கணேசா
+
+வாணி தேவி சரணம் கணேசா
+வருவாய் அருள்வாய் சரணம் கணேசா
+கணேச சரணம் சரணம் கணேசா
+சரணம் தரணே சரணம் கணேசா
+`, `
+Ganesa charanam, Sharanam Ganesha
+Sharanam Tharanae, Sharanam Ganesha
+Mooshika Vaahana Sharanam Ganesha
+Moolap-Porulae Sharanam Ganesha
+Vighna Vinaayaka Sharanam Ganesha
+Vighnangal Pokanum Sharanam Ganesha
+Paarvathi Baala Sharanam Ganesha
+Paavangal Pokanum Sharanam Ganesha
+Shankara Thanaiya Saranam Ganesa
+Sankatam Thavirkanum Saranam Ganesa
+Arumukha Sodara Sharanam Ganesha
+Aaruthal Tharuvai Sharanam Ganesha
+Ayyappa Sothara Sharanam Ganesha
+Iyyanngal Pokanum Sharanam Ganesha
+Vani Devi Sharanam Ganesha
+Varuvaai Arulvaai Sharanam Ganesha
+Ganesha Sharanam, Sharanam Ganesha
+Sharanam Tharanae, Sharanam Ganesha
+`),
+
+  sung('ta', 'deva-saranam-sabareesa', A, 'தேவ சரணம் ஸ்ரீ சபரீசா', 'Deva Saranam Sri Sabareesa', `
+தேவ சரணம் ஸ்ரீ சபரீசா
+நாத சரணம் ஸ்ரீ பூதநாதா
+பம்பையில் வாசன் ஐயா
+பாப சம்ஹாரன் ஐயா
+
+ஒன்னாம் திருப்படி கயகனமே
+ரெண்டாம் திருப்படி கயகனமே
+மூணாம் திருப்படி
+நாலாம் திருப்படி
+அஞ்சாம் திருப்படி கயகனமே
+॥ தேவ சரணம் ॥
+
+ஆறாம் திருப்படி கயகனமே
+ஏழாம் திருப்படி கயகனமே
+எட்டாம் திருப்படி
+ஒன்பதாம் திருப்படி
+பத்தாம் திருப்படி கயகனமே
+॥ தேவ சரணம் ॥
+
+பதினொன்னாம் திருப்படி கயகனமே
+பன்னிரண்டாம் திருப்படி கயகனமே
+பதிமூணாம் திருப்படி
+பதினாலாம் திருப்படி
+பதினஞ்சாம் திருப்படி கயகனமே
+॥ தேவ சரணம் ॥
+
+பதினாறாம் திருப்படி கயகனமே
+பதினேழாம் திருப்படி கயகனமே
+சத்திய திருப்படி
+பொன்னின் திருப்படி
+பதினெட்டாம் படி கயகனமே
+॥ தேவ சரணம் ॥
+
+தேவ சரணம் ஸ்ரீ சபரீசா
+நாத சரணம் ஸ்ரீ பூதநாதா
+பம்பையில் வாசன் ஐயா
+பாப சம்ஹாரன் ஐயா
+`, `
+Deva Sharanam Shree Sabhareesa
+Nadha Saranam Shree Bhoodhanadha
+Pambaiyil Vaasan Ayya
+Paapa Samhaaran Ayya
+(Chorus) Deva Sharanam
+
+Onnam Thiruppadi Kayakaname
+Rendaam Thiruppadi Kayakaname
+Moonam Thiruppadi
+Naalam Thiruppadi
+Anjaam Thiruppadi Kayakaname
+(Chorus) Deva Sharanam
+
+Aaraam Thiruppadi Kayakaname
+Ezhaam Thiruppadi Kayakaname
+Ettam Thiruppadi
+Onbadham Thiruppadi
+Patham Thiruppadi Kayakaname
+(Chorus) Deva Sharanam
+
+Pathinonnam Thiruppadi Kayakaname
+Pannirendaam Thiruppadi Kayakaname
+Pathimoonam Thiruppadi
+Pathinaalam Thiruppadi
+Pathinanjaam Thiruppadi Kayakaname
+(Chorus) Deva Sharanam
+
+Pathinaaram Thiruppadi Kayakaname
+Pathinezham Thiruppadi Kayakaname
+Sathya Thiruppadi
+Ponnin Thiruppadi
+Pathinettam Padi Kayakaname
+(Chorus) Deva Sharanam
+
+Deva Sharanam Shree Sabhareesa
+Nadha Saranam Shree Bhoodhanadha
+Pambaiyil Vaasan Ayya
+Paapa Samhaaran Ayya
+`),
+
+  sung('ta', 'bhakta-paribalan', A, 'பக்த பரிபாலன் இதோ பவனி வருகிறார்', 'Bhakta Paribalan Itho Bavani Varugirar', `
+பக்த பரிபாலன் இதோ பவனி வருகிறார்
+பந்தளத்து வீரன் இதோ பவனி வருகிறார்
+குறைகள் எல்லாம் போக்கிடவே பவனி வருகிறார்
+குளத்தூர்ப்புழை பாலன் இதோ பவனி வருகிறார்
+
+அச்சன்கோவில் அரசன் இதோ பவனி வருகிறார்
+அச்சம் அதை போக்கிடவே பவனி வருகிறார்
+ஆரியங்காவு ஐயன் இதோ பவனி வருகிறார்
+ஆனந்தமாய் நடனமாடி பவனி வருகிறார்
+
+வில்லும் அம்பும் கையில் ஏந்தி பவனி வருகிறார்
+வில்லாளி வீரன் இதோ பவனி வருகிறார்
+வினைகள் எல்லாம் போக்கிடவே பவனி வருகிறார்
+வீரமணி கண்டன் இதோ பவனி வருகிறார்
+
+சபரிகிரி வாசன் இதோ பவனி வருகிறார்
+சாந்த சொரூபன் இதோ பவனி வருகிறார்
+சாந்தி அதை பொழிந்திடவே பவனி வருகிறார்
+நற்கதியை தந்திடவே பவனி வருகிறார்
+
+ஐயப்பன் பவனி வருகிறார் (10)
+`, `
+Bhakta Paribalan Itho Bavani Varugirar
+Pandalathu Veeran Itho Bavani Varugirar
+Kuraigal Ellam Pokidavae Bavani Varugirar
+Kulathur Puzhai Balan Itho Bavani Varugirar
+Achan Kovil Arasan Itho Bavani Varugirar
+Acham Athai Pokidave Bavani Varugirar
+Aariyanga Vaiyan Itho Bavani Varugirar
+Aanandhamai Nadanamadi Bavani Varugirar
+Villum Ambum Kaiyil Eanthi Bavani Varugirar
+Villali Veeran Itho Bavani Varugirar
+Vinaigal Ellam Pokidave Bavani Varugirar
+Veeramani Kandan Itho Bavani Varugirar
+Sabarigiri Vaasan Itho Bavani Varugirar
+Santha Swaroopan Itho Bavani Varugirar
+Santhi Athai Pozhindhidave Bavani Varugirar
+Nargathiyai Thanthidave Bavani Varugirar
+Ayyappan Bavani Varugirar (10)
+`),
+
+  sung('ta', 'bhagavan-saranam-tamil', A, 'பகவான் சரணம் பகவதி சரணம்', 'Bhagavan Saranam Bhagavathi Saranam (Tamil)', `
+பகவான் சரணம் (கோரஸ்) பகவதி சரணம்
+தேவன் பாதம் (கோரஸ்) தேவி பாதம்
+பகவானே (கோரஸ்) பகவதியே
+தேவனே (கோரஸ்) தேவியே
+
+பகவான் சரணம் பகவதி சரணம், சரணம் சரணம் ஐயப்பா
+பகவதி சரணம் பகவான் சரணம், சரணம் சரணம் ஐயப்பா
+அகமும் குளிரவே அழைத்திடுவோமே, சரணம் சரணம் ஐயப்பா
+பகலும் இரவும் உன் நாமமே, ஸ்மரணம் ஸ்மரணம் ஐயப்பா
+
+கரிமலை வாசா பாப விநாசா, சரணம் சரணம் ஐயப்பா
+கருத்தினில் வருவாய் கருணையை பொழிவாய், சரணம் சரணம் ஐயப்பா
+மகிஷி சம்ஹார மதகஜ வாகன, சரணம் சரணம் ஐயப்பா
+சுகுண விலாச சுந்தர ரூப, சரணம் சரணம் ஐயப்பா
+
+ஆறுவாரமே நோன்பிருந்தோம், பேரழகா உன்னைக் காண வந்தோம்
+பால் அபிஷேகம் உனக்கப்பா, இந்த பாலனை கடைக்கண் பாரப்பா
+முத்திரைத் தேங்காய் உனக்கப்பா, தித்திக்கும் நாமம் எமக்கப்பா
+கற்பூர தீபம் உனக்கப்பா, உந்தன் பொற்பாத மலர்கள் எமக்கப்பா
+
+தேவன் பாதம் தேவி பாதம் சேவடி சரணம் ஐயப்பா
+நாவினில் தருவாய் கீதமப்பா, தேவை உன் திருப்பாதமப்பா
+நெய் அபிஷேகம் உனக்கப்பா, உன் திவ்ய தரிசனம் எமக்கப்பா
+தையினில் வருவோம் ஐயப்பா, அருள் செய்யப்பா மனம் வையப்பா
+
+பகவான் சரணம் பகவதி சரணம், சரணம் சரணம் ஐயப்பா
+பகவதி சரணம் பகவான் சரணம், சரணம் சரணம் ஐயப்பா
+பகவான் சரணம் (கோரஸ்) பகவதி சரணம்
+தேவன் பாதம் (கோரஸ்) தேவி பாதம்
+பகவானே (கோரஸ்) பகவதியே
+தேவனே (கோரஸ்) தேவியே
+சரணம் சரணம் ஐயப்பா (கோரஸ்) சுவாமி சரணம் ஐயப்பா (4)
+`, `
+Bhagavan Saranam (Chorus) Bhagavathi Saranam
+Devan Paadam (Chorus) Devi Paadam
+Bhagavanae (Chorus) Bhagavathiyae
+Devanae (Chorus) Deviyae
+Bhagavan Saranam Bagavathi Saranam, Saranam Saranam Ayyappa
+Bhagavathi Saranam Bhagavan Saranam, Saranam Saranam Ayyappa
+Agamum Kuliravae Azhaithiduvomae, Saranam Saranam Ayyappa
+Pagalum Iravum Un Namame, Smaranam Smaranam Ayyappa
+Karimalai Vaasa Paapa Vinaasa, Saranam Saranam Ayyappa
+Karuthinil Varuvai Karunai-Ai Pozhivai, Saranam Saranam Ayyappa
+Mahishi Samhara Madha-Gaja Vaahana, Saranam Saranam Ayyappa
+Suguna Vilaasa Sundara Roopa, Saranam Saranam Ayyappa
+Aaruvarame Non-Birunthom, Perazhaga Unnai Kaana Vandhom
+Paal Abhishekam Unakappa, Indha Baalanai Kadai-Kan Paarappa
+Muthirai Thengai Unakappa, Thith-Thik-Kum Naamam Emakappa
+Karpoora Dheepam Unakappa, Unthan Porpatha Malargal Emakappa
+Devan Paatham Devi Paatham Sevadi Saranam Ayyappa
+Navinil Tharuvai Geetham-Appa, Thevai Un Thiru Paadham-Appa
+Nei Abhishekam Unakappa, Un Divya Darisanam Emakappa
+Thai-Yinil Varuvom Ayyappa, Arul Seiyappa Manam Vaiyappa
+Bhagavan Saranam Bagavathi Saranam, Saranam Saranam Ayyappa
+Bhagavathi Saranam Bhagavan Saranam, Saranam Saranam Ayyappa
+Bhagavan Saranam (Chorus) Bhagavathi Saranam
+Devan Paatham (Chorus) Devi Paatham
+Bhagavanae (Chorus) Bhagavathiyae
+Devanae (Chorus) Deviyae
+Saranam Saranam Ayyappa (Chorus: Swami Saranam Ayyappa) (4)
+`),
+
+  sung('ta', 'om-om-ayyappa', A, 'ஓம் ஓம் ஐயப்பா ஓம் குருநாதா ஐயப்பா', 'Om Om Ayyappa Om Gurunatha Ayyappa', `
+ஓம் ஓம் ஐயப்பா ஓம் குருநாதா ஐயப்பா (2)
+
+அரனார் பாலா ஐயப்பா
+அம்பிகை பாலா ஐயப்பா
+இருமுடிப் பிரியனே ஐயப்பா
+இரக்கம் மிகுந்தவா ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+ஈசன் மகனே ஐயப்பா
+ஈஸ்வரி மைந்தா ஐயப்பா
+உமையவள் பாலா ஐயப்பா
+உறுதுணை நீயே ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+ஊக்கம் தருபவா ஐயப்பா
+உள்வினை அகற்றும் ஐயப்பா
+எங்கும் நிறைந்தவா ஐயப்பா
+எங்கள் நாயகா ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+பம்பையின் பாலனே ஐயப்பா
+பந்தள வேந்தா ஐயப்பா
+வன்புலி வாகனா ஐயப்பா
+வில்லாளி வீரா ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+சபரிகிரீசா ஐயப்பா
+சாந்த சொரூபா ஐயப்பா
+சத்திய சீலா ஐயப்பா
+சாஸ்வத ரூபா ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+ஹரி ஹரி சிவ சிவ ஐயப்பா
+சிவ சிவ ஹரி ஹரி ஐயப்பா
+அழகு நிறைந்தவா ஐயப்பா
+அதிசயமானவா ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+அஷ்ட லட்சுமியும் ஐயப்பா
+அனுதினம் அருள்வாய் ஐயப்பா
+திவ்ய தரிசனம் ஐயப்பா
+தினம் தினம் அருள்வாய் ஐயப்பா
+॥ ஓம் ஓம் ஐயப்பா ॥
+
+அன்னதான பிரபுவே சரணம் ஐயப்பா (2)
+ஆரியங்காவு ஐயனே சரணம் ஐயப்பா
+பொன்னடியைப் பணிந்து நின்றோம் சரணம் பொன் ஐயப்பா
+கண்ணனின் மைந்தனே சரணம் ஐயப்பா
+சரணம் ஐயப்பா சுவாமி சரணம் ஐயப்பா (2)
+
+வன்புலி மேல் அமர்ந்தவனே சரணமே ஐயப்பா
+வாவர் சாமி தோழனே சரணமே ஐயப்பா
+இன்னல் யாவும் தீர்ப்பவனே சரணம் பொன் ஐயப்பா
+ஈசனின் செல்வனே சரணம் ஐயப்பா
+॥ அன்னதான பிரபுவே ॥
+
+எருமேலி சாஸ்தாவே சரணம் பொன் ஐயப்பா
+ஏழை பங்காளனே சரணம் பொன் ஐயப்பா
+அறிந்தும் அறியாமலும் செய்த பிழை தன்னை
+பொறுத்தருள்வாய் நீ சரணம் பொன் ஐயப்பா
+॥ அன்னதான பிரபுவே ॥
+`, `
+Om Om Ayyappa, Om Gurunatha Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa
+
+Om Om Ayyappa, Om Gurunatha Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa
+
+Aranar bala Ayyappa,
+Ambigai bala Ayyappa
+Irumudi Piriyane Ayyappa,
+Irakkam Mikunthava Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Eesan Mahane Ayyappa,
+Eswari Maintha Ayyappa
+Umaiyaval Bala Ayyappa,
+Uruthunai N-iye Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Ookkam Tharubava Ayyappa,
+Ullvinai Akarrum Ayyappa
+Engum Nirain-thava Ayyappa,
+En-gal Nayaga Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Pampaiyin Balane Ayyappa,
+Pan-thala Ven-tha Ayyappa
+Vanpuli Vahana Ayyappa,
+Villali Vira Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Sabari-girisa Ayyappa,
+San-tha Swaroopa Ayyappa
+Sathiya Seela Ayyappa,
+Sasvatha Roopa Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Hari Hari Siva Siva Ayyappa,
+Siva Siva Hari Hari Ayyappa
+Azaghu N-irain-thava Ayyappa,
+Athisaya-manava Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Ashta Laxmiyum Ayyappa,
+Anu Thinam Arulvai Ayyappa
+Thivya tharisanam Ayyappa,
+Thinam Thinam Arulvai Ayyappa
+(Chorus) Om Om Ayyappa, Om Gurunatha Ayyappa (2)
+
+Annadhaana Prabhuve Saranam Ayyappa
+Annadhaana Prabhuve Saranam Ayyappa
+Ariyankavu Ayyane Saranam Ayyappa
+Pon Adiyai Paninthu Ninrom Saranam Pon
+Ayyappa
+Kannanin Mainthane Saranam Ayyappa
+Saranam Ayyappa Swami Saranam Ayyappa
+Saranam Ayyappa Swami Saranam Ayyappa
+Vanpuli Mel Amarndhavane Saraname Ayyappa
+Vaavari Saami Thozhane Saraname Ayyappa
+Innal Yaavum Theerppavane Saranam Pon
+Ayyappa
+Eesanin Selvane Saranam Ayyappa
+(Chorus) Annadhaana Prabhuve
+
+Erumeli Shaasthave Saranam Pon Ayyappa
+Ezhai Pangaalane Saranam Pon Ayyappa
+Arindum Ariyamalim Seitha Pizhai Thannai
+Porutharulvaay Nee Saranam Pon Ayyappa
+(Chorus) Annadhaana Prabhuve
+`),
+
+  sung('ta', 'swami-pon-ayyappa', A, 'சுவாமி பொன் ஐயப்பா', 'Swami Pon Ayyappa', `
+சுவாமி பொன் ஐயப்பா
+சரணம் பொன் ஐயப்பா
+சபரிகிரி நாயகனே சரணம் ஐயப்பா
+மங்கள தாயகனே சரணம் ஐயப்பா
+
+அச்சன்கோவில் அரசன் என்றும்
+ஆரியங்காவு ஐயா என்றும்
+அடியார்கள் அழைப்பதெல்லாம் உன்னைத்தானோ
+॥ சபரிகிரி நாயகனே ॥
+
+வில்லாளி வீரன் என்றும்
+வீரமணி கண்டன் என்றும்
+வீரமாய் புகழ்வதெல்லாம் உன்னைத்தானோ
+॥ சபரிகிரி நாயகனே ॥
+
+கற்பூரப் பிரியன் என்றும்
+காந்தமலை வாசன் என்றும்
+அன்பர்கள் போற்றுவது உன்னைத்தானோ
+॥ சபரிகிரி நாயகனே ॥
+
+பம்பா நதி வாசன் என்றும்
+பந்தள மாவீரன் என்றும்
+பாரெல்லாம் போற்றுவது உன்னைத்தானோ
+॥ சபரிகிரி நாயகனே ॥
+
+ஆதாரமானவனே
+அகிலாண்ட நாயகனே
+அருள் புரிவாய் அடியனுக்கு ஐயப்பா
+॥ சபரிகிரி நாயகனே ॥
+
+ஆற்றில் ஒரு காலை வைத்தேன்
+சேற்றில் ஒரு காலை வைத்தேன்
+அல்லல் படுகிறேனே ஐயப்பா
+॥ சபரிகிரி நாயகனே ॥
+
+உற்றார்கள் யாரும் இல்லை
+உறவினர் யாரும் இல்லை
+உன்னையே நம்பி வந்தேன் ஐயப்பா
+॥ சபரிகிரி நாயகனே ॥
+
+எப்பிழைகள் செய்தாலும்
+அப்பிழைகள் பொறுத்தருள்வாய்
+ஏகாந்த வாசகனே ஐயப்பா
+॥ சபரிகிரி நாயகனே ॥
+`, `
+Swami Pon Ayyappa
+Saranam Pon Ayyappa
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Daayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Acchan Kovil Arasan Enrum
+Ariyankaavu Ayya Enrom
+Adiyaarkal Azhaippadhellam Unnai Thaano
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Villali Veeran Enrum
+Veeramani Kandan Enrum
+Veeramai Pugazhvathellam Unnai Thaano
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Karpoora Piriyan Enrum
+Kaantha Malai Vaasan Enrum
+Anbarkal Pottruvathu Unnai Thaano
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Pamba Nadhi Vaasan Enrum
+Pandhala Maaveeran Enrum
+Paarellam Pottruvathu Unnai Thaano
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Aadhaaramaanavane
+Akilaanda Naayakane
+Arul Purivaay Adiyanukku Ayyappa
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Daayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Aatril Oru Kaalai Vaithen
+Settril Oru Kaalai Vaithen
+Allal Padukirene Ayyappa
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Uttraarkal Yaarum Illai
+Uravinar Yaarum Illai
+Unnaiye Nambi Vandhen Ayyappa
+Sabari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+
+Eppizhaikal Seithaalum
+Appizhaikal Porutharulvaay
+Aekaantha Vaasagane Ayyappa
+Sabhari Giri Naayakane Saranam Ayyappa
+Mangala Dhaayakane Saranam Ayyappa
+(Chorus) Swami Pon Ayyappa
+`),
+
+  sung('ta', 'saranam-appa-saranam-ayya', A, 'சரணம் அப்பா சரணம் ஐயா சுவாமியே', 'Saranam Appa Saranam Ayya Swamiye', `
+சரணம் அப்பா சரணம் ஐயா சுவாமியே, இங்கே வரணும் அப்பா சரணம் ஐயா சுவாமியே (ஐயப்போ)
+சுவாமி திந்தக தோம் (கோரஸ்) ஐயப்பா திந்தக தோம் (2)
+ஐயப்பா திந்தக தோம் (கோரஸ்) சுவாமி திந்தக தோம் (2)
+
+நெற்றியிலே நீறணிந்து நீல ஆடை தாங்கியே, சுற்றி வந்து ஐயன் பாதம் தேடினேன்
+சபரிமலை தனை நோக்கி ஓடினேன் (ஐயப்போ)
+॥ சுவாமி திந்தக தோம் ॥
+॥ சரணம் அப்பா ॥
+
+பாவக்கடலைக் கடந்து சென்று பரமனடி சேர்ந்திடவே, தவக்கோலமாம் துளசி மாலை தாங்கியே
+தாரணியில் உன் புகழைப் பாடினேன் (ஐயப்போ)
+॥ சுவாமி திந்தக தோம் ॥
+॥ சரணம் அப்பா ॥
+
+சரம் எடுத்து தீர்த்தம் ஆடி வேட்டை ஆடி கூட்டம் கூடி, பேட்டையிலே துள்ளி வந்தேன் சுவாமியே
+அது பேரானந்தம் பேரானந்தம் சுவாமியே (ஐயப்போ)
+॥ சுவாமி திந்தக தோம் ॥
+॥ சரணம் அப்பா ॥
+
+இருமுடியும் தாங்கிக் கொண்டு பெருவழியில் நடக்கையிலே, கரிமலையில் கதறுகிறேன் ஐயனே
+என்னைக் காத்தருள வேண்டுகிறேன் மெய்யனே (ஐயப்போ)
+॥ சுவாமி திந்தக தோம் ॥
+॥ சரணம் அப்பா ॥
+
+பாவனமாம் பம்பை தன்னில் பாலகனே உன்னைக் கண்டு, பாட்டுப் பாட பாவ வினை போகுதே
+பக்தியோடு கை உன்னையே கூப்புதே (ஐயப்போ)
+॥ சுவாமி திந்தக தோம் ॥
+॥ சரணம் அப்பா ॥
+
+ஆறுவாரம் நோன்பிருந்து ஆறு மூன்று படி ஏறி, ஆரவாரக் கூட்டத்திற்கு நடுவிலே
+ஆனந்தமாய் தரிசனமும் காண்பேனே (ஐயப்போ)
+
+சுவாமியே (கோரஸ்) ஐயப்போ
+ஐயப்போ (கோரஸ்) சுவாமியே
+சுவாமி சரணம் (கோரஸ்) ஐயப்ப சரணம்
+ஐயப்ப சரணம் (கோரஸ்) சுவாமி சரணம்
+பகவானே (கோரஸ்) பகவதியே
+பகவதியே (கோரஸ்) பகவானே
+பகவான் சரணம் (கோரஸ்) பகவதி சரணம்
+பகவதி சரணம் (கோரஸ்) பகவான் சரணம்
+தேக பலம் தா (கோரஸ்) பாத பலம் தா
+பாத பலம் தா (கோரஸ்) தேக பலம் தா
+குண்டும் குழியும் (கோரஸ்) கண்ணுக்கு வெளிச்சம்
+கண்ணுக்கு வெளிச்சம் (கோரஸ்) குண்டும் குழியும்
+கெட்டும் கெட்டு (கோரஸ்) சபரிமலைக்கு (2)
+யாரைக் காண (கோரஸ்) சுவாமியைக் காண (2)
+சுவாமியைக் கண்டால் (கோரஸ்) மோட்சம் கிட்டும் (2)
+எப்போ கிட்டும் (கோரஸ்) இப்போ கிட்டும்
+`, `
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo)
+(Chorus) Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo)
+
+Swami Thinthaka Thom (Chorus) Ayyappa Thinthaka Thom (2)
+Ayyappa Thinthaka Thom (Chorus) Swami Thinthaka Thom (2)
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo)
+(Chorus) Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo)
+
+Netri Yile Neer Aninthu Neela Aadai Thangiye, Sutri Vanthu Ayyan Padham Theedinen,
+Sabarimalai Thanai Nooki Odinen (Ayyappo)
+(Chorus) Swami Thinthaka Thom, Ayyappa Thinthaka Thom
+
+Ayyappa Thinthaka Thom, Swami Thinthaka Thom
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo) (2)
+Pavakadalai Kadanthu Sendru, Paramanadi Sernthidave, Thavakolamam Thulsai Maalai Thangiye
+Thaaraniyil Un Pugazhai Padinen (Ayyappo)
+(Chorus) Swami Thinthaka Thom, Ayyappa Thinthaka Thom
+
+Ayyappa Thinthaka Thom, Swami Thinthaka Thom
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo) (2)
+Saram Eduthu Theertham Aadi Vettai Aadi Kootam Koodi, Pettayile Thulli Vanthen Swamiye,
+Athu Perananthem Perananthen Swamiye (Ayyappo)
+(Chorus) Swami Thinthaka Thom, Ayyappa Thinthaka Thom
+
+Ayyappa Thinthaka Thom, Swami Thinthaka Thom
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo) (2)
+Irumudiyum Thangi Kondu Peruvazhilyil Nadakayile Kari Malayil Kadharukiren Ayanne,
+Ennai Katharula Vendukiren Meyyane (Ayyappo)
+(Chorus) Swami Thinthaka Thom, Ayyappa Thinthaka Thom
+
+Ayyappa Thinthaka Thom, Swami Thinthaka Thom
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo) (2)
+Pavanamam Pamba Thannil Balagane Unnai Kandu Pattu Paada Paava Vinai Poguthe,
+Bakthi Yodu Kai Unaiye Kooputhe (Ayyappo)
+(Chorus) Swami Thinthaka Thom, Ayyappa Thinthaka Thom
+
+Ayyappa Thinthaka Thom, Swami Thinthaka Thom
+Saranam Appa Saranam Ayya Swamiye, Inge Varanum Appa Saranam Ayya Swamiye (Ayyappo) (2)
+Aruvaram Nonbirunthu Aaru Moondru Padi Yeri Aaravara Kootathirku Naduvile,
+Annandhamai Dharisanamum Kanbene (Ayyappo)
+Swamiye (Chorus) Ayyappo
+Ayyappo (Chorus) Swamiye
+Swami Saranam (Chorus) Ayyappa Saranam
+Ayyappa Saranam (Chorus) Swami Saranam
+Bhagavane (Chorus) Bhagavathiye
+Bhagavathiye (Chorus) Bhagavane
+Bhagavan Saranam (Chorus) Bhagavathi Saranam
+Bhagavathi Saranam (Chorus) Bhagavan Saranam
+Thega Balamtha (Chorus) Padha Balamtha
+Padha Balamtha (Chorus) Thega Balamtha
+Kundum Kuziyum (Chorus) Kannukku Velicham
+Kannukku Velicham (Chorus) Kundum Kuziyum
+Kettum Kettu (Chorus) Sabarimalaiku
+Kettum Kettu (Chorus) Sabarimalaiku
+Yaarai Kaana (Chorus) Swamiyai Kaana
+Yaarai Kaana (Chorus) Swamiyai Kaana
+Swamiai Kandal (Chorus) Motcham Kittum
+Swamiai Kandal (Chorus) Motcham Kittum
+Eppo Kittum (Chorus) Ippo Kittum
+`),
+
+  sung('ta', 'padi-pattu', A, 'படிப் பாட்டு (பதினெட்டுப் படிகள்)', 'Padi Paattu (the eighteen steps)', `
+ஒன்றாம் திருப்படி
+சரணம் பொன் ஐயப்பா
+சுவாமி பொன் ஐயப்பா
+என் ஐயனே பொன் ஐயப்பா
+சுவாமி அல்லாதொரு சரணம் இல்லையப்பா
+
+இரண்டாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+மூன்றாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+நான்காம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+ஐந்தாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+ஆறாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+ஏழாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+எட்டாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+ஒன்பதாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பத்தாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினொன்றாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பன்னிரண்டாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதிமூன்றாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினான்காம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினைந்தாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினாறாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினேழாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+பதினெட்டாம் திருப்படி
+॥ சரணம் பொன் ஐயப்பா ॥
+`, `
+1. Onnam Thirupadi
+Saranam Pon Ayyappa
+Swami Pon Ayyappa,
+En Ayyanae
+Pon Ayyappa
+Swami Allaathoru
+Saranam Illaiyyappa
+2. Rendam
+3. Moondram
+4. Naalam
+5. Anjam
+6. Aaram
+7. Ezham
+8. Ettam
+9. Onbatam
+10. Patham (fast)
+11. Pathinon-nam
+12. Pannirendam
+13. Pathimoondram
+14. Pathinalam
+15. Pathinanjam
+16. Pathinaaram
+17. Pathinelam
+18. (slow) Pathinettam
 `),
 ];
 
