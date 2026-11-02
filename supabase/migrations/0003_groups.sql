@@ -5,7 +5,7 @@
 -- Anyone can block another person (no private messages either way) and report a message or person.
 -- Row Level Security on every table; changes that need checks across tables go through functions below.
 
-create extension if not exists pgcrypto;
+create extension if not exists pgcrypto with schema extensions;
 
 create table public.groups (
   id          uuid primary key default gen_random_uuid(),
@@ -16,7 +16,7 @@ create table public.groups (
   approx_lat  double precision,
   approx_lon  double precision,
   listed      boolean not null default false,
-  invite_code text not null unique default encode(gen_random_bytes(5), 'hex'),
+  invite_code text not null unique default encode(extensions.gen_random_bytes(5), 'hex'),
   created_by  uuid not null references auth.users (id) on delete cascade,
   created_at  timestamptz not null default now()
 );
@@ -222,7 +222,7 @@ end $$;
 /** A new invite code (when the old one was shared too widely). */
 create function public.new_invite_code(p_group uuid) returns text
 language plpgsql security definer set search_path = public as $$
-declare c text := encode(gen_random_bytes(5), 'hex');
+declare c text := encode(extensions.gen_random_bytes(5), 'hex');
 begin
   if not is_guruswami(p_group) then raise exception 'only a guruswami can do this'; end if;
   update groups set invite_code = c where id = p_group;
